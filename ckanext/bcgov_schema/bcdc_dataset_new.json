@@ -1,0 +1,999 @@
+{
+  "scheming_version": 1,
+  "dataset_type": "bcdc_dataset",
+  "about": "Dataset for BC Data Catalogue",
+  "about_url": "http://github.com/bcgov/ckanext-bcgov",
+  "dataset_fields": [
+    {
+      "field_name": "publish_state",
+      "preset": "select",
+      "label": "State",
+      "required": true,
+      "sorted_choices": true,
+      "choices": [
+        {
+          "value": "DRAFT",
+          "label": "Draft"
+        },
+        {
+          "value": "PUBLISHED",
+          "label": "Published"
+        },
+        {
+          "value": "PENDING ARCHIVE",
+          "label": "Pending Archive"
+        },
+        {
+          "value": "REJECTED",
+          "label": "Rejected"
+        },
+        {
+          "value": "PENDING PUBLISHED",
+          "label": "Pending Published"
+        }
+      ]
+    },
+    {
+      "field_name": "title",
+      "label": "Title",
+      "preset": "title",
+      "form_placeholder": "eg. A descriptive title",
+      "required": true
+    },
+    {
+      "field_name": "name",
+      "label": "URL",
+      "preset": "dataset_slug",
+      "form_placeholder": "eg. my-dataset",
+      "required": true
+    },
+    {
+      "field_name": "owner_org",
+      "label": "Organization",
+      "preset": "dataset_organization"
+    },
+    {
+      "field_name": "notes",
+      "label": "Description",
+      "form_snippet": "markdown.html",
+      "form_placeholder": "eg. Some useful notes about the data",
+      "required": true
+    },
+    {
+      "field_name": "purpose",
+      "label": "Purpose",
+      "form_snippet": "markdown.html",
+      "form_placeholder": "Summary of the intentions for which the dataset was developed"
+    },
+    {
+      "field_name": "lineage_statement",
+      "label": "Lineage Statement",
+      "form_snippet": "markdown.html",
+      "form_placeholder": "Information about the events or source data used in constructing the data"
+    },
+    {
+      "field_name": "data_quality",
+      "label": "Data Quality",
+      "form_snippet": "markdown.html",
+      "form_placeholder": "Descriptive text that can include info about issues, completeness, consistency etc."
+    },
+    {
+      "field_name": "tag_string",
+      "label": "Keywords",
+      "preset": "tag_string_autocomplete",
+      "form_placeholder": "eg. economy, mental health, government",
+      "required": true
+    },
+    {
+      "field_name": "more_info",
+      "label": "More Info",
+      "preset": "composite_repeating",
+      "form_blanks": 1,
+      "subfields": [
+        {
+          "field_name": "url",
+          "label": "URL",
+          "form_placeholder": "http://ministry.gov.bc.ca/moreinfo.html"
+        }
+      ]
+    },
+    {
+      "field_name": "contacts",
+      "label": "Contacts",
+      "preset": "composite_repeating",
+      "form_blanks": 1,
+      "subfields": [
+        {
+          "field_name": "name",
+          "label": "Name",
+          "form_placeholder": "Contact name",
+          "required": true
+        },
+        {
+          "field_name": "email",
+          "label": "Email",
+          "form_placeholder": "Contact email",
+          "required": true
+        },
+        {
+          "field_name": "org",
+          "label": "Organization",
+          "preset": "select",
+          "choices_helper": "edc_orgs_form",
+          "required": true
+        },
+        {
+          "field_name": "role",
+          "label": "Role",
+          "preset": "select",
+          "required": true,
+          "sorted_choices": true,
+          "choices": [
+            {
+              "value": "businessExpert",
+              "label": "Business Expert"
+            },
+            {
+              "value": "custodian",
+              "label": "Custodian"
+            },
+            {
+              "value": "distributor",
+              "label": "Distributor"
+            },
+            {
+              "value": "pointOfContact",
+              "label": "Point of Contact"
+            }
+          ]
+        },
+        {
+          "field_name": "displayed",
+          "label": "",
+          "preset": "multiple_checkbox",
+          "choices": [
+            {
+              "value": "displayed",
+              "label": "Contact Displayed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "field_name": "dates",
+      "label": "Data Currency/Update",
+      "preset": "composite_repeating",
+      "subfields": [
+        {
+          "field_name": "type",
+          "label": "Date Type",
+          "preset": "select",
+          "required": true,
+          "sorted_choices": true,
+          "choices": [
+            {
+              "value": "Archived",
+              "label": "Archived"
+            },
+            {
+              "value": "Created",
+              "label": "Created"
+            },
+            {
+              "value": "Destroyed",
+              "label": "Destroyed"
+            },
+            {
+              "value": "Modified",
+              "label": "Modified"
+            },
+            {
+              "value": "Published",
+              "label": "Published"
+            }
+          ]
+        },
+        {
+          "field_name": "date",
+          "label": "Date",
+          "preset": "date",
+          "required": true
+        }
+      ]
+    },
+    {
+      "field_name": "resource_status",
+      "label": "Resource Status",
+      "preset": "select",
+      "required": true,
+      "sorted_choices": true,
+      "is_conditional_source": true,
+      "comment": "As this is resource status should it maybe be moved to resource??",
+      "choices": [
+        {
+          "value": "completed",
+          "label": "Completed"
+        },
+        {
+          "value": "destroyed",
+          "label": "Destroyed"
+        },
+        {
+          "value": "historicalArchive",
+          "label": "Historical Archive"
+        },
+        {
+          "value": "obsolete",
+          "label": "Obsolete"
+        },
+        {
+          "value": "onGoing",
+          "label": "On Going"
+        },
+        {
+          "value": "planned",
+          "label": "Planned"
+        },
+        {
+          "value": "required",
+          "label": "Required"
+        },
+        {
+          "value": "underDevelopment",
+          "label": "Under Development"
+        }
+      ]
+    },
+    {
+      "field_name": "replacement_record",
+      "label": "Replacement Record",
+      "conditional_field": "resource_status",
+      "conditional_values": ["obsolete"],
+      "validators": "conditional_required"
+    },
+    {
+      "field_name": "retention_expiry_date",
+      "label": "Retention Expiry Date",
+      "preset": "date",
+      "conditional_field": "resource_status",
+      "conditional_values": ["historicalArchive"],
+      "validators": "conditional_required"
+    },
+    {
+      "field_name": "source_data_path",
+      "label": "Source Data Path",
+      "conditional_field": "resource_status",
+      "conditional_values": ["historicalArchive"],
+      "validators": "conditional_required"
+    },
+    {
+      "field_name": "view_audience",
+      "label": "Who can view this data?",
+      "preset": "select",
+      "required": true,
+      "sorted_choices": true,
+      "choices": [
+        {
+          "value": "Government",
+          "label": "Government"
+        },
+        {
+          "value": "Named users",
+          "label": "Named users"
+        },
+        {
+          "value": "Public",
+          "label": "Public"
+        }
+      ]
+    },
+    {
+      "field_name": "metadata_visibility",
+      "label": "Who can view this record?",
+      "preset": "select",
+      "required": true,
+      "sorted_choices": true,
+      "choices": [
+        {
+          "value": "Government",
+          "label": "Government"
+        },
+        {
+          "value": "Named users",
+          "label": "Named users"
+        },
+        {
+          "value": "Public",
+          "label": "Public"
+        }
+      ]
+    },
+    {
+      "field_name": "download_audience",
+      "label": "Who can download this data?",
+      "preset": "select",
+      "required": true,
+      "sorted_choices": true,
+      "conditional_field": "dataset_type",
+      "conditional_values": ["dataset", "geographic", "webservice"],
+      "validators": "conditional_required",
+      "comment": "Not sure if this should be moved to resource, that is the download part",
+      "choices": [
+        {
+          "value": "Government",
+          "label": "Government"
+        },
+        {
+          "value": "Named users",
+          "label": "Named users"
+        },
+        {
+          "value": "Public",
+          "label": "Public"
+        }
+      ]
+    },
+    {
+      "field_name": "license_id",
+      "label": "License",
+      "form_snippet": "license.html",
+      "comment": "This was previously required for all but application datasets, I think we can probably just have this on the dataset regardless of resource types"
+    },
+    {
+      "field_name": "security_class",
+      "label": "Security Classification",
+      "preset": "select",
+      "required": true,
+      "sorted_choices": false,
+      "choices": [
+        {
+          "value": "HIGH-CABINET",
+          "label": "High-Cabinet"
+        },
+        {
+          "value": "HIGH-CLASSIFIED",
+          "label": "High-Classified"
+        },
+        {
+          "value": "HIGH-SENSITIVITY",
+          "label": "High-Sensitivity"
+        },
+        {
+          "value": "LOW-PUBLIC",
+          "label": "Low-Public"
+        },
+        {
+          "value": "LOW-SENSITIVITY",
+          "label": "Low-Sensitivity"
+        },
+
+        {
+          "value": "MEDIUM-PERSONAL",
+          "label": "Medium-Personal"
+        },
+        {
+          "value": "MEDIUM-SENSITIVITY",
+          "label": "Medium-Sensitivity"
+        }
+      ]
+    }
+  ],
+  "resource_fields": [
+    {
+      "field_name": "bcdc_type",
+      "preset": "select",
+      "label": "Type",
+      "required": true,
+      "sorted_choices": true,
+      "is_conditional_source": true,
+      "choices": [
+        {
+          "value": "document",
+          "label": "Document/Tabular Data"
+        },
+        {
+          "value": "geographic",
+          "label": "Geographic"
+        },
+        {
+          "value": "webservice",
+          "label": "Webservice/API"
+        },
+        {
+          "value": "application",
+          "label": "Application"
+        }
+      ]
+    },
+    {
+      "field_name": "url",
+      "label": "URL",
+      "preset": "resource_url_upload"
+    },
+    {
+      "field_name": "json_table_schema",
+      "label": "JSON Table Schema",
+      "preset": "json_object"
+    },
+    {
+      "field_name": "name",
+      "label": "Name",
+      "form_placeholder": "eg. January 2013 Silver Prices"
+    },
+    {
+      "field_name": "resource_description",
+      "label": "Resource Description",
+      "form_snippet": "markdown.html",
+      "form_placeholder": "Some useful notes about the data",
+      "required": false
+    },
+    {
+      "field_name": "resource_update_cycle",
+      "label": "Resource Update Cycle",
+      "preset": "select",
+      "required": true,
+      "sorted_choices": false,
+      "choices": [
+        {
+          "value": "continual",
+          "label": "Continual"
+        },
+        {
+          "value": "daily",
+          "label": "Daily"
+        },
+        {
+          "value": "weekly",
+          "label": "Weekly"
+        },
+        {
+          "value": "fortnightly",
+          "label": "Fortnightly"
+        },
+        {
+          "value": "monthly",
+          "label": "Monthly"
+        },
+        {
+          "value": "quarterly",
+          "label": "Quarterly"
+        },
+        {
+          "value": "annually",
+          "label": "Annually"
+        },
+        {
+          "value": "biannually",
+          "label": "Biannually"
+        },
+        {
+          "value": "asNeeded",
+          "label": "As Needed"
+        },
+        {
+          "value": "irregular",
+          "label": "Irregular"
+        },
+        {
+          "value": "notPlanned",
+          "label": "Not Planned"
+        },
+        {
+          "value": "unknown",
+          "label": "Unknown"
+        }
+      ]
+    },
+    {
+      "field_name": "resource_storage_format",
+      "label": "Resource Storage Format",
+      "preset": "select",
+      "required": true,
+      "sorted_choices": false,
+      "choices": [
+        {
+          "value": "arcgis_rest",
+          "label": "arcgis_rest"
+        },
+        {
+          "value": "atom",
+          "label": "atom"
+        },
+        {
+          "value": "cded",
+          "label": "cded"
+        },
+        {
+          "value": "csv",
+          "label": "csv"
+        },
+        {
+          "value": "e00",
+          "label": "e00"
+        },
+        {
+          "value": "fgdb",
+          "label": "fgdb"
+        },
+        {
+          "value": "geojson",
+          "label": "geojson"
+        },
+        {
+          "value": "georss",
+          "label": "georss"
+        },
+        {
+          "value": "gft",
+          "label": "gft"
+        },
+        {
+          "value": "html",
+          "label": "html"
+        },
+        {
+          "value": "json",
+          "label": "json"
+        },
+        {
+          "value": "kml",
+          "label": "kml"
+        },
+        {
+          "value": "kmz",
+          "label": "kmz"
+        },
+        {
+          "value": "openapi-json",
+          "label": "openapi-json"
+        },
+        {
+          "value": "other",
+          "label": "other"
+        },
+        {
+          "value": "pdf",
+          "label": "pdf"
+        },
+        {
+          "value": "rdf",
+          "label": "rdf"
+        },
+        {
+          "value": "shp",
+          "label": "shp"
+        },
+        {
+          "value": "tsv",
+          "label": "tsv"
+        },
+        {
+          "value": "txt",
+          "label": "txt"
+        },
+        {
+          "value": "wms",
+          "label": "wms"
+        },
+        {
+          "value": "wmts",
+          "label": "wmts"
+        },
+        {
+          "value": "xls",
+          "label": "xls"
+        },
+        {
+          "value": "xlsx",
+          "label": "xlsx"
+        },
+        {
+          "value": "xml",
+          "label": "xml"
+        },
+        {
+          "value": "zip",
+          "label": "zip"
+        }
+      ]
+    },
+    {
+      "field_name": "resource_type",
+      "label": "Resource Type",
+      "preset": "select",
+      "required": true,
+      "sorted_choices": false,
+      "choices": [
+        {
+          "value": "abstraction",
+          "label": "Abstraction"
+        },
+        {
+          "value": "data",
+          "label": "Data"
+        },
+        {
+          "value": "reports",
+          "label": "Reports"
+        }
+      ]
+    },
+    {
+      "field_name": "resource_storage_location",
+      "label": "Resource Storage Location",
+      "preset": "select",
+      "required": true,
+      "sorted_choices": false,
+      "choices": [
+        {
+          "value": "bc geographic warehouse",
+          "label": "BC Geographic Warehouse"
+        },
+        {
+          "value": "catalogue data store",
+          "label": "Catalogue Data Store"
+        },
+        {
+          "value": "esri arcgis online",
+          "label": "ESRI ArcGIS Online"
+        },
+        {
+          "value": "file system",
+          "label": "File System"
+        },
+        {
+          "value": "ministry or other database",
+          "label": "Ministry or Other Database"
+        },
+        {
+          "value": "unspecified",
+          "label": "Unspecified"
+        },
+        {
+          "value": "web or ftp site",
+          "label": "Web or FTP Site"
+        },
+        {
+          "value": "pub.data.gov.bc.ca",
+          "label": "pub.data.gov.bc.ca"
+        }
+      ]
+    },
+    {
+      "field_name": "resource_access_method",
+      "label": "Resource Access Method",
+      "preset": "select",
+      "required": true,
+      "sorted_choices": false,
+      "choices": [
+        {
+          "value": "application",
+          "label": "Application"
+        },
+        {
+          "value": "direct access",
+          "label": "Direct Access"
+        },
+        {
+          "value": "indirect access",
+          "label": "Indirect Access"
+        },
+        {
+          "value": "service",
+          "label": "Service"
+        }
+      ]
+    },
+    {
+      "field_name": "supplemental_information",
+      "label": "Supplemental Information",
+      "form_snippet": "markdown.html",
+      "form_placeholder": "Other descriptive information about the dataset",
+      "required": false
+    },
+    {
+      "field_name": "temporal_extent",
+      "label": "Temporal Extent",
+      "preset": "composite",
+      "subfields": [
+        {
+          "field_name": "beginning_date",
+          "label": "Beginning Date"
+        },
+        {
+          "field_name": "end_date",
+          "label": "End Date"
+        }
+      ]
+    },
+    {
+      "field_name": "projection_name",
+      "label": "Projection Name",
+      "preset": "select",
+      "required": true,
+      "sorted_choices": false,
+      "conditional_field": "bcdc_type",
+      "conditional_values": ["geographic"],
+      "choices": [
+        {
+          "value": "epsg3005",
+          "label": "EPSG_3005 - NAD83 BC Albers"
+        },
+        {
+          "value": "epsg3857",
+          "label": "EPSG_3857 - WGS84 Pseudo-Mercator -- Spherical Mercator"
+        },
+        {
+          "value": "epsg4326",
+          "label": "EPSG_4326 - WGS84 World Geodetic System 1984"
+        },
+        {
+          "value": "epsg26707",
+          "label": "EPSG_26707 - NAD27 UTM zone 7N"
+        },
+        {
+          "value": "epsg26708",
+          "label": "EPSG_26708 - NAD27 UTM zone 8N"
+        },
+        {
+          "value": "epsg26709",
+          "label": "EPSG_26709 - NAD27 UTM zone 9N"
+        },
+        {
+          "value": "epsg26710",
+          "label": "EPSG_26710 - NAD27 UTM zone 10N"
+        },
+       {
+          "value": "epsg26711",
+          "label": "EPSG_26711 - NAD27 UTM zone 11N"
+        },
+        {
+          "value": "epsg26712",
+          "label": "EPSG_26712 - NAD27 UTM zone 12N"
+        },
+        {
+          "value": "epsg26907",
+          "label": "EPSG_26907 - NAD83 UTM zone 7N"
+        },
+        {
+          "value": "epsg26908",
+          "label": "EPSG_26908 - NAD83 UTM zone 8N"
+        },
+        {
+          "value": "epsg26909",
+          "label": "EPSG_26909 - NAD83 UTM zone 9N"
+        },
+        {
+          "value": "epsg26910",
+          "label": "EPSG_26910 - NAD83 UTM zone 10N"
+        },
+        {
+          "value": "epsg26911",
+          "label": "EPSG_26911 - NAD83 UTM zone 11N"
+        },
+        {
+          "value": "epsg26912",
+          "label": "EPSG_26912 - NAD83 UTM zone 12N"
+        },
+        {
+          "value": "epsg32607",
+          "label": "EPSG_32607 - WGS84 UTM zone 7N"
+        },
+        {
+          "value": "epsg32608",
+          "label": "EPSG_32608 - WGS84 UTM zone 8N"
+        },
+        {
+          "value": "epsg32609",
+          "label": "EPSG_32609 - WGS84 UTM zone 9N"
+        },
+        {
+          "value": "epsg32610",
+          "label": "EPSG_32610 - WGS84 UTM zone 10N"
+        },
+        {
+          "value": "epsg32611",
+          "label": "EPSG_32611 - WGS84 UTM zone 11N"
+        },
+        {
+          "value": "epsg32612",
+          "label": "EPSG_32612 - WGS84 UTM zone 12N"
+        },
+        {
+          "value": "epsg4269",
+          "label": "EPSG_4269 - NAD83"
+        },
+        {
+          "value": "na",
+          "label": "N-A"
+        },
+        {
+          "value": "utm",
+          "label": "UTM"
+        }
+      ]
+    },
+    {
+      "field_name": "preview_info",
+      "label": "Preview Information",
+      "preset": "composite",
+      "conditional_field": "bcdc_type",
+      "conditional_values": ["geographic"],
+      "subfields": [
+        {
+          "field_name": "layer_name",
+          "label": "Layer Name"
+        },
+        {
+          "field_name": "preview_latitude",
+          "label": "Preview Latitude"
+        },
+        {
+          "field_name": "preview_longitude",
+          "label": "Preview Longitude"
+        },
+        {
+          "field_name": "preview_map_service_url",
+          "label": "Preview Map Service URL"
+        },
+        {
+          "field_name": "preview_zoom_level",
+          "label": "Preview Zoom Level"
+        },
+        {
+          "field_name": "preview_image_url",
+          "label": "Image URL"
+        },
+        {
+          "field_name": "link_to_imap",
+          "label": "Link to iMap"
+        }
+      ]
+    },
+    {
+      "field_name": "geographic_extent",
+      "label": "Geographic Extent",
+      "preset": "composite",
+      "conditional_field": "bcdc_type",
+      "conditional_values": ["geographic"],
+      "subfields": [
+        {
+          "field_name": "north_bound_latitude",
+          "label": "North"
+        },
+        {
+          "field_name": "south_bound_latitude",
+          "label": "South"
+        },
+        {
+          "field_name": "east_bound_longitude",
+          "label": "East"
+        },
+        {
+          "field_name": "west_bound_longitude",
+          "label": "West"
+        }
+      ]
+    },
+    {
+      "field_name": "spatial_datatype",
+      "label": "Spatial Datatype",
+      "preset": "select",
+      "required": true,
+      "sorted_choices": false,
+      "conditional_field": "bcdc_type",
+      "conditional_values": ["geographic"],
+      "choices": [
+        {
+          "value": "SDE_BINARY",
+          "label": "SDE_BINARY"
+        },
+        {
+          "value": "SDO_GEOMETRY",
+          "label": "SDO_GEOMETRY"
+        },
+        {
+          "value": "ST_GEOMETRY",
+          "label": "ST_GEOMETRY"
+        }
+      ]
+    },
+    {
+      "field_name": "object_name",
+      "label": "Object Name",
+      "conditional_field": "bcdc_type",
+      "conditional_values": ["geographic"]
+    },
+    {
+      "field_name": "iso_topic_string",
+      "label": "ISO Topic Category",
+      "preset": "autocomplete",
+      "conditional_field": "bcdc_type",
+      "conditional_values": ["geographic"],
+      "validators": "conditional_required",
+      "choices": [
+        {
+          "value": "farming",
+          "label": "Farming"
+        },
+        {
+          "value": "biota",
+          "label": "Biota"
+        },
+        {
+          "value": "boundaries",
+          "label": "Boundaries"
+        },
+        {
+          "value": "climatologyMeteorologyAtmosphere",
+          "label": "Climatology Meteorology Atmosphere"
+        },
+        {
+          "value": "economy",
+          "label": "Economy"
+        },
+        {
+          "value": "elevation",
+          "label": "Elevation"
+        },
+        {
+          "value": "environment",
+          "label": "Environment"
+        },
+        {
+          "value": "geoscientificInformation",
+          "label": "Geoscientific Information"
+        },
+        {
+          "value": "health",
+          "label": "Health"
+        },
+        {
+          "value": "imageryBaseMapsEarthCover",
+          "label": "Imagery Base Maps Earth Cover"
+        },
+        {
+          "value": "intelligenceMilitary",
+          "label": "Intelligence Military"
+        },
+        {
+          "value": "inlandWaters",
+          "label": "Inland Waters"
+        },
+        {
+          "value": "location",
+          "label": "Location"
+        },
+        {
+          "value": "oceans",
+          "label": "Oceans"
+        },
+        {
+          "value": "planningCadastre",
+          "label": "Planning Cadastre"
+        },
+        {
+          "value": "society",
+          "label": "Society"
+        },
+        {
+          "value": "structure",
+          "label": "Structure"
+        },
+        {
+          "value": "transportation",
+          "label": "Transportation"
+        },
+        {
+          "value": "utilitiesCommuncation",
+          "label": "Utilities Communication"
+        },
+        {
+          "value": "unknown",
+          "label": "Unknown"
+        }
+      ]
+    }
+  ]
+}

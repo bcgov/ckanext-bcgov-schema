@@ -1,0 +1,44 @@
+{% resource 'bcgov_schema/composite.css' %}
+{% set label_dict = h.composite_get_label_dict(field.subfields) %}
+{% set choices_dict = h.composite_get_choices_dict(field.subfields) %}
+{% set name_list = h.composite_get_name_list(field.subfields) %}
+{% set composite_dict_list = h.composite_repeating_get_value_dict_list(field.field_name, field.subfields, data, field.form_blanks, false) %}
+
+<ol>
+  {% for composite_dict in composite_dict_list %}
+    {% if field.field_name != 'contacts' or (composite_dict['displayed'] and composite_dict['displayed'] == 'displayed') %}
+    <li>
+      {% for key in name_list %}
+        {% if key != 'displayed' and composite_dict[key]|length > 0 %}
+          {% if choices_dict[key]|length > 0  %}
+            {% if h.composite_is_list(composite_dict[key])  %}
+              {%- set labels = [] -%}
+              {% for item in composite_dict[key] %}
+      			{%- do labels.append(h.scheming_choices_label(choices_dict[key], item)) -%}
+              {% endfor %}
+              {% set value = h.composite_join_list(labels) %}
+            {% else %}
+              {% set value = h.scheming_choices_label(choices_dict[key], composite_dict[key]) %}
+            {% endif %}
+          {% else %}
+            {% set value = composite_dict[key] %}
+          {% endif %}
+          {% if first_key_written %}<br>{% endif %}{% if field.field_name != 'more_info' %}<strong>{{ label_dict[key] }}:</strong>{% endif %}
+          {% set first_key_written = true %}
+          {% if h.composite_is_mail(value|string) %}
+            {{ value.split('@')[0] }}<span style="display:none">foo</span>(at){{ value.split('@')[1] }}
+          {% elif label_dict[key] == 'Organization' %}
+            {% set org_name = h.edc_org_title(value) %}
+            {{ org_name }}
+          {% elif label_dict[key] == 'URL' %}
+            <a href="{{ value }}" target="_blank">{{ value }}</a>
+          {% else %}
+            {{ value }}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </li>
+    {% endif %}
+  {% endfor %}
+</ol>
+

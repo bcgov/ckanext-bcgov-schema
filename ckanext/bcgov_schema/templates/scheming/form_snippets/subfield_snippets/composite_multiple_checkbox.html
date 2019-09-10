@@ -1,0 +1,40 @@
+{% import 'macros/form.html' as form %}
+
+{%- set subfield_label=h.scheming_language_text(subfield.label) + subfields_repeating_label + ' ' + index|string -%}
+
+{%- call form.input_block(
+    label=subfield_label,
+    classes=['control-medium'],
+    error=errors[name],
+    is_required=h.scheming_field_required(subfield)) -%}
+    
+	{%- set options=[] -%}
+	{%- for c in h.scheming_field_choices(subfield) -%}
+	 {%- do options.append({'value': c.value, 'text': h.scheming_language_text(c.label) }) -%}
+	{%- endfor -%}
+
+	 {% if subfield.help_text and subfield_index>1 %}
+		{% set composite_classes = "composite-multiple-checkboxes-with-help" %}
+	  {% else %}
+		{% set composite_classes = "composite-multiple-checkboxes" %}
+	  {% endif %}
+      
+    <fieldset class="{{ composite_classes }}">
+        {%- for option in options -%}
+            <label for="{{ name }}-{{ option.value }}" class="composite-multiple-checkbox-label">
+                <input id="{{ name }}-{{ option.value }}"
+                    type="checkbox"
+                    class="composite-multiple-checkbox" 
+                    name="{{ name }}"
+                    value="{{ option.value }}"
+                    {{ "checked " if option.value in value }} 
+                    />
+                {{ option.text }}
+            </label>
+        {%- endfor -%}
+    </fieldset>
+  {% if subfield_index>1 %}
+    {%- snippet 'scheming/form_snippets/subfield_snippets/composite_help_text.html', field=subfield -%}
+  {% endif %}
+
+{%- endcall -%}

@@ -1,0 +1,6 @@
+{% import 'macros/form.html' as form %}
+
+{% if c.user %}
+  {% set display_snippet = h.get_display_snippet(field.restricted_field) %}
+  {%- snippet 'scheming/display_snippets/' + display_snippet, field=field.restricted_field -%}
+{% endif %}

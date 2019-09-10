@@ -1,0 +1,39 @@
+{
+  "scheming_presets_version": 1,
+  "about": "presets for the BCDC",
+  "about_url": "http://github.com/ckan/ckanext-scheming#preset",
+  "presets": [
+    {
+      "preset_name": "json_schema_url_upload",
+      "values": {
+        "validators": "ignore_missing unicode remove_whitespace",
+        "form_snippet": "upload.html",
+        "form_placeholder": "http://example.com/my-schema.json",
+        "upload_field": "upload_schema",
+        "upload_clear": "clear_upload_schema",
+        "upload_label": "JSON Table Schema"
+      }
+    },
+    {
+      "preset_name": "iso_topic_autocomplete",
+      "values": {
+        "validators": "ignore_missing",
+        "classes": ["control-full"],
+        "form_attrs": {
+          "data-module": "autocomplete",
+          "data-module-tags": "",
+          "data-module-source": "/api/3/action/tag_autocomplete_by_vocab?vocabulary_id=iso_topic_category&query=?"
+        }
+      }
+    },
+    {
+      "preset_name": "autocomplete",
+      "values": {
+        "form_snippet": "autocomplete.html",
+        "display_snippet": "multiple_choice.html",
+        "validators": "ignore_missing scheming_multiple_choice",
+        "output_validators": "scheming_multiple_choice_output"
+      }
+    }
+  ]
+}

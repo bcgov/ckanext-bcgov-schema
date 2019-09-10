@@ -1,0 +1,42 @@
+{#- Grand Master snippet for all scheming form fields -#}
+{#- Render the field the user requested, or use a default field -#}
+{#- This template expands the default scheming by adding conditional rendering -#}
+{#- Adds CKAN javascript modules as wrappers around fields defined as conditional_source or conditional_field -#}
+{#- conditional_source fields will publish their changes -#}
+{#- Associated conditional_field fields subscribe and update their visibility accordingly -#}
+
+{% resource 'bcgov_schema/conditional-field.js' %}
+{% resource 'bcgov_schema/conditional-source.js' %}
+
+{%- set form_snippet = field.form_snippet -%}
+
+{%- if not form_snippet -%}
+  {%- set form_snippet = 'text.html' -%}
+{%- endif -%}
+
+{%- if '/' not in form_snippet -%}
+  {%- set form_snippet = 'scheming/form_snippets/' + form_snippet -%}
+{%- endif -%}
+
+<!-- data-module-value="{-{ data[field.field_name] }-}" -->
+
+{%- if field.is_conditional_source -%}
+  <div data-module="conditional-source"
+       data-module-name="{{ field.field_name }}"
+
+       id="conditional-source-div-{{ field.field_name }}">
+    {%- snippet form_snippet, field=field, data=data, errors=errors,
+      licenses=licenses, entity_type=entity_type, object_type=object_type -%}
+  </div>
+{%- elif field.conditional_field and field.conditional_values -%}
+  <div data-module="conditional-field"
+       data-module-conditional_field="{{ field.conditional_field }}"
+       data-module-conditional_values="{{ h.dump_json(field.conditional_values) }}"
+       id="conditional-div-{{ field.field_name }}">
+    {%- snippet form_snippet, field=field, data=data, errors=errors,
+      licenses=licenses, entity_type=entity_type, object_type=object_type -%}
+  </div>
+{%- else -%}
+  {%- snippet form_snippet, field=field, data=data, errors=errors,
+      licenses=licenses, entity_type=entity_type, object_type=object_type -%}
+{%- endif -%}

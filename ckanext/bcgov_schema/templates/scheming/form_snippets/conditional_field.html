@@ -1,0 +1,11 @@
+{% import 'macros/form.html' as form %}
+<!--{ % resource 'composite/composite.css' % }-->
+
+<div data-module="conditional-field"
+     data-module-conditionalField="{{ field.conditional_field }}"
+     data-module-conditionalValues="{{ field.conditional_values }}"
+     id="conditional-div-{{ field.field_name }}">
+
+  {% set form_snippet = h.get_form_snippet(field.field) %}
+  {%- snippet 'scheming/form_snippets/' + form_snippet, field=field.field -%}
+</div>

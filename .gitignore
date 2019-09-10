@@ -1,0 +1,7 @@
+*.pyc
+*.egg-info/
+requirements-ext.txt
+pip-requirements.txt
+*.DS_Store
+build
+dist
