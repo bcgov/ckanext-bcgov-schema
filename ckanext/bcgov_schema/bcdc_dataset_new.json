@@ -911,7 +911,7 @@
       "preset": "autocomplete",
       "conditional_field": "bcdc_type",
       "conditional_values": ["geographic"],
-      "validators": "conditional_required",
+      "validators": "conditional_required scheming_multiple_choice",
       "choices": [
         {
           "value": "farming",

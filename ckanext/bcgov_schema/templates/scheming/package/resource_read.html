@@ -49,7 +49,7 @@
             {%- if field.require_logged_in and c.user or not field.require_logged_in -%}
               {%- if (field.conditional_field and res[field.conditional_field] in field.conditional_values) or not field.conditional_field -%}
                 {%- if field.field_name not in exclude_fields and field.display_snippet is not none -%}
-                {%- if field.field_name in res -%}
+                {%- if field.field_name in res and not h.is_empty(res[field.field_name]) -%}
                   <tr>
                     <th scope="row" class="dataset-label">
                       {{- h.scheming_language_text(field.label) -}}

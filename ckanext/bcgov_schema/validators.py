@@ -25,12 +25,9 @@ def conditional_required(field, schema):
         if 'conditional_field' in field and 'conditional_values' in field:
             conditional_field = field['conditional_field']
             conditional_values = field['conditional_values']
-            if conditional_field in data and not_empty(data[conditional_field]) and data[conditional_field] in conditional_values:
-                if not_empty(value):
-                    return value
-                else:
-                    errors[key].append(_('%s required when %s set to %s') % (field['label'], conditional_field, conditional_values))
-                    return
+            if conditional_field in data and data[conditional_field] and data[conditional_field] in conditional_values:
+                logger.debug("Checking not empty")
+                not_empty(value)
         return value
 
     return validator

@@ -16,7 +16,7 @@
       {%- if (field.conditional_field and pkg_dict[field.conditional_field] in field.conditional_values) or not field.conditional_field -%}
         {%- if field.field_name not in exclude_fields
             and field.display_snippet is not none -%}
-        {%- if field.field_name in pkg_dict and pkg_dict[field.field_name] != '' and pkg_dict[field.field_name] != [] -%}
+        {%- if field.field_name in pkg_dict and not h.is_empty(pkg_dict[field.field_name]) -%}
           <tr>
             <th scope="row" class="dataset-label">{{
               h.scheming_language_text(field.label) }}</th>
