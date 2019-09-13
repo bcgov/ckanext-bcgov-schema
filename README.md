@@ -12,7 +12,7 @@ Installation
 
         $ . /usr/lib/ckan/default/bin/activate
 
-2.  Install the extension. Switch to `ckanext-bcgov-disqus` extension directory and run the following command:
+2.  Install the extension. Switch to `ckanext-bcgov-schema` extension directory and run the following command:
 
         python setup.py install
     
