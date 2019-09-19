@@ -6,7 +6,7 @@
 
 <ol>
   {% for composite_dict in composite_dict_list %}
-    {% if field.field_name != 'contacts' or (composite_dict['displayed'] and composite_dict['displayed'] == 'displayed') %}
+    {% if field.field_name != 'contacts' or h.display_contact(composite_dict) %}
     <li>
       {% for key in name_list %}
         {% if key != 'displayed' and composite_dict[key]|length > 0 %}

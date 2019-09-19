@@ -315,9 +315,6 @@
       "preset": "select",
       "required": true,
       "sorted_choices": true,
-      "conditional_field": "dataset_type",
-      "conditional_values": ["dataset", "geographic", "webservice"],
-      "validators": "conditional_required",
       "comment": "Not sure if this should be moved to resource, that is the download part",
       "choices": [
         {

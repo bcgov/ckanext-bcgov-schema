@@ -25,6 +25,14 @@ def get_display_snippet(field):
     return 'text.html'
 
 
+def display_contact(composite_value):
+    if 'displayed' in composite_value and composite_value['displayed']:
+        return True
+    elif 'private' in composite_value and composite_value['private']:
+        return True
+    return False
+
+
 def is_empty(value):
     if value:
         if isinstance(value, unicode):
@@ -66,7 +74,6 @@ def scheming_display_json_value(value, indent=2):
         serialized.
     :rtype: string
     """
-    logger.debug('Value: {0}'.format(value))
     if not value:
         return None
     try:

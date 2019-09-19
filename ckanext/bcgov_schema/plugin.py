@@ -26,5 +26,6 @@ class BCGovSchemaPlugin(plugins.SingletonPlugin):
     def get_helpers(self):
         return {
             "is_empty": helpers.is_empty,
-            "scheming_display_json_value": helpers.scheming_display_json_value
+            "scheming_display_json_value": helpers.scheming_display_json_value,
+            "display_contact": helpers.display_contact
         }
