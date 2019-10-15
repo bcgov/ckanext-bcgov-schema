@@ -33,6 +33,18 @@ def display_contact(composite_value):
     return False
 
 
+def parse_bcgw_details(field_name, data):
+    """
+    Template helper function.
+    Get data from BCGW details
+    """
+
+    raw_data = data.get(field_name)
+    json_data = json.loads(raw_data)
+
+    return json_data
+
+
 def is_empty(value):
     if value:
         if isinstance(value, unicode):

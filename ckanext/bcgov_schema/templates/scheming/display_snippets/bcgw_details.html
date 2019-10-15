@@ -1,0 +1,21 @@
+{% resource 'bcgov_schema/composite.css' %}
+{% set composite_dict_list = h.parse_bcgw_details(field.field_name, data) %}
+
+<ol>
+  {% for composite_dict in composite_dict_list %}
+    {% if first_key_written %}<hr>{% endif %}
+    <li>
+      <strong>Column Name: </strong>{{ composite_dict['column_name'] }}
+      <br>
+      <strong>Short Name: </strong>{{ composite_dict['short_name'] }}
+      <br>
+      <strong>Data Type: </strong>{{ composite_dict['data_type'] }}
+      <br>
+      <strong>Column Comments: </strong>{{ composite_dict['column_comments'] }}
+      <br>
+      <strong>Data Precision: </strong>{{ composite_dict['data_precision'] }}
+    </li>
+  {% set first_key_written = true %}
+  {% endfor %}
+</ol>
+

@@ -335,6 +335,7 @@
       "field_name": "license_id",
       "label": "License",
       "form_snippet": "license.html",
+      "required": true,
       "comment": "This was previously required for all but application datasets, I think we can probably just have this on the dataset regardless of resource types"
     },
     {
@@ -488,6 +489,7 @@
       "preset": "select",
       "required": true,
       "sorted_choices": false,
+      "form_include_blank_choice": true,
       "choices": [
         {
           "value": "arcgis_rest",
@@ -601,6 +603,7 @@
       "preset": "select",
       "required": true,
       "sorted_choices": false,
+      "form_include_blank_choice": true,
       "choices": [
         {
           "value": "abstraction",
@@ -696,10 +699,12 @@
       "subfields": [
         {
           "field_name": "beginning_date",
+          "preset": "date",
           "label": "Beginning Date"
         },
         {
           "field_name": "end_date",
+          "preset": "date",
           "label": "End Date"
         }
       ]
@@ -708,10 +713,11 @@
       "field_name": "projection_name",
       "label": "Projection Name",
       "preset": "select",
-      "required": true,
       "sorted_choices": false,
       "conditional_field": "bcdc_type",
       "conditional_values": ["geographic"],
+      "validators": "conditional_required",
+      "form_include_blank_choice": true,
       "choices": [
         {
           "value": "epsg3005",
@@ -877,10 +883,11 @@
       "field_name": "spatial_datatype",
       "label": "Spatial Datatype",
       "preset": "select",
-      "required": true,
       "sorted_choices": false,
       "conditional_field": "bcdc_type",
       "conditional_values": ["geographic"],
+      "validators": "conditional_required",
+      "form_include_blank_choice": true,
       "choices": [
         {
           "value": "SDE_BINARY",
@@ -895,12 +902,6 @@
           "label": "ST_GEOMETRY"
         }
       ]
-    },
-    {
-      "field_name": "object_name",
-      "label": "Object Name",
-      "conditional_field": "bcdc_type",
-      "conditional_values": ["geographic"]
     },
     {
       "field_name": "iso_topic_string",
@@ -989,6 +990,52 @@
         {
           "value": "unknown",
           "label": "Unknown"
+        }
+      ]
+    },
+    {
+      "field_name": "object_name",
+      "label": "Object Name",
+      "conditional_field": "bcdc_type",
+      "conditional_values": ["geographic"]
+    },
+    {
+      "field_name": "object_short_name",
+      "label": "Object Short Name",
+      "form_snippet": null
+    },
+    {
+      "field_name": "object_table_comments",
+      "label": "Object Table Comments",
+      "form_snippet": null
+    },
+    {
+      "field_name": "details",
+      "label": "Details",
+      "display_snippet": "bcgw_details.html",
+      "validators": "composite_repeating_group2json",
+      "form_snippet": null,
+      "required": false,
+      "subfields": [
+        {
+          "field_name": "column_name",
+          "label": "Column Name"
+        },
+        {
+          "field_name": "short_name",
+          "label": "Short Name"
+        },
+        {
+          "field_name": "data_type",
+          "label": "Data Type"
+        },
+        {
+          "field_name": "data_precision",
+          "label": "Data Precision"
+        },
+        {
+          "field_name": "column_comments",
+          "label": "Column Comments"
         }
       ]
     }
