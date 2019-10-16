@@ -909,7 +909,8 @@
       "preset": "autocomplete",
       "conditional_field": "bcdc_type",
       "conditional_values": ["geographic"],
-      "validators": "conditional_required scheming_multiple_choice",
+      "validators": "conditional_required iso_topic_category",
+      "form_include_blank_choice": true,
       "choices": [
         {
           "value": "farming",

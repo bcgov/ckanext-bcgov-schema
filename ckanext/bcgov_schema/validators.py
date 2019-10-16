@@ -35,6 +35,57 @@ def conditional_required(field, schema):
     return validator
 
 
+@scheming_validator
+def iso_topic_category(field, schema):
+    """
+    Based on scheming multiple choice but has to support empty values because old UI doesn't let it be not submitted
+    and we need to allow it to be empty to support conditional fields
+    """
+    static_choice_values = None
+    if 'choices' in field:
+        static_choice_order = [c['value'] for c in field['choices']]
+        static_choice_values = set(static_choice_order)
+
+    def validator(key, data, errors, context):
+        # if there was an error before calling our validator
+        # don't bother with our validation
+        if errors[key]:
+            return
+
+        value = data[key]
+        if value is not missing:
+            if isinstance(value, basestring):
+                value = [value]
+            elif not isinstance(value, list):
+                errors[key].append(_('expecting list of strings'))
+                return
+        else:
+            value = []
+
+        choice_values = static_choice_values
+        if not choice_values:
+            choice_order = [c['value'] for c in sh.scheming_field_choices(field)]
+            choice_values = set(choice_order)
+
+        selected = set()
+        for element in value:
+            if element in choice_values:
+                selected.add(element)
+                continue
+            if element is not '':
+                errors[key].append(_('unexpected choice "%s"') % element)
+
+        if not errors[key]:
+            data[key] = json.dumps([v for v in
+                (static_choice_order if static_choice_values else choice_order)
+                if v in selected])
+
+            if field.get('required') and not selected:
+                errors[key].append(_('Select at least one'))
+
+    return validator
+
+
 def _float_validator(key, data, errors, content):
     value = data.get(key, 0.0)
 
