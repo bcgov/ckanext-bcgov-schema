@@ -164,6 +164,7 @@
       "field_name": "dates",
       "label": "Data Currency/Update",
       "preset": "composite_repeating",
+      "form_blanks": 1,
       "subfields": [
         {
           "field_name": "type",
