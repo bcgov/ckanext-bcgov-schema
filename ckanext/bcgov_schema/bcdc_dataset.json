@@ -5,7 +5,7 @@
   "about_url": "http://github.com/bcgov/ckanext-bcgov",
   "dataset_fields": [
     {
-      "field_name": "edc_state",
+      "field_name": "publish_state",
       "preset": "select",
       "label": "State",
       "required": true,
@@ -34,32 +34,6 @@
       ]
     },
     {
-      "field_name": "dataset_type",
-      "preset": "select",
-      "label": "Type",
-      "required": true,
-      "sorted_choices": true,
-      "is_conditional_source": true,
-      "choices": [
-        {
-          "value": "dataset",
-          "label": "Document/Tabular Data"
-        },
-        {
-          "value": "geographic",
-          "label": "Geographic"
-        },
-        {
-          "value": "webservice",
-          "label": "Webservice/API"
-        },
-        {
-          "value": "application",
-          "label": "Application"
-        }
-      ]
-    },
-    {
       "field_name": "title",
       "label": "Title",
       "preset": "title",
@@ -82,6 +56,7 @@
       "field_name": "notes",
       "label": "Description",
       "form_snippet": "markdown.html",
+      "display_snippet": "markdown.html",
       "form_placeholder": "eg. Some useful notes about the data",
       "required": true
     },
@@ -89,28 +64,22 @@
       "field_name": "purpose",
       "label": "Purpose",
       "form_snippet": "markdown.html",
-      "form_placeholder": "Summary of the intentions for which the dataset was developed",
-      "conditional_field": "dataset_type",
-      "conditional_values": ["dataset", "geographic"],
-      "required": false
+      "display_snippet": "markdown.html",
+      "form_placeholder": "Summary of the intentions for which the dataset was developed"
     },
     {
       "field_name": "lineage_statement",
       "label": "Lineage Statement",
       "form_snippet": "markdown.html",
-      "form_placeholder": "Information about the events or source data used in constructing the data",
-      "conditional_field": "dataset_type",
-      "conditional_values": ["dataset", "geographic"],
-      "required": false
+      "display_snippet": "markdown.html",
+      "form_placeholder": "Information about the events or source data used in constructing the data"
     },
     {
       "field_name": "data_quality",
       "label": "Data Quality",
       "form_snippet": "markdown.html",
-      "form_placeholder": "Descriptive text that can include info about issues, completeness, consistency etc.",
-      "conditional_field": "dataset_type",
-      "conditional_values": ["dataset", "geographic"],
-      "required": false
+      "display_snippet": "markdown.html",
+      "form_placeholder": "Descriptive text that can include info about issues, completeness, consistency etc."
     },
     {
       "field_name": "tag_string",
@@ -200,11 +169,9 @@
       "label": "Data Currency/Update",
       "preset": "composite_repeating",
       "form_blanks": 1,
-      "conditional_field": "dataset_type",
-      "conditional_values": ["dataset", "geographic"],
       "subfields": [
         {
-          "field_name": "date_type",
+          "field_name": "type",
           "label": "Date Type",
           "preset": "select",
           "required": true,
@@ -247,6 +214,7 @@
       "required": true,
       "sorted_choices": true,
       "is_conditional_source": true,
+      "comment": "As this is resource status should it maybe be moved to resource??",
       "choices": [
         {
           "value": "completed",
@@ -333,12 +301,8 @@
       "sorted_choices": true,
       "choices": [
         {
-          "value": "Government",
-          "label": "Government"
-        },
-        {
-          "value": "Named users",
-          "label": "Named users"
+          "value": "IDIR",
+          "label": "IDIR"
         },
         {
           "value": "Public",
@@ -352,9 +316,7 @@
       "preset": "select",
       "required": true,
       "sorted_choices": true,
-      "conditional_field": "dataset_type",
-      "conditional_values": ["dataset", "geographic", "webservice"],
-      "validators": "conditional_required",
+      "comment": "Not sure if this should be moved to resource, that is the download part",
       "choices": [
         {
           "value": "Government",
@@ -374,9 +336,8 @@
       "field_name": "license_id",
       "label": "License",
       "form_snippet": "license.html",
-      "conditional_field": "dataset_type",
-      "conditional_values": ["dataset", "geographic", "webservice"],
-      "validators": "conditional_required"
+      "required": true,
+      "comment": "This was previously required for all but application datasets, I think we can probably just have this on the dataset regardless of resource types"
     },
     {
       "field_name": "security_class",
@@ -415,127 +376,35 @@
           "label": "Medium-Sensitivity"
         }
       ]
-    },
-    {
-      "field_name": "preview_info",
-      "label": "Preview Information",
-      "preset": "composite",
-      "conditional_field": "dataset_type",
-      "conditional_values": ["geographic"],
-      "subfields": [
-        {
-          "field_name": "layer_name",
-          "label": "Layer Name"
-        },
-        {
-          "field_name": "preview_latitude",
-          "label": "Preview Latitude"
-        },
-        {
-          "field_name": "preview_longitude",
-          "label": "Preview Longitude"
-        },
-        {
-          "field_name": "preview_map_service_url",
-          "label": "Preview Map Service URL"
-        },
-        {
-          "field_name": "preview_zoom_level",
-          "label": "Preview Zoom Level"
-        },
-        {
-          "field_name": "preview_image_url",
-          "label": "Image URL"
-        },
-        {
-          "field_name": "link_to_imap",
-          "label": "Link to iMap"
-        }
-      ]
-    },
-    {
-      "field_name": "geographic_extent",
-      "label": "Geographic Extent",
-      "preset": "composite",
-      "conditional_field": "dataset_type",
-      "conditional_values": ["geographic"],
-      "subfields": [
-        {
-          "field_name": "north_bound_latitude",
-          "label": "North"
-        },
-        {
-          "field_name": "south_bound_latitude",
-          "label": "South"
-        },
-        {
-          "field_name": "east_bound_longitude",
-          "label": "East"
-        },
-        {
-          "field_name": "west_bound_longitude",
-          "label": "West"
-        }
-      ]
-    },
-    {
-      "field_name": "spatial_datatype",
-      "label": "Spatial Datatype",
-      "preset": "select",
-      "required": true,
-      "sorted_choices": false,
-      "conditional_field": "dataset_type",
-      "conditional_values": ["geographic"],
-      "choices": [
-        {
-          "value": "SDE_BINARY",
-          "label": "SDE_BINARY"
-        },
-        {
-          "value": "SDO_GEOMETRY",
-          "label": "SDO_GEOMETRY"
-        },
-        {
-          "value": "ST_GEOMETRY",
-          "label": "ST_GEOMETRY"
-        }
-      ]
-    },
-    {
-      "field_name": "object_name",
-      "label": "Object Name",
-      "conditional_field": "dataset_type",
-      "conditional_values": ["geographic"]
-    },
-    {
-      "field_name": "iso_topic_string",
-      "label": "ISO Topic Category",
-      "conditional_field": "dataset_type",
-      "conditional_values": ["geographic"],
-      "validators": "conditional_required"
-    },
-    {
-      "field_name": "record_create_date",
-      "label": "Created Date",
-      "form_snippet": null
-    },
-    {
-      "field_name": "record_publish_date",
-      "label": "Published Date",
-      "form_snippet": null
-    },
-    {
-      "field_name": "record_archive_date",
-      "label": "Archived Date",
-      "form_snippet": null
-    },
-    {
-      "field_name": "record_last_modified",
-      "label": "Last Modified",
-      "form_snippet": null
     }
   ],
   "resource_fields": [
+    {
+      "field_name": "bcdc_type",
+      "preset": "select",
+      "label": "Type",
+      "required": true,
+      "sorted_choices": true,
+      "is_conditional_source": true,
+      "choices": [
+        {
+          "value": "document",
+          "label": "Document/Tabular Data"
+        },
+        {
+          "value": "geographic",
+          "label": "Geographic"
+        },
+        {
+          "value": "webservice",
+          "label": "Webservice/API"
+        },
+        {
+          "value": "application",
+          "label": "Application"
+        }
+      ]
+    },
     {
       "field_name": "url",
       "label": "URL",
@@ -544,7 +413,7 @@
     {
       "field_name": "json_table_schema",
       "label": "JSON Table Schema",
-      "preset": "json_schema_url_upload"
+      "preset": "json_object"
     },
     {
       "field_name": "name",
@@ -555,6 +424,7 @@
       "field_name": "resource_description",
       "label": "Resource Description",
       "form_snippet": "markdown.html",
+      "display_snippet": "markdown.html",
       "form_placeholder": "Some useful notes about the data",
       "required": false
     },
@@ -621,6 +491,7 @@
       "preset": "select",
       "required": true,
       "sorted_choices": false,
+      "form_include_blank_choice": true,
       "choices": [
         {
           "value": "arcgis_rest",
@@ -679,6 +550,10 @@
           "label": "openapi-json"
         },
         {
+          "value": "oracle_sde",
+          "label": "Oracle/SDE"
+        },
+        {
           "value": "other",
           "label": "other"
         },
@@ -734,6 +609,7 @@
       "preset": "select",
       "required": true,
       "sorted_choices": false,
+      "form_include_blank_choice": true,
       "choices": [
         {
           "value": "abstraction",
@@ -819,6 +695,7 @@
       "field_name": "supplemental_information",
       "label": "Supplemental Information",
       "form_snippet": "markdown.html",
+      "display_snippet": "markdown.html",
       "form_placeholder": "Other descriptive information about the dataset",
       "required": false
     },
@@ -828,11 +705,13 @@
       "preset": "composite",
       "subfields": [
         {
-          "field_name": "beginning date",
+          "field_name": "beginning_date",
+          "preset": "date",
           "label": "Beginning Date"
         },
         {
-          "field_name": "end date",
+          "field_name": "end_date",
+          "preset": "date",
           "label": "End Date"
         }
       ]
@@ -841,8 +720,11 @@
       "field_name": "projection_name",
       "label": "Projection Name",
       "preset": "select",
-      "required": true,
       "sorted_choices": false,
+      "conditional_field": "bcdc_type",
+      "conditional_values": ["geographic"],
+      "validators": "conditional_required",
+      "form_include_blank_choice": true,
       "choices": [
         {
           "value": "epsg3005",
@@ -939,6 +821,229 @@
         {
           "value": "utm",
           "label": "UTM"
+        }
+      ]
+    },
+    {
+      "field_name": "preview_info",
+      "label": "Preview Information",
+      "preset": "composite",
+      "conditional_field": "bcdc_type",
+      "conditional_values": ["geographic"],
+      "subfields": [
+        {
+          "field_name": "layer_name",
+          "label": "Layer Name"
+        },
+        {
+          "field_name": "preview_latitude",
+          "label": "Preview Latitude"
+        },
+        {
+          "field_name": "preview_longitude",
+          "label": "Preview Longitude"
+        },
+        {
+          "field_name": "preview_map_service_url",
+          "label": "Preview Map Service URL"
+        },
+        {
+          "field_name": "preview_zoom_level",
+          "label": "Preview Zoom Level"
+        },
+        {
+          "field_name": "preview_image_url",
+          "label": "Image URL"
+        },
+        {
+          "field_name": "link_to_imap",
+          "label": "Link to iMap"
+        }
+      ]
+    },
+    {
+      "field_name": "geographic_extent",
+      "label": "Geographic Extent",
+      "preset": "composite",
+      "conditional_field": "bcdc_type",
+      "conditional_values": ["geographic"],
+      "subfields": [
+        {
+          "field_name": "north_bound_latitude",
+          "label": "North"
+        },
+        {
+          "field_name": "south_bound_latitude",
+          "label": "South"
+        },
+        {
+          "field_name": "east_bound_longitude",
+          "label": "East"
+        },
+        {
+          "field_name": "west_bound_longitude",
+          "label": "West"
+        }
+      ]
+    },
+    {
+      "field_name": "spatial_datatype",
+      "label": "Spatial Datatype",
+      "preset": "select",
+      "sorted_choices": false,
+      "conditional_field": "bcdc_type",
+      "conditional_values": ["geographic"],
+      "validators": "conditional_required",
+      "form_include_blank_choice": true,
+      "choices": [
+        {
+          "value": "SDE_BINARY",
+          "label": "SDE_BINARY"
+        },
+        {
+          "value": "SDO_GEOMETRY",
+          "label": "SDO_GEOMETRY"
+        },
+        {
+          "value": "ST_GEOMETRY",
+          "label": "ST_GEOMETRY"
+        }
+      ]
+    },
+    {
+      "field_name": "iso_topic_category",
+      "label": "ISO Topic Category",
+      "preset": "autocomplete",
+      "conditional_field": "bcdc_type",
+      "conditional_values": ["geographic"],
+      "validators": "conditional_required iso_topic_category",
+      "form_include_blank_choice": true,
+      "choices": [
+        {
+          "value": "farming",
+          "label": "Farming"
+        },
+        {
+          "value": "biota",
+          "label": "Biota"
+        },
+        {
+          "value": "boundaries",
+          "label": "Boundaries"
+        },
+        {
+          "value": "climatologyMeteorologyAtmosphere",
+          "label": "Climatology Meteorology Atmosphere"
+        },
+        {
+          "value": "economy",
+          "label": "Economy"
+        },
+        {
+          "value": "elevation",
+          "label": "Elevation"
+        },
+        {
+          "value": "environment",
+          "label": "Environment"
+        },
+        {
+          "value": "geoscientificInformation",
+          "label": "Geoscientific Information"
+        },
+        {
+          "value": "health",
+          "label": "Health"
+        },
+        {
+          "value": "imageryBaseMapsEarthCover",
+          "label": "Imagery Base Maps Earth Cover"
+        },
+        {
+          "value": "intelligenceMilitary",
+          "label": "Intelligence Military"
+        },
+        {
+          "value": "inlandWaters",
+          "label": "Inland Waters"
+        },
+        {
+          "value": "location",
+          "label": "Location"
+        },
+        {
+          "value": "oceans",
+          "label": "Oceans"
+        },
+        {
+          "value": "planningCadastre",
+          "label": "Planning Cadastre"
+        },
+        {
+          "value": "society",
+          "label": "Society"
+        },
+        {
+          "value": "structure",
+          "label": "Structure"
+        },
+        {
+          "value": "transportation",
+          "label": "Transportation"
+        },
+        {
+          "value": "utilitiesCommuncation",
+          "label": "Utilities Communication"
+        },
+        {
+          "value": "unknown",
+          "label": "Unknown"
+        }
+      ]
+    },
+    {
+      "field_name": "object_name",
+      "label": "Object Name",
+      "conditional_field": "bcdc_type",
+      "conditional_values": ["geographic"]
+    },
+    {
+      "field_name": "object_short_name",
+      "label": "Object Short Name",
+      "form_snippet": null
+    },
+    {
+      "field_name": "object_table_comments",
+      "label": "Object Table Comments",
+      "form_snippet": null
+    },
+    {
+      "field_name": "details",
+      "label": "Details",
+      "display_snippet": "bcgw_details.html",
+      "validators": "composite_repeating_group2json",
+      "form_snippet": null,
+      "required": false,
+      "subfields": [
+        {
+          "field_name": "column_name",
+          "label": "Column Name"
+        },
+        {
+          "field_name": "short_name",
+          "label": "Short Name"
+        },
+        {
+          "field_name": "data_type",
+          "label": "Data Type"
+        },
+        {
+          "field_name": "data_precision",
+          "label": "Data Precision"
+        },
+        {
+          "field_name": "column_comments",
+          "label": "Column Comments"
         }
       ]
     }

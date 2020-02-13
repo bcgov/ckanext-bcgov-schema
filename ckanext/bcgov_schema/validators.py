@@ -64,7 +64,7 @@ def iso_topic_category(field, schema):
 
         choice_values = static_choice_values
         if not choice_values:
-            choice_order = [c['value'] for c in sh.scheming_field_choices(field)]
+            choice_order = [choice['value'] for choice in sh.scheming_field_choices(field)]
             choice_values = set(choice_order)
 
         selected = set()
@@ -77,8 +77,8 @@ def iso_topic_category(field, schema):
 
         if not errors[key]:
             data[key] = json.dumps([v for v in
-                (static_choice_order if static_choice_values else choice_order)
-                if v in selected])
+                                    (static_choice_order if static_choice_values else choice_order)
+                                    if v in selected])
 
             if field.get('required') and not selected:
                 errors[key].append(_('Select at least one'))
