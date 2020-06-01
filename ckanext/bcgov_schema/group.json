@@ -27,14 +27,12 @@
     {
       "field_name": "url",
       "label": "Image URL",
-      "display_snippet": null,
       "form_placeholder": "http://example.com/my-image.jpg"
     },
     {
       "field_name": "private",
       "label": "Private",
-      "form_snippet": null,
-      "display_snippet": null,
+      "preset": "multiple_checkbox",
       "validators": "ignore_missing"
     }
   ]

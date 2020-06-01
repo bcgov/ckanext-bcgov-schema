@@ -50,7 +50,8 @@
     {
       "field_name": "owner_org",
       "label": "Organization",
-      "preset": "dataset_organization"
+      "preset": "dataset_organization",
+      "required": true
     },
     {
       "field_name": "notes",
