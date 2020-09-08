@@ -5,35 +5,6 @@
   "about_url": "http://github.com/bcgov/ckanext-bcgov",
   "dataset_fields": [
     {
-      "field_name": "publish_state",
-      "preset": "select",
-      "label": "State",
-      "required": true,
-      "sorted_choices": true,
-      "choices": [
-        {
-          "value": "DRAFT",
-          "label": "Draft"
-        },
-        {
-          "value": "PENDING PUBLISHED",
-          "label": "Pending Published"
-        },
-        {
-          "value": "PUBLISHED",
-          "label": "Published"
-        },
-        {
-          "value": "PENDING ARCHIVE",
-          "label": "Pending Archive"
-        },
-        {
-          "value": "REJECTED",
-          "label": "Rejected"
-        }
-      ]
-    },
-    {
       "field_name": "title",
       "label": "Title",
       "preset": "title",
@@ -62,45 +33,11 @@
       "required": true
     },
     {
-      "field_name": "purpose",
-      "label": "Purpose",
-      "form_snippet": "markdown.html",
-      "display_snippet": "markdown.html",
-      "form_placeholder": "Summary of the intentions for which the dataset was developed"
-    },
-    {
-      "field_name": "lineage_statement",
-      "label": "Lineage Statement",
-      "form_snippet": "markdown.html",
-      "display_snippet": "markdown.html",
-      "form_placeholder": "Information about the events or source data used in constructing the data"
-    },
-    {
-      "field_name": "data_quality",
-      "label": "Data Quality",
-      "form_snippet": "markdown.html",
-      "display_snippet": "markdown.html",
-      "form_placeholder": "Descriptive text that can include info about issues, completeness, consistency etc."
-    },
-    {
-      "field_name": "tag_string",
-      "label": "Keywords",
-      "preset": "tag_string_autocomplete",
-      "form_placeholder": "eg. economy, mental health, government",
-      "required": true
-    },
-    {
-      "field_name": "more_info",
-      "label": "More Info",
-      "preset": "composite_repeating",
-      "form_blanks": 1,
-      "subfields": [
-        {
-          "field_name": "url",
-          "label": "URL",
-          "form_placeholder": "http://ministry.gov.bc.ca/moreinfo.html"
-        }
-      ]
+      "field_name": "license_id",
+      "label": "License",
+      "form_snippet": "license.html",
+      "required": true,
+      "comment": "This was previously required for all but application datasets, I think we can probably just have this on the dataset regardless of resource types"
     },
     {
       "field_name": "contacts",
@@ -166,112 +103,38 @@
       ]
     },
     {
-      "field_name": "dates",
-      "label": "Data Currency/Update",
+      "field_name": "purpose",
+      "label": "Purpose",
+      "form_snippet": "markdown.html",
+      "display_snippet": "markdown.html",
+      "form_placeholder": "Summary of the intentions for which the dataset was developed"
+    },
+    {
+      "field_name": "data_quality",
+      "label": "Data Quality",
+      "form_snippet": "markdown.html",
+      "display_snippet": "markdown.html",
+      "form_placeholder": "Descriptive text that can include info about issues, completeness, consistency etc."
+    },
+    {
+      "field_name": "lineage_statement",
+      "label": "Lineage Statement",
+      "form_snippet": "markdown.html",
+      "display_snippet": "markdown.html",
+      "form_placeholder": "Information about the events or source data used in constructing the data"
+    },
+    {
+      "field_name": "more_info",
+      "label": "More Info",
       "preset": "composite_repeating",
       "form_blanks": 1,
       "subfields": [
         {
-          "field_name": "type",
-          "label": "Date Type",
-          "preset": "select",
-          "required": true,
-          "sorted_choices": true,
-          "choices": [
-            {
-              "value": "Archived",
-              "label": "Archived"
-            },
-            {
-              "value": "Created",
-              "label": "Created"
-            },
-            {
-              "value": "Destroyed",
-              "label": "Destroyed"
-            },
-            {
-              "value": "Modified",
-              "label": "Modified"
-            },
-            {
-              "value": "Published",
-              "label": "Published"
-            }
-          ]
-        },
-        {
-          "field_name": "date",
-          "label": "Date",
-          "preset": "date",
-          "required": true
+          "field_name": "url",
+          "label": "URL",
+          "form_placeholder": "http://ministry.gov.bc.ca/moreinfo.html"
         }
       ]
-    },
-    {
-      "field_name": "resource_status",
-      "label": "Resource Status",
-      "preset": "select",
-      "required": true,
-      "sorted_choices": true,
-      "is_conditional_source": true,
-      "comment": "As this is resource status should it maybe be moved to resource??",
-      "choices": [
-        {
-          "value": "completed",
-          "label": "Completed"
-        },
-        {
-          "value": "destroyed",
-          "label": "Destroyed"
-        },
-        {
-          "value": "historicalArchive",
-          "label": "Historical Archive"
-        },
-        {
-          "value": "obsolete",
-          "label": "Obsolete"
-        },
-        {
-          "value": "onGoing",
-          "label": "On Going"
-        },
-        {
-          "value": "planned",
-          "label": "Planned"
-        },
-        {
-          "value": "required",
-          "label": "Required"
-        },
-        {
-          "value": "underDevelopment",
-          "label": "Under Development"
-        }
-      ]
-    },
-    {
-      "field_name": "replacement_record",
-      "label": "Replacement Record",
-      "conditional_field": "resource_status",
-      "conditional_values": ["obsolete"],
-      "validators": "conditional_required"
-    },
-    {
-      "field_name": "retention_expiry_date",
-      "label": "Retention Expiry Date",
-      "preset": "date",
-      "conditional_field": "resource_status",
-      "conditional_values": ["historicalArchive"],
-      "validators": "conditional_required"
-    },
-    {
-      "field_name": "source_data_path",
-      "label": "Source Data Path",
-      "conditional_field": "resource_status",
-      "conditional_values": ["historicalArchive"],
-      "validators": "conditional_required"
     },
     {
       "field_name": "view_audience",
@@ -334,13 +197,6 @@
       ]
     },
     {
-      "field_name": "license_id",
-      "label": "License",
-      "form_snippet": "license.html",
-      "required": true,
-      "comment": "This was previously required for all but application datasets, I think we can probably just have this on the dataset regardless of resource types"
-    },
-    {
       "field_name": "security_class",
       "label": "Security Classification",
       "preset": "select",
@@ -377,6 +233,153 @@
           "label": "Medium-Sensitivity"
         }
       ]
+    },
+    {
+      "field_name": "tag_string",
+      "label": "Keywords",
+      "preset": "tag_string_autocomplete",
+      "form_placeholder": "eg. economy, mental health, government",
+      "required": true
+    },
+    {
+      "field_name": "publish_state",
+      "preset": "select",
+      "label": "State",
+      "required": true,
+      "sorted_choices": true,
+      "choices": [
+        {
+          "value": "DRAFT",
+          "label": "Draft"
+        },
+        {
+          "value": "PENDING PUBLISHED",
+          "label": "Pending Published"
+        },
+        {
+          "value": "PUBLISHED",
+          "label": "Published"
+        },
+        {
+          "value": "PENDING ARCHIVE",
+          "label": "Pending Archive"
+        },
+        {
+          "value": "REJECTED",
+          "label": "Rejected"
+        }
+      ]
+    },
+    {
+      "field_name": "resource_status",
+      "label": "Resource Status",
+      "preset": "select",
+      "required": true,
+      "sorted_choices": true,
+      "is_conditional_source": true,
+      "comment": "As this is resource status should it maybe be moved to resource??",
+      "choices": [
+        {
+          "value": "completed",
+          "label": "Completed"
+        },
+        {
+          "value": "destroyed",
+          "label": "Destroyed"
+        },
+        {
+          "value": "historicalArchive",
+          "label": "Historical Archive"
+        },
+        {
+          "value": "obsolete",
+          "label": "Obsolete"
+        },
+        {
+          "value": "onGoing",
+          "label": "On Going"
+        },
+        {
+          "value": "planned",
+          "label": "Planned"
+        },
+        {
+          "value": "required",
+          "label": "Required"
+        },
+        {
+          "value": "underDevelopment",
+          "label": "Under Development"
+        }
+      ]
+    },
+    
+    {
+      "field_name": "dates",
+      "label": "Record Lifecycle History",
+      "preset": "composite_repeating",
+      "form_blanks": 1,
+      "subfields": [
+        {
+          "field_name": "type",
+          "label": "Date Type",
+          "preset": "select",
+          "required": true,
+          "sorted_choices": true,
+          "choices": [
+            {
+              "value": "Archived",
+              "label": "Archived"
+            },
+            {
+              "value": "Created",
+              "label": "Created"
+            },
+            {
+              "value": "Destroyed",
+              "label": "Destroyed"
+            },
+            {
+              "value": "Modified",
+              "label": "Modified"
+            },
+            {
+              "value": "Published",
+              "label": "Published"
+            }
+          ]
+        },
+        {
+          "field_name": "date",
+          "label": "Date",
+          "preset": "date",
+          "required": true
+        }
+      ]
+    },
+    
+    
+    {
+      "field_name": "replacement_record",
+      "label": "Replacement Record",
+      "conditional_field": "resource_status",
+      "conditional_values": ["obsolete"],
+      "validators": "conditional_required"
+    },
+    {
+      "field_name": "retention_expiry_date",
+      "label": "Retention Expiry Date",
+      "preset": "date",
+      "conditional_field": "resource_status",
+      "conditional_values": ["historicalArchive"],
+      "validators": "conditional_required"
+    },
+    {
+      "field_name": "source_data_path",
+      "label": "Source Data Path",
+      "conditional_field": "resource_status",
+      "conditional_values": ["historicalArchive"],
+      "validators": "conditional_required"
     }
   ],
   "resource_fields": [
