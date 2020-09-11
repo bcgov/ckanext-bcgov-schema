@@ -384,6 +384,16 @@
   ],
   "resource_fields": [
     {
+      "field_name": "name",
+      "label": "Name",
+      "form_placeholder": "eg. January 2013 Silver Prices"
+    },
+    {
+      "field_name": "url",
+      "label": "URL",
+      "preset": "resource_url_upload"
+    },
+    {
       "field_name": "bcdc_type",
       "preset": "select",
       "label": "Type",
@@ -410,26 +420,19 @@
       ]
     },
     {
-      "field_name": "url",
-      "label": "URL",
-      "preset": "resource_url_upload"
-    },
-    {
-      "field_name": "json_table_schema",
-      "label": "JSON Table Schema",
-      "preset": "json_object"
-    },
-    {
-      "field_name": "name",
-      "label": "Name",
-      "form_placeholder": "eg. January 2013 Silver Prices"
-    },
-    {
       "field_name": "resource_description",
       "label": "Resource Description",
       "form_snippet": "markdown.html",
       "display_snippet": "markdown.html",
       "form_placeholder": "Some useful notes about the data",
+      "required": false
+    },
+    {
+      "field_name": "supplemental_information",
+      "label": "Supplemental Information",
+      "form_snippet": "markdown.html",
+      "display_snippet": "markdown.html",
+      "form_placeholder": "Other descriptive information about the dataset",
       "required": false
     },
     {
@@ -486,6 +489,23 @@
         {
           "value": "weekly",
           "label": "Weekly"
+        }
+      ]
+    },
+    {
+      "field_name": "temporal_extent",
+      "label": "Temporal Extent",
+      "preset": "composite",
+      "subfields": [
+        {
+          "field_name": "beginning_date",
+          "preset": "date",
+          "label": "Beginning Date"
+        },
+        {
+          "field_name": "end_date",
+          "preset": "date",
+          "label": "End Date"
         }
       ]
     },
@@ -608,28 +628,6 @@
       ]
     },
     {
-      "field_name": "resource_type",
-      "label": "Resource Type",
-      "preset": "select",
-      "required": true,
-      "sorted_choices": false,
-      "form_include_blank_choice": true,
-      "choices": [
-        {
-          "value": "abstraction",
-          "label": "Abstraction"
-        },
-        {
-          "value": "data",
-          "label": "Data"
-        },
-        {
-          "value": "reports",
-          "label": "Reports"
-        }
-      ]
-    },
-    {
       "field_name": "resource_storage_location",
       "label": "Resource Storage Location",
       "preset": "select",
@@ -671,52 +669,72 @@
       ]
     },
     {
-      "field_name": "resource_access_method",
-      "label": "Resource Access Method",
+      "field_name": "spatial_datatype",
+      "label": "Spatial Datatype",
       "preset": "select",
-      "required": true,
       "sorted_choices": false,
+      "conditional_field": "bcdc_type",
+      "conditional_values": ["geographic"],
+      "validators": "conditional_required",
+      "form_include_blank_choice": true,
       "choices": [
         {
-          "value": "application",
-          "label": "Application"
+          "value": "SDE_BINARY",
+          "label": "SDE_BINARY"
         },
         {
-          "value": "direct access",
-          "label": "Direct Access"
+          "value": "SDO_GEOMETRY",
+          "label": "SDO_GEOMETRY"
         },
         {
-          "value": "indirect access",
-          "label": "Indirect Access"
-        },
-        {
-          "value": "service",
-          "label": "Service"
+          "value": "ST_GEOMETRY",
+          "label": "ST_GEOMETRY"
         }
       ]
     },
     {
-      "field_name": "supplemental_information",
-      "label": "Supplemental Information",
-      "form_snippet": "markdown.html",
-      "display_snippet": "markdown.html",
-      "form_placeholder": "Other descriptive information about the dataset",
-      "required": false
+      "field_name": "object_name",
+      "label": "Object Name",
+      "conditional_field": "bcdc_type",
+      "conditional_values": ["geographic"]
     },
     {
-      "field_name": "temporal_extent",
-      "label": "Temporal Extent",
-      "preset": "composite",
+      "field_name": "object_short_name",
+      "label": "Object Short Name",
+      "form_snippet": null
+    },
+    {
+      "field_name": "object_table_comments",
+      "label": "Object Table Comments",
+      "form_snippet": null
+    },
+    {
+      "field_name": "details",
+      "label": "Details",
+      "display_snippet": "bcgw_details.html",
+      "validators": "composite_repeating_group2json",
+      "form_snippet": null,
+      "required": false,
       "subfields": [
         {
-          "field_name": "beginning_date",
-          "preset": "date",
-          "label": "Beginning Date"
+          "field_name": "column_name",
+          "label": "Column Name"
         },
         {
-          "field_name": "end_date",
-          "preset": "date",
-          "label": "End Date"
+          "field_name": "short_name",
+          "label": "Short Name"
+        },
+        {
+          "field_name": "data_type",
+          "label": "Data Type"
+        },
+        {
+          "field_name": "data_precision",
+          "label": "Data Precision"
+        },
+        {
+          "field_name": "column_comments",
+          "label": "Column Comments"
         }
       ]
     },
@@ -829,90 +847,9 @@
       ]
     },
     {
-      "field_name": "preview_info",
-      "label": "Preview Information",
-      "preset": "composite",
-      "conditional_field": "bcdc_type",
-      "conditional_values": ["geographic"],
-      "subfields": [
-        {
-          "field_name": "layer_name",
-          "label": "Layer Name"
-        },
-        {
-          "field_name": "preview_latitude",
-          "label": "Preview Latitude"
-        },
-        {
-          "field_name": "preview_longitude",
-          "label": "Preview Longitude"
-        },
-        {
-          "field_name": "preview_map_service_url",
-          "label": "Preview Map Service URL"
-        },
-        {
-          "field_name": "preview_zoom_level",
-          "label": "Preview Zoom Level"
-        },
-        {
-          "field_name": "preview_image_url",
-          "label": "Image URL"
-        },
-        {
-          "field_name": "link_to_imap",
-          "label": "Link to iMap"
-        }
-      ]
-    },
-    {
-      "field_name": "geographic_extent",
-      "label": "Geographic Extent",
-      "preset": "composite",
-      "conditional_field": "bcdc_type",
-      "conditional_values": ["geographic"],
-      "subfields": [
-        {
-          "field_name": "north_bound_latitude",
-          "label": "North"
-        },
-        {
-          "field_name": "south_bound_latitude",
-          "label": "South"
-        },
-        {
-          "field_name": "east_bound_longitude",
-          "label": "East"
-        },
-        {
-          "field_name": "west_bound_longitude",
-          "label": "West"
-        }
-      ]
-    },
-    {
-      "field_name": "spatial_datatype",
-      "label": "Spatial Datatype",
-      "preset": "select",
-      "sorted_choices": false,
-      "conditional_field": "bcdc_type",
-      "conditional_values": ["geographic"],
-      "validators": "conditional_required",
-      "form_include_blank_choice": true,
-      "choices": [
-        {
-          "value": "SDE_BINARY",
-          "label": "SDE_BINARY"
-        },
-        {
-          "value": "SDO_GEOMETRY",
-          "label": "SDO_GEOMETRY"
-        },
-        {
-          "value": "ST_GEOMETRY",
-          "label": "ST_GEOMETRY"
-        }
-      ]
+      "field_name": "json_table_schema",
+      "label": "JSON Table Schema",
+      "preset": "json_object"
     },
     {
       "field_name": "iso_topic_category",
@@ -1005,49 +942,118 @@
         }
       ]
     },
+    
+
+
     {
-      "field_name": "object_name",
-      "label": "Object Name",
+      "field_name": "resource_type",
+      "label": "Resource Type",
+      "preset": "select",
+      "required": true,
+      "sorted_choices": false,
+      "form_include_blank_choice": true,
+      "choices": [
+        {
+          "value": "abstraction",
+          "label": "Abstraction"
+        },
+        {
+          "value": "data",
+          "label": "Data"
+        },
+        {
+          "value": "reports",
+          "label": "Reports"
+        }
+      ]
+    },
+    
+    {
+      "field_name": "resource_access_method",
+      "label": "Resource Access Method",
+      "preset": "select",
+      "required": true,
+      "sorted_choices": false,
+      "choices": [
+        {
+          "value": "application",
+          "label": "Application"
+        },
+        {
+          "value": "direct access",
+          "label": "Direct Access"
+        },
+        {
+          "value": "indirect access",
+          "label": "Indirect Access"
+        },
+        {
+          "value": "service",
+          "label": "Service"
+        }
+      ]
+    },
+    
+    
+    {
+      "field_name": "preview_info",
+      "label": "Preview Information",
+      "preset": "composite",
       "conditional_field": "bcdc_type",
-      "conditional_values": ["geographic"]
-    },
-    {
-      "field_name": "object_short_name",
-      "label": "Object Short Name",
-      "form_snippet": null
-    },
-    {
-      "field_name": "object_table_comments",
-      "label": "Object Table Comments",
-      "form_snippet": null
-    },
-    {
-      "field_name": "details",
-      "label": "Details",
-      "display_snippet": "bcgw_details.html",
-      "validators": "composite_repeating_group2json",
-      "form_snippet": null,
-      "required": false,
+      "conditional_values": ["geographic"],
       "subfields": [
         {
-          "field_name": "column_name",
-          "label": "Column Name"
+          "field_name": "layer_name",
+          "label": "Layer Name"
         },
         {
-          "field_name": "short_name",
-          "label": "Short Name"
+          "field_name": "preview_latitude",
+          "label": "Preview Latitude"
         },
         {
-          "field_name": "data_type",
-          "label": "Data Type"
+          "field_name": "preview_longitude",
+          "label": "Preview Longitude"
         },
         {
-          "field_name": "data_precision",
-          "label": "Data Precision"
+          "field_name": "preview_map_service_url",
+          "label": "Preview Map Service URL"
         },
         {
-          "field_name": "column_comments",
-          "label": "Column Comments"
+          "field_name": "preview_zoom_level",
+          "label": "Preview Zoom Level"
+        },
+        {
+          "field_name": "preview_image_url",
+          "label": "Image URL"
+        },
+        {
+          "field_name": "link_to_imap",
+          "label": "Link to iMap"
+        }
+      ]
+    },
+    {
+      "field_name": "geographic_extent",
+      "label": "Geographic Extent",
+      "preset": "composite",
+      "conditional_field": "bcdc_type",
+      "conditional_values": ["geographic"],
+      "subfields": [
+        {
+          "field_name": "north_bound_latitude",
+          "label": "North"
+        },
+        {
+          "field_name": "south_bound_latitude",
+          "label": "South"
+        },
+        {
+          "field_name": "east_bound_longitude",
+          "label": "East"
+        },
+        {
+          "field_name": "west_bound_longitude",
+          "label": "West"
         }
       ]
     }
