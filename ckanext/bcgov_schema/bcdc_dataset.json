@@ -130,9 +130,18 @@
       "form_blanks": 1,
       "subfields": [
         {
+          "field_name": "description",
+          "label": "Description",
+          "hide_if_empty": true,
+          "no_label": true,
+          "form_placeholder": "Describe the link"
+        },
+        {
           "field_name": "url",
           "label": "URL",
-          "form_placeholder": "http://ministry.gov.bc.ca/moreinfo.html"
+          "no_label": true,
+          "form_placeholder": "http://ministry.gov.bc.ca/moreinfo.html",
+          "truncate": true
         }
       ]
     },
@@ -391,7 +400,7 @@
     },
     {
       "field_name": "url",
-      "label": "URL",
+      "label": "Resource Type",
       "preset": "resource_url_upload"
     },
     {
