@@ -320,10 +320,41 @@ async function main() {
 									[packageObj['id'], packageExtras['download_audience'], packageObj['revision_id'], uuidv4()]);
 			}
 			if (!('security_class' in packageExtras)) {
-				packageExtras['security_class'] = 'LOW-PUBLIC';
+				//packageExtras['security_class'] = 'LOW-PUBLIC';
+				packageExtras['security_class'] = 'PUBLIC';
 				await pool.query("INSERT INTO package_extra (id, package_id, key, value, revision_id, state)" +
 									"VALUES ($4, $1, 'security_class', $2, $3, 'active')", 
 									[packageObj['id'], packageExtras['security_class'], packageObj['revision_id'], uuidv4()]);
+			}else{
+				switch(packageExtras['security_class'].toUpperCase()){
+					case "LOW-SENSITIVITY":
+						packageExtras['security_class'] = 'PROTECTED A';
+						break;
+
+					case "MEDIUM-SENSITIVITY":
+						packageExtras['security_class'] = 'PROTECTED B';
+						break;
+
+					case "MEDIUM-PERSONAL":
+						packageExtras['security_class'] = 'PROTECTED B';
+						break;
+
+					case "HIGH-CABINET":
+						packageExtras['security_class'] = 'PROTECTED C';
+						break;
+					
+					case "HIGH-CONFIDENTIAL":
+						packageExtras['security_class'] = 'PROTECTED C';
+						break;
+
+					case "HIGH-SENSITIVITY":
+						packageExtras['security_class'] = 'PROTECTED C';
+						break;
+
+					default:
+						packageExtras['security_class'] = 'PUBLIC';
+				}
+				await pool.query("UPDATE package_extra set value=$1 WHERE package_id=$2 AND key=$3", [packageExtras['security_class'], packageObj['id'], 'security_class']);
 			}
 
 			// Update package extras by inserting new values
@@ -334,16 +365,16 @@ async function main() {
 					+ "($10, $1, 'publish_state', $5, $6, 'active')";
 
 			let extrasUpdateValues = [
-				packageObj['id'], 
-				JSON.stringify(packageExtras['contacts']),
-				JSON.stringify(packageExtras['dates']),
-				JSON.stringify(packageExtras['more_info']),
-				packageExtras['edc_state'],
-				packageObj['revision_id'],
-				uuidv4(),
-				uuidv4(),
-				uuidv4(),
-				uuidv4()
+				packageObj['id'], //1
+				JSON.stringify(packageExtras['contacts']),//2
+				JSON.stringify(packageExtras['dates']),//3
+				JSON.stringify(packageExtras['more_info']),//4
+				packageExtras['edc_state'],//5
+				packageObj['revision_id'],//6
+				uuidv4(),//7
+				uuidv4(),//8
+				uuidv4(),//9
+				uuidv4()//10
 			]
 			await pool.query(extrasUpdateSQL, extrasUpdateValues);
 
