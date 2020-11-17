@@ -86,6 +86,14 @@
             {
               "value": "pointOfContact",
               "label": "Point of Contact"
+            },
+            {
+              "value": "dataManager",
+              "label": "Data Manager"
+            },
+            {
+              "value": "dataSteward",
+              "label": "Data Steward"
             }
           ]
         },
@@ -272,6 +280,10 @@
         {
           "value": "PENDING ARCHIVE",
           "label": "Pending Archive"
+        },
+        {
+          "value": "ARCHIVED",
+          "label": "Archived"
         },
         {
           "value": "REJECTED",
@@ -465,6 +477,10 @@
           "label": "Biannually"
         },
         {
+          "value": "biweekly",
+          "label": "Biweekly"
+        },
+        {
           "value": "continual",
           "label": "Continual"
         },
@@ -483,6 +499,10 @@
         {
           "value": "monthly",
           "label": "Monthly"
+        },
+        {
+          "value": "nightly",
+          "label": "Nightly"
         },
         {
           "value": "notPlanned",
@@ -564,6 +584,10 @@
           "label": "gft"
         },
         {
+          "value": "gpkg",
+          "label": "gpkg"
+        },
+        {
           "value": "html",
           "label": "html"
         },
@@ -578,6 +602,10 @@
         {
           "value": "kmz",
           "label": "kmz"
+        },
+        {
+          "value": "multiple",
+          "label": "multiple"
         },
         {
           "value": "openapi-json",
