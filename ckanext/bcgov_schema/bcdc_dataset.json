@@ -213,33 +213,20 @@
       "sorted_choices": false,
       "choices": [
         {
-          "value": "HIGH-CABINET",
-          "label": "High-Cabinet"
+          "value": "PUBLIC",
+          "label": "Public"
         },
         {
-          "value": "HIGH-CLASSIFIED",
-          "label": "High-Classified"
+          "value": "PROTECTED A",
+          "label": "Protected-A"
         },
         {
-          "value": "HIGH-SENSITIVITY",
-          "label": "High-Sensitivity"
+          "value": "PROTECTED B",
+          "label": "Protected-B"
         },
         {
-          "value": "LOW-PUBLIC",
-          "label": "Low-Public"
-        },
-        {
-          "value": "LOW-SENSITIVITY",
-          "label": "Low-Sensitivity"
-        },
-
-        {
-          "value": "MEDIUM-PERSONAL",
-          "label": "Medium-Personal"
-        },
-        {
-          "value": "MEDIUM-SENSITIVITY",
-          "label": "Medium-Sensitivity"
+          "value": "PROTECTED C",
+          "label": "Protected-C"
         }
       ]
     },
