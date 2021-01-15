@@ -365,6 +365,27 @@
         }
       ]
     },
+
+    {
+      "field_name": "record_publish_date",
+      "label": "",
+      "preset": "date"
+    },
+    {
+      "field_name": "record_create_date",
+      "label": "",
+      "preset": "date"
+    },
+    {
+      "field_name": "record_archive_date",
+      "label": "",
+      "preset": "date"
+    },
+    {
+      "field_name": "record_last_modified",
+      "label": "",
+      "preset": "date"
+    },
     
     
     {
