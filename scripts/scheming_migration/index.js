@@ -60,7 +60,11 @@ const extra_keys = "("
 	+ "'view_audience', "
 	+ "'metadata_visibility', "
 	+ "'download_audience', "
-	+ "'security_class'"
+	+ "'security_class',"
+	+ "'record_publish_date',"
+	+ "'record_create_date',"
+	+ "'record_archive_date',"
+	+ "'record_last_modified'"
 	+ ")";
 
 async function main() {
