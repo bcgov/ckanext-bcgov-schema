@@ -79,7 +79,7 @@ async function main() {
 			let packageExtras = {};
 			let resources = [];
 			let resourceType = packageObj['type'].toLowerCase();
-			if (resourceType.length < 1) {
+			if ( (resourceType.length < 1) || (resourceType === 'dataset') ) {
 				resourceType = 'document';
 			}
 
@@ -114,6 +114,9 @@ async function main() {
 					if (keyComponents[2] == 'branch') {
 						contactsObj[keyComponents[1]]['org'] = packageExtra['value'];
 					} else if (keyComponents[2] != 'organization') {
+						contactsObj[keyComponents[1]][keyComponents[2]] = packageExtra['value'];
+					}
+					else if (keyComponents[2] != 'organization') {
 						contactsObj[keyComponents[1]][keyComponents[2]] = packageExtra['value'];
 					}
 				} else if (packageExtra['key'].match(/dates\:/g)) {
