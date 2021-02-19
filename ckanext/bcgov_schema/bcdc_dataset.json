@@ -420,7 +420,7 @@
     },
     {
       "field_name": "url",
-      "label": "Resource Type",
+      "label": "Resource",
       "preset": "resource_url_upload"
     },
     {
