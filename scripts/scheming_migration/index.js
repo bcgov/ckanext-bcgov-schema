@@ -240,11 +240,12 @@ async function main() {
 				}
 
 				// Set sane defaults for required resource fields with missing
-				if ( ('description' in resource) && (!('resource_description' in resource)) ){
-					resource['resource_description'] =  resource['description']
-				}
-				if (!('resource_description' in resource)) {
-					resource['resource_description'] = 'No Description found. Please Update this resource.';
+				if ( (!('resource_description' in resource)) || (resource.resource_description === '') ){
+					if ('description' in resource){
+						resource['resource_description'] =  resource['description']
+					}else{
+						resource['resource_description'] = 'No Description found. Please Update this resource.';
+					}
 				}
 				if (!('resource_update_cycle' in resource)) {
 					resource['resource_update_cycle'] = 'asNeeded';
