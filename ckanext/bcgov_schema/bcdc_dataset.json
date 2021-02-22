@@ -416,6 +416,7 @@
       "field_name": "name",
       "label": "Name",
       "preset": "title",
+      "required": true,
       "form_placeholder": "eg. January 2013 Silver Prices"
     },
     {

@@ -209,7 +209,7 @@ async function main() {
 				if (details.length > 0) {
 					extraObj['details'] = JSON.stringify(details);
 				}
-				extraObj['temporal_extent'] = temporalExtent;
+				extraObj['temporal_extent'] = JSON.stringify(temporalExtent);
 				if (proj_name[extraObj['projection_name']]) extraObj['projection_name'] = proj_name[extraObj['projection_name']];
 				if (extraObj['resource_storage_access_method']) extraObj['resource_storage_access_method'] = extraObj['resource_storage_access_method'].toLowerCase();
 				if (extraObj['resource_storage_location']) extraObj['resource_storage_location'] = extraObj['resource_storage_location'] == 'BCGW Datastore' ? 'bc geographic warehouse' : extraObj['resource_storage_location'].toLowerCase();
@@ -226,8 +226,8 @@ async function main() {
 				delete resource['name'];
 				let makeService = (resourceType === 'geographic' && (resourceName === 'WMS getCapabilities request' || resourceName === 'KML Network Link'));
 				if (resourceType) resource['bcdc_type'] = makeService ? 'webservice' : resourceType;
-				if (previewInformation && !makeService) resource['preview_info'] = previewInformation;
-				if (geographicExtent && !makeService) resource['geographic_extent'] = geographicExtent;
+				if (previewInformation && !makeService) resource['preview_info'] = JSON.stringify(previewInformation);
+				if (geographicExtent && !makeService) resource['geographic_extent'] = JSON.stringify(geographicExtent);
 				if (packageExtras['iso_topic_string'] && !makeService) resource['iso_topic_category'] = JSON.stringify(packageExtras['iso_topic_string'].split(','));
 				if (packageExtras['object_name'] && !makeService) resource['object_name'] = packageExtras['object_name'];
 				if (packageExtras['object_short_name'] && !makeService) resource['object_short_name'] = packageExtras['object_short_name'];
@@ -240,11 +240,12 @@ async function main() {
 				}
 
 				// Set sane defaults for required resource fields with missing
-				if ( ('description' in resource) && (!('resource_description' in resource)) ){
-					resource['resource_description'] =  resource['description']
-				}
-				if (!('resource_description' in resource)) {
-					resource['resource_description'] = 'Description not provided.';
+				if ( (!('resource_description' in resource)) || (resource.resource_description === '') ){
+					if ('description' in resource){
+						resource['resource_description'] =  resource['description']
+					}else{
+						resource['resource_description'] = 'Description not provided.';
+					}
 				}
 				if (!('resource_update_cycle' in resource)) {
 					resource['resource_update_cycle'] = 'asNeeded';
