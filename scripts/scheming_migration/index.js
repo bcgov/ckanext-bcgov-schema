@@ -244,7 +244,7 @@ async function main() {
 					resource['resource_description'] =  resource['description']
 				}
 				if (!('resource_description' in resource)) {
-					resource['resource_description'] = 'No Description found. Please Update this resource.';
+					resource['resource_description'] = 'Description not provided.';
 				}
 				if (!('resource_update_cycle' in resource)) {
 					resource['resource_update_cycle'] = 'asNeeded';
