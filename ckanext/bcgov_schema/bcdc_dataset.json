@@ -34,7 +34,7 @@
     },
     {
       "field_name": "license_id",
-      "label": "License",
+      "label": "Licence",
       "form_snippet": "license.html",
       "required": true,
       "comment": "This was previously required for all but application datasets, I think we can probably just have this on the dataset regardless of resource types"
@@ -161,16 +161,20 @@
       "sorted_choices": true,
       "choices": [
         {
+          "value": "Public",
+          "label": "Public"
+        },
+        {
+          "value": "Government and Business BCeID",
+          "label": "Government and Business BCeID"
+        },
+        {
           "value": "Government",
           "label": "Government"
         },
         {
           "value": "Named users",
           "label": "Named users"
-        },
-        {
-          "value": "Public",
-          "label": "Public"
         }
       ]
     },
@@ -200,6 +204,14 @@
       "comment": "Not sure if this should be moved to resource, that is the download part",
       "choices": [
         {
+          "value": "Public",
+          "label": "Public"
+        },
+        {
+          "value": "Government and Business BCeID",
+          "label": "Government and Business BCeID"
+        },
+        {
           "value": "Government",
           "label": "Government"
         },
@@ -208,9 +220,10 @@
           "label": "Named users"
         },
         {
-          "value": "Public",
-          "label": "Public"
+          "value": "Not downloable",
+          "label": "Not downloable"
         }
+        
       ]
     },
     {
