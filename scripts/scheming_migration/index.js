@@ -191,15 +191,15 @@ async function main() {
 			}
 
 			// Resources query and setting empty objects for composite fields
-			let resourceRes = await pool.query("SELECT extras, id, name from resource WHERE package_id = $1", [packageObj['id']]);
+			let resourceRes = await pool.query("SELECT * from resource WHERE package_id = $1", [packageObj['id']]);
 			let temporalExtent = {};
 
 			// Iterate over resources and assign relevant fields to an object
 			resourceRes.rows.forEach(function(resource) {
 				let extraObj = JSON.parse(resource['extras']);
 				if (extraObj == null ) extraObj = {};
-				extraObj['id'] = resource['id'];
-				extraObj['name'] = resource['name'];
+				//extraObj['id'] = resource['id'];
+				//extraObj['name'] = resource['name'];
 				if ('data_collection_start_date' in extraObj) {
 					temporalExtent['beginning_date'] = extraObj['data_collection_start_date'];
 				}
@@ -207,15 +207,16 @@ async function main() {
 					temporalExtent['end_date'] = extraObj['data_collection_end_date'];
 				}
 				if (details.length > 0) {
-					extraObj['details'] = JSON.stringify(details);
+					resource['details'] = JSON.stringify(details);
 				}
-				extraObj['temporal_extent'] = JSON.stringify(temporalExtent);
-				if (proj_name[extraObj['projection_name']]) extraObj['projection_name'] = proj_name[extraObj['projection_name']];
-				if (extraObj['resource_storage_access_method']) extraObj['resource_storage_access_method'] = extraObj['resource_storage_access_method'].toLowerCase();
-				if (extraObj['resource_storage_location']) extraObj['resource_storage_location'] = extraObj['resource_storage_location'] == 'BCGW Datastore' ? 'bc geographic warehouse' : extraObj['resource_storage_location'].toLowerCase();
+				resource['temporal_extent'] = JSON.stringify(temporalExtent);
+				if (proj_name[extraObj['projection_name']]) resource['projection_name'] = proj_name[extraObj['projection_name']];
+				if (extraObj['resource_storage_access_method']) resource['resource_storage_access_method'] = extraObj['resource_storage_access_method'].toLowerCase();
+				if (extraObj['resource_storage_location']) resource['resource_storage_location'] = extraObj['resource_storage_location'] == 'BCGW Datastore' ? 'bc geographic warehouse' : extraObj['resource_storage_location'].toLowerCase();
 				delete extraObj['data_collection_start_date'];
 				delete extraObj['data_collection_end_date'];
-				resources.push(extraObj);
+				
+				resources.push(resource);
 			});
 
 			// Iterate over resource objects and add in package fields that are moving a level
