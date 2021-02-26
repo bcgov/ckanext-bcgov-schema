@@ -707,6 +707,10 @@
           "label": "ESRI ArcGIS Online"
         },
         {
+          "value": "external",
+          "label": "External"
+        },
+        {
           "value": "file system",
           "label": "File System"
         },
