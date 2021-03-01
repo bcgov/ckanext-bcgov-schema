@@ -343,7 +343,7 @@
       "subfields": [
         {
           "field_name": "type",
-          "label": "Date Type",
+          "label": "Type",
           "preset": "select",
           "required": true,
           "sorted_choices": true,
