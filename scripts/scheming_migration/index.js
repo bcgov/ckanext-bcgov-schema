@@ -258,6 +258,8 @@ async function main() {
 				}
 				if (!('resource_type' in resource)) {
 					resource['resource_type'] = 'data';
+				}else if (resource.resource_type === null){
+					resource['resource_type'] = 'data';
 				}
 				if (makeService) resource['resource_storage_location'] = 'web or ftp site';
 				if (resourceType === 'geographic' && resourceName === 'BC Geographic Warehouse Custom Download') resource['resource_storage_location'] = 'bc geographic warehouse';
