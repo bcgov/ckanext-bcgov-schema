@@ -55,7 +55,11 @@ def iso_topic_category(field, schema):
         value = data[key]
         if value is not missing:
             if isinstance(value, basestring):
-                value = [value]
+                try:
+                    value = json.loads(value)
+                except:
+                    value = [value]
+                
             elif not isinstance(value, list):
                 errors[key].append(_('expecting list of strings'))
                 return
