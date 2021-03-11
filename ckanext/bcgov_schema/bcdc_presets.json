@@ -22,6 +22,14 @@
         "display_snippet": "multiple_choice.html",
         "output_validators": "scheming_multiple_choice_output"
       }
+    },
+    {
+      "preset_name": "state_machine",
+      "values": {
+        "form_snippet": "select.html",
+        "display_snippet": "select.html",
+        "validators": "scheming_required scheming_choices valid_next_state"
+      }
     }
   ]
 }

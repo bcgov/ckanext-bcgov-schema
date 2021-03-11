@@ -261,34 +261,44 @@
     },
     {
       "field_name": "publish_state",
-      "preset": "select",
+      "preset": "state_machine",
       "label": "State",
+      "startState": {"state": "DRAFT", "by": ["editor", "admin", "sysadmin"]},
       "required": true,
-      "sorted_choices": true,
       "choices": [
         {
           "value": "DRAFT",
-          "label": "Draft"
+          "label": "Draft",
+          "validTo": [
+            {"state":"PENDING PUBLISHED", "by": ["editor", "admin", "sysadmin"]}
+          ]
         },
         {
           "value": "PENDING PUBLISHED",
-          "label": "Pending Published"
+          "label": "Pending Published",
+          "validTo": [
+            {"state":"DRAFT", "by": ["editor", "admin", "sysadmin"]},
+            {"state":"PUBLISHED", "by": ["admin", "sysadmin"]}
+          ]
         },
         {
           "value": "PUBLISHED",
-          "label": "Published"
+          "label": "Published",
+          "validTo": [
+            {"state":"PENDING ARCHIVE", "by": ["editor", "admin", "sysadmin"]}
+          ]
         },
         {
           "value": "PENDING ARCHIVE",
-          "label": "Pending Archive"
+          "label": "Pending Archive",
+          "validTo": [
+            {"state":"ARCHIVED", "by": ["admin", "sysadmin"]}
+          ]
         },
         {
           "value": "ARCHIVED",
-          "label": "Archived"
-        },
-        {
-          "value": "REJECTED",
-          "label": "Rejected"
+          "label": "Archived",
+          "validTo": []
         }
       ]
     },

@@ -5,6 +5,7 @@ import ckan.lib.navl.dictization_functions as df
 
 from ckanext.scheming.validation import scheming_validator
 from ckantoolkit import _, get_validator, Invalid
+import ckan.authz as authz
 import logging
 
 logger = logging.getLogger(__name__)
@@ -123,3 +124,92 @@ def longitude_validator(key, data, errors, context):
     if not value or value > 0.0:
         raise Invalid(_('Longitude requires a negative number. Found "%s"') % value)
 
+@scheming_validator
+def valid_next_state(field, schema):
+    """
+    Validate that the old state can move to the new state and that 
+    the user has permission to do so
+    """
+    static_choice_values = None
+    nextLookup = {}
+    initialState = field['startState']
+    if 'choices' in field:
+        static_choice_order = [c['value'] for c in field['choices']]
+        static_choice_values = set(static_choice_order)
+        for c in field['choices']:
+            if 'validTo' in c:
+                nextLookup[c['value']] = c['validTo']
+
+    def validator(key, data, errors, context):
+        # if there was an error before calling our validator
+        # don't bother with our validation
+        if errors[key]:
+            return
+
+        model = context['model']
+        session = context['session']
+        package = context.get('package')
+
+        query = session.query(model.PackageExtra)
+        if package:
+            package_id = package.id
+        else:
+            package_id = None
+        if package_id and package_id is not missing:
+            query = query.filter(model.PackageExtra.package_id == package_id)
+            query = query.filter(model.PackageExtra.key == key)
+        result = query.first()
+        
+        stateLookup = None
+        hasResult = False
+
+        if result is not None:
+            hasResult = True
+            stateLookup = nextLookup[result.value]
+        else:
+            stateLookup = initialState
+        
+
+        validStates = []
+        who = []
+
+        for s in stateLookup:
+            validStates.append(s['state'])
+            if s['state'] == data[key]:
+                who = s['by']
+
+        if data[key] not in validStates:
+            e = "Invalid state valid choices are:"
+            for s in validStates:
+                e = e + " " + s +","
+            e = e[0:(len(e)-1)]
+            errors[key].append(_(e)) 
+
+        user = context['user']
+        user = model.User.get(user)
+
+        user_object = context.get('auth_user_obj')
+
+        sysAdmin = user.sysadmin
+        
+        admin = authz._has_user_permission_for_groups(package.owner_org, user.id, 'admin')
+        editor = authz._has_user_permission_for_groups(package.owner_org, user.id, 'editor')
+            
+        hasPermission = False
+        if 'sysadmin' in who and sysAdmin:
+            hasPermission = True
+
+        if 'admin' in who and admin:
+            hasPermission = True
+        
+        if 'editor' in who and editor:
+            hasPermission = True
+
+        if not hasPermission:
+            em = "You lack permission to move to this state, you must be one of"
+            for w in who:
+                em = em + " " + w + ","
+            em = em[0:len(em)-1]
+            errors[key].append(_(em))
+
+    return validator
