@@ -165,6 +165,8 @@ def valid_next_state(field, schema):
 
         if result is not None:
             hasResult = True
+            if result.value == data[key]:
+                return
             stateLookup = nextLookup[result.value]
         else:
             stateLookup = initialState
