@@ -149,6 +149,7 @@ def valid_next_state(field, schema):
         model = context['model']
         session = context['session']
         package = context.get('package')
+        result = None
 
         query = session.query(model.PackageExtra)
         if package:
@@ -158,18 +159,18 @@ def valid_next_state(field, schema):
         if package_id and package_id is not missing:
             query = query.filter(model.PackageExtra.package_id == package_id)
             query = query.filter(model.PackageExtra.key == key)
-        result = query.first()
+            result = query.first()
         
         stateLookup = None
         hasResult = False
 
-        if result is not None:
+        if result is not None and package_id is not None:
             hasResult = True
             if result.value == data[key]:
                 return
             stateLookup = nextLookup[result.value]
         else:
-            stateLookup = initialState
+            stateLookup = [initialState]
         
 
         validStates = []
@@ -193,9 +194,15 @@ def valid_next_state(field, schema):
         user_object = context.get('auth_user_obj')
 
         sysAdmin = user.sysadmin
-        
-        admin = authz._has_user_permission_for_groups(package.owner_org, user.id, 'admin')
-        editor = authz._has_user_permission_for_groups(package.owner_org, user.id, 'editor')
+        admin = False
+        editor = False
+
+        if package is not None and 'owner_org' in package:
+            admin = authz._has_user_permission_for_groups(package.owner_org, user.id, 'admin')
+            editor = authz._has_user_permission_for_groups(package.owner_org, user.id, 'editor')
+        elif 'owner_org' in data:
+            admin = authz._has_user_permission_for_groups(data.owner_org, user.id, 'admin')
+            editor = authz._has_user_permission_for_groups(data.owner_org, user.id, 'editor')
             
         hasPermission = False
         if 'sysadmin' in who and sysAdmin:
