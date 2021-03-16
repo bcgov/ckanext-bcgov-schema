@@ -197,12 +197,21 @@ def valid_next_state(field, schema):
         admin = False
         editor = False
 
+        logger.debug('State machine checking permissions')
+        owner_org_key = (u'owner_org',)
+        
+
         if package is not None and 'owner_org' in package:
-            admin = authz._has_user_permission_for_groups(package.owner_org, user.id, 'admin')
-            editor = authz._has_user_permission_for_groups(package.owner_org, user.id, 'editor')
-        elif 'owner_org' in data:
-            admin = authz._has_user_permission_for_groups(data.owner_org, user.id, 'admin')
-            editor = authz._has_user_permission_for_groups(data.owner_org, user.id, 'editor')
+            logger.debug('Package not none')
+            admin = authz._has_user_permission_for_groups(user.id, 'admin', [package.owner_org])
+            editor = authz._has_user_permission_for_groups(user.id, 'update_dataset', [package.owner_org])
+        elif owner_org_key in data:
+            logger.debug('Owner org in data {0} {1} {2}'.format(data[owner_org_key], user.id, str(user)))
+            admin = authz._has_user_permission_for_groups(user.id, 'admin', [data[owner_org_key]])
+            editor = authz._has_user_permission_for_groups(user.id, 'update_dataset', [data[owner_org_key]])
+        
+        logger.debug('State machine checking permissions S,A,E {0}, {1}, {2}'.format(sysAdmin, admin, editor))
+        
             
         hasPermission = False
         if 'sysadmin' in who and sysAdmin:
