@@ -265,3 +265,5 @@ def title_validator(field, schema):
             raise Invalid(
                 _('Title "%s" length is more than maximum %s') % (value, PACKAGE_NAME_MAX_LENGTH)
             )
+        
+    return validator
