@@ -21,7 +21,8 @@ class BCGovSchemaPlugin(plugins.SingletonPlugin):
             "latitude_validator": validators.latitude_validator,
             "longitude_validator": validators.longitude_validator,
             "iso_topic_category": validators.iso_topic_category,
-            "valid_next_state": validators.valid_next_state
+            "valid_next_state": validators.valid_next_state,
+            "title_validator": validators.title_validator,
         }
 
     # ITemplateHelpers

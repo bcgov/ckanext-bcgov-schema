@@ -6,6 +6,7 @@ import ckan.lib.navl.dictization_functions as df
 from ckanext.scheming.validation import scheming_validator
 from ckantoolkit import _, get_validator, Invalid
 import ckan.authz as authz
+from ckan.model import (PACKAGE_NAME_MIN_LENGTH, PACKAGE_NAME_MAX_LENGTH)
 import logging
 
 logger = logging.getLogger(__name__)
@@ -231,4 +232,38 @@ def valid_next_state(field, schema):
             em = em[0:len(em)-1]
             errors[key].append(_(em))
 
+    return validator
+
+@scheming_validator
+def title_validator(field, schema):
+
+    def validator(key, data, errors, context):
+        if errors[key]:
+            return
+        
+        model = context['model']
+        session = context['session']
+        package = context.get('package')
+
+        query = session.query(model.Package.state).filter_by(title=data[key])
+        if package:
+            package_id = package.id
+        else:
+            package_id = data.get(key[:-1] + ('id',))
+        if package_id and package_id is not missing:
+            query = query.filter(model.Package.id != package_id)
+        result = query.first()
+        if result and result.state != State.DELETED:
+            errors[key].append(_('That Title is already in use.'))
+
+        value = data[key]
+        if len(value) < PACKAGE_NAME_MIN_LENGTH:
+            raise Invalid(
+                _('Title "%s" length is less than minimum %s') % (value, PACKAGE_NAME_MIN_LENGTH)
+            )
+        if len(value) > PACKAGE_NAME_MAX_LENGTH:
+            raise Invalid(
+                _('Title "%s" length is more than maximum %s') % (value, PACKAGE_NAME_MAX_LENGTH)
+            )
+        
     return validator

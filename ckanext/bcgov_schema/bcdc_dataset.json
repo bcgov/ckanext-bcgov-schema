@@ -9,7 +9,7 @@
       "label": "Title",
       "preset": "title",
       "form_placeholder": "eg. A descriptive title",
-      "validators": "package_name_validator",
+      "validators": "title_validator",
       "required": true,
       "help_text": "Unique title of a record. Limited to 100 characters."
     },
