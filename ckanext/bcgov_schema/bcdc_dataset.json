@@ -10,60 +10,69 @@
       "preset": "title",
       "form_placeholder": "eg. A descriptive title",
       "validators": "package_name_validator",
-      "required": true
+      "required": true,
+      "help_text": "Unique title of a record. Limited to 100 characters."
     },
     {
       "field_name": "name",
       "label": "URL",
       "preset": "dataset_slug",
       "form_placeholder": "eg. my-dataset",
-      "required": true
+      "required": true,
+      "help_text": "Unique title URL of a record populated with the intial title."
     },
     {
       "field_name": "owner_org",
       "label": "Organization",
       "preset": "dataset_organization",
-      "required": true
+      "required": true,
+      "help_text": "Custodial business areas who published the record and resources."
     },
     {
       "field_name": "notes",
       "label": "Description",
       "form_snippet": "markdown.html",
       "display_snippet": "markdown.html",
-      "form_placeholder": "eg. Some useful notes about the data",
-      "required": true
+      "form_placeholder": "Detailed useful information about the record, data, resources and business use.",
+      "required": true,
+      "help_text": "Detailed information about the record and resources."
     },
     {
       "field_name": "license_id",
       "label": "Licence",
       "form_snippet": "license.html",
       "required": true,
-      "comment": "This was previously required for all but application datasets, I think we can probably just have this on the dataset regardless of resource types"
+      "comment": "This was previously required for all but application datasets, I think we can probably just have this on the dataset regardless of resource types",
+      "help_text": "The licence defines the access and use of the data or resources."
     },
     {
       "field_name": "contacts",
       "label": "Contacts",
       "preset": "composite_repeating",
       "form_blanks": 1,
+      "help_text": "Name, email and role of person(s) or an inbox to contact for more information regarding the record.",
       "subfields": [
         {
           "field_name": "name",
           "label": "Name",
           "form_placeholder": "Contact name",
-          "required": true
+          "required": true,
+          "help_text": "Name of person or inbox to contact for more information regarding the record."
         },
         {
           "field_name": "email",
           "label": "Email",
           "form_placeholder": "Contact email",
-          "required": true
+          "required": true,
+          "help_text": "Email of person or inbox to contact for more information regarding the record."
         },
         {
           "field_name": "org",
           "label": "Organization",
           "preset": "select",
           "choices_helper": "edc_orgs_form",
-          "required": true
+          "required": true,
+          "help_text": "Organization of the person or inbox to contact for more information regarding the record."
         },
         {
           "field_name": "role",
@@ -71,30 +80,31 @@
           "preset": "select",
           "required": true,
           "sorted_choices": true,
+          "help_text": "Role of the person or inbox to contact for more information regarding the record.",
           "choices": [
-            {
-              "value": "businessExpert",
-              "label": "Business Expert"
-            },
-            {
-              "value": "custodian",
-              "label": "Custodian"
-            },
-            {
-              "value": "distributor",
-              "label": "Distributor"
-            },
             {
               "value": "pointOfContact",
               "label": "Point of Contact"
+            },
+            {
+              "value": "businessExpert",
+              "label": "Business Expert"
             },
             {
               "value": "dataManager",
               "label": "Data Manager"
             },
             {
+              "value": "custodian",
+              "label": "Custodian"
+            },
+            {
               "value": "dataSteward",
               "label": "Data Steward"
+            },
+            {
+              "value": "distributor",
+              "label": "Distributor"
             }
           ]
         },
@@ -105,7 +115,8 @@
           "choices": [
             {
               "value": "displayed",
-              "label": "Contact Displayed"
+              "label": "Contact Displayed",
+              "help_text": "Displayed contacts are visible to public."
             }
           ]
         }
