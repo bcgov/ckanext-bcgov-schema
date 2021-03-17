@@ -26,16 +26,16 @@
       "label": "Organization",
       "preset": "dataset_organization",
       "required": true,
-      "help_text": "Custodial organization who published the record."
+      "help_text": "Custodial business areas who published the record and resources."
     },
     {
       "field_name": "notes",
       "label": "Description",
       "form_snippet": "markdown.html",
       "display_snippet": "markdown.html",
-      "form_placeholder": "eg. Some useful notes about the data",
+      "form_placeholder": "Detailed useful information about the record, data, resources and business use.",
       "required": true,
-      "help_text": "Detailed description about the record and resources."
+      "help_text": "Detailed information about the record and resources."
     },
     {
       "field_name": "license_id",
@@ -43,14 +43,14 @@
       "form_snippet": "license.html",
       "required": true,
       "comment": "This was previously required for all but application datasets, I think we can probably just have this on the dataset regardless of resource types",
-      "help_text": "Access and use defined by the Licence."
+      "help_text": "The licence defines the access and use of the data or resources."
     },
     {
       "field_name": "contacts",
       "label": "Contacts",
       "preset": "composite_repeating",
       "form_blanks": 1,
-      "help_text": "Name, email and role of person or inbox to contact for more information regarding the record.",
+      "help_text": "Name, email and role of person(s) or an inbox to contact for more information regarding the record.",
       "subfields": [
         {
           "field_name": "name",
@@ -99,12 +99,12 @@
               "label": "Custodian"
             },
             {
-              "value": "distributor",
-              "label": "Distributor"
-            },
-            {
               "value": "dataSteward",
               "label": "Data Steward"
+            },
+            {
+              "value": "distributor",
+              "label": "Distributor"
             }
           ]
         },
