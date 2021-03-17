@@ -201,8 +201,8 @@ def valid_next_state(field, schema):
         owner_org_key = (u'owner_org',)
         
 
-        if package is not None and 'owner_org' in package:
-            logger.debug('Package not none')
+        if package is not None and hasattr(package, 'owner_org'):
+            logger.debug('Package not none {0} {1} {2}'.format(package.owner_org, user.id, str(user)))
             admin = authz._has_user_permission_for_groups(user.id, 'admin', [package.owner_org])
             editor = authz._has_user_permission_for_groups(user.id, 'update_dataset', [package.owner_org])
         elif owner_org_key in data:
@@ -223,6 +223,7 @@ def valid_next_state(field, schema):
         if 'editor' in who and editor:
             hasPermission = True
 
+        logger.debug("State machine has permission? {0} {1}".format(str(who), str(hasPermission)))
         if not hasPermission:
             em = "You lack permission to move to this state, you must be one of"
             for w in who:
