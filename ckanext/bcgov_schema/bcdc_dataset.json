@@ -175,7 +175,7 @@
       "preset": "select",
       "required": true,
       "sorted_choices": false,
-      "help_text": "Classifications are defined in the <a href="https://www2.gov.bc.ca/gov/content?id=7430B7CCF0FE459F93A554E72DF21503">Information Security Classificaiton Standard</a> .",
+      "help_text": "Classifications are defined in the <a href=https://www2.gov.bc.ca/gov/content?id=7430B7CCF0FE459F93A554E72DF21503>Information Security Classification Standard</a>.",
       "choices": [
         {
           "value": "PUBLIC",
@@ -264,12 +264,11 @@
         {
           "value": "Public",
           "label": "Public"
-        }
+        },
         {
           "value": "IDIR",
           "label": "IDIR"
-        },
-
+        }
       ]
     },
     {
@@ -394,7 +393,7 @@
             {
               "value": "Published",
               "label": "Published"
-            }
+            },
             {
               "value": "Modified",
               "label": "Modified"
@@ -870,7 +869,7 @@
       "conditional_values": ["geographic"],
       "validators": "conditional_required",
       "form_include_blank_choice": true,
-      "help_text": "Spatial reference system as defined by <a href="https://epsg.io/">ESPG</a>, e.g., BCGW is <a href="https://epsg.io/">ESPG-3005 - NAD83 BC Albers</a>.",
+      "help_text": "Spatial reference system as defined by <a href=https://epsg.io/>ESPG</a>, e.g., BCGW data is primarily <a href=https://epsg.io/>ESPG-3005 - NAD83 BC Albers</a>.",
       "choices": [
         {
           "value": "epsg3005",
@@ -900,7 +899,7 @@
           "value": "epsg26710",
           "label": "EPSG_26710 - NAD27 UTM zone 10N"
         },
-       {
+        {
           "value": "epsg26711",
           "label": "EPSG_26711 - NAD27 UTM zone 11N"
         },
@@ -974,7 +973,7 @@
       "field_name": "json_table_schema",
       "label": "JSON Table Schema",
       "preset": "json_object",
-      "help_text": "JSON Table Schema is a standard for providing a “schema” (similar to a database schema) for tabular data. <a href="https://json-schema.org/">https://json-schema.org/<\a>",
+      "help_text": "JSON Table Schema is a standard for providing a “schema” (similar to a database schema) for tabular data. <a href=https://json-schema.org/>https://json-schema.org/<\a>"
     },
     {
       "field_name": "iso_topic_category",
@@ -984,7 +983,7 @@
       "conditional_values": ["geographic"],
       "validators": "conditional_required iso_topic_category",
       "form_include_blank_choice": true,
-      "help_text": "Categories to define spatial data by subjects. See <href="https://apps.usgs.gov/thesaurus/thesaurus-full.php?thcode=15">definitions<\a>.",
+      "help_text": "Categories to define spatial data by subjects. See <href=https://apps.usgs.gov/thesaurus/thesaurus-full.php?thcode=15>definitions<\a>.",
       "choices": [
         {
           "value": "biota",
