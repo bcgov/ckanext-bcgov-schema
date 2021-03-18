@@ -8,7 +8,7 @@
       "field_name": "title",
       "label": "Title",
       "preset": "title",
-      "form_placeholder": "eg. A descriptive title",
+      "form_placeholder": "e.g., a unique descriptive title",
       "validators": "title_validator",
       "required": true,
       "help_text": "Unique title of a record. Limited to 100 characters."
@@ -17,7 +17,7 @@
       "field_name": "name",
       "label": "URL",
       "preset": "dataset_slug",
-      "form_placeholder": "eg. my-dataset",
+      "form_placeholder": "e.g., my-dataset",
       "required": true,
       "help_text": "Unique title URL of a record populated with the intial title."
     },
@@ -26,7 +26,7 @@
       "label": "Organization",
       "preset": "dataset_organization",
       "required": true,
-      "help_text": "Custodial business areas who published the record and resources."
+      "help_text": "Custodial business responsible for the record and resources."
     },
     {
       "field_name": "notes",
@@ -35,7 +35,7 @@
       "display_snippet": "markdown.html",
       "form_placeholder": "Detailed useful information about the record, data, resources and business use.",
       "required": true,
-      "help_text": "Detailed information about the record and resources."
+      "help_text": "Detailed useful information about the record, data, resources and business use."
     },
     {
       "field_name": "license_id",
@@ -55,14 +55,14 @@
         {
           "field_name": "name",
           "label": "Name",
-          "form_placeholder": "Contact name",
+          "form_placeholder": "Contact name or generic imbox",
           "required": true,
           "help_text": "Name of person or inbox to contact for more information regarding the record."
         },
         {
           "field_name": "email",
           "label": "Email",
-          "form_placeholder": "Contact email",
+          "form_placeholder": "Contact email or generic imbox",
           "required": true,
           "help_text": "Email of person or inbox to contact for more information regarding the record."
         },
@@ -127,27 +127,31 @@
       "label": "Purpose",
       "form_snippet": "markdown.html",
       "display_snippet": "markdown.html",
-      "form_placeholder": "Summary of the intentions for which the dataset was developed"
+      "form_placeholder": "Summary of the intentions for which the dataset was developed.",
+      "help_text": "Optional information describing the purpose of the data of the associated resources."
     },
     {
       "field_name": "data_quality",
       "label": "Data Quality",
       "form_snippet": "markdown.html",
       "display_snippet": "markdown.html",
-      "form_placeholder": "Descriptive text that can include info about issues, completeness, consistency etc."
+      "form_placeholder": "Descriptive text that can include info about issues, completeness, consistency etc.",
+      "help_text": "Optional information describing the quality of the record and associated resources."
     },
     {
       "field_name": "lineage_statement",
       "label": "Lineage Statement",
       "form_snippet": "markdown.html",
       "display_snippet": "markdown.html",
-      "form_placeholder": "Information about the events or source data used in constructing the data"
+      "form_placeholder": "Information about the events or source data used in constructing the data.",
+      "help_text": "Optional information describing the lineage of the record and associated resources. Where appropriate it may include a statement whether the data set has been validated or quality assured, whether it is the official version (if multiple versions exist"
     },
     {
       "field_name": "more_info",
       "label": "More Info",
       "preset": "composite_repeating",
       "form_blanks": 1,
+      "help_text": "URLs to additional information about the record and resources.",
       "subfields": [
         {
           "field_name": "description",
@@ -171,6 +175,7 @@
       "preset": "select",
       "required": true,
       "sorted_choices": false,
+      "help_text": "Information Security Classificaitons as defined by the https://www2.gov.bc.ca/gov/content?id=7430B7CCF0FE459F93A554E72DF21503.",
       "choices": [
         {
           "value": "PUBLIC",
@@ -196,6 +201,7 @@
       "preset": "select",
       "required": true,
       "sorted_choices": true,
+      "help_text": "Defines the who can view datasets visible in applications like iMapBC.",
       "choices": [
         {
           "value": "Public",
@@ -222,6 +228,7 @@
       "required": true,
       "sorted_choices": true,
       "comment": "Not sure if this should be moved to resource, that is the download part",
+      "help_text": "For datasets, defines who can download the files associated with this record.",
       "choices": [
         {
           "value": "Public",
@@ -252,23 +259,26 @@
       "preset": "select",
       "required": true,
       "sorted_choices": true,
+      "help_text": "Defines if the record is visible to the public or set to only visible when logged in.",
       "choices": [
-        {
-          "value": "IDIR",
-          "label": "IDIR"
-        },
         {
           "value": "Public",
           "label": "Public"
         }
+        {
+          "value": "IDIR",
+          "label": "IDIR"
+        },
+
       ]
     },
     {
       "field_name": "tag_string",
       "label": "Keywords",
       "preset": "tag_string_autocomplete",
-      "form_placeholder": "eg. economy, mental health, government",
-      "required": true
+      "form_placeholder": "e.g., economy, mental health, government",
+      "required": true,
+      "help_text": "Keywords help users return datasets using key identified words, phrases or accronyms for a record and it's resources."
     },
     {
       "field_name": "publish_state",
@@ -276,6 +286,7 @@
       "label": "State",
       "startState": {"state": "DRAFT", "by": ["editor", "admin", "sysadmin"]},
       "required": true,
+      "help_text": "Defines the publication phase of a record. Published and Pending Archive records will be visible to consumers.",
       "choices": [
         {
           "value": "DRAFT",
@@ -324,39 +335,41 @@
       "required": true,
       "sorted_choices": true,
       "is_conditional_source": true,
-      "comment": "As this is resource status should it maybe be moved to resource??",
+      "comment": "As this is resource status should it maybe be moved to resource?",
+      "help_text": "Defines the current status of a record and it's resources.",
       "choices": [
-        {
-          "value": "completed",
-          "label": "Completed"
-        },
-        {
-          "value": "destroyed",
-          "label": "Destroyed"
-        },
-        {
-          "value": "historicalArchive",
-          "label": "Historical Archive"
-        },
-        {
-          "value": "obsolete",
-          "label": "Obsolete"
-        },
-        {
-          "value": "onGoing",
-          "label": "On Going"
-        },
         {
           "value": "planned",
           "label": "Planned"
+        },
+        {
+          "value": "underDevelopment",
+          "label": "Under Development"
+        },
+
+        {
+          "value": "onGoing",
+          "label": "On Going"
         },
         {
           "value": "required",
           "label": "Required"
         },
         {
-          "value": "underDevelopment",
-          "label": "Under Development"
+          "value": "completed",
+          "label": "Completed"
+        },
+        {
+          "value": "obsolete",
+          "label": "Obsolete"
+        },
+        {
+          "value": "historicalArchive",
+          "label": "Historical Archive"
+        },
+        {
+          "value": "destroyed",
+          "label": "Destroyed"
         }
       ]
     },
@@ -366,6 +379,7 @@
       "label": "Record Lifecycle History",
       "preset": "composite_repeating",
       "form_blanks": 1,
+      "help_text": "Provides a variety of milestone dates related to its life cycle.",
       "subfields": [
         {
           "field_name": "type",
@@ -375,24 +389,25 @@
           "sorted_choices": true,
           "choices": [
             {
-              "value": "Archived",
-              "label": "Archived"
-            },
-            {
               "value": "Created",
               "label": "Created"
             },
             {
-              "value": "Destroyed",
-              "label": "Destroyed"
-            },
+              "value": "Published",
+              "label": "Published"
+            }
             {
               "value": "Modified",
               "label": "Modified"
             },
             {
-              "value": "Published",
-              "label": "Published"
+              "value": "Archived",
+              "label": "Archived"
+            },
+
+            {
+              "value": "Destroyed",
+              "label": "Destroyed"
             }
           ]
         },
@@ -400,7 +415,8 @@
           "field_name": "date",
           "label": "Date",
           "preset": "date",
-          "required": true
+          "required": true,
+          "help_text": "The date associated with the milestone related to its life cycle."
         }
       ]
     },
