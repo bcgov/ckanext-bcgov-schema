@@ -8,7 +8,7 @@
       "field_name": "title",
       "label": "Title",
       "preset": "title",
-      "form_placeholder": "e.g., a unique descriptive title",
+      "form_placeholder": "A unique descriptive title",
       "validators": "title_validator",
       "required": true,
       "help_text": "Unique title of a record. Limited to 100 characters."
@@ -17,7 +17,7 @@
       "field_name": "name",
       "label": "URL",
       "preset": "dataset_slug",
-      "form_placeholder": "e.g., my-dataset",
+      "form_placeholder": "a-unique-descriptive-title",
       "required": true,
       "help_text": "Unique title URL of a record populated with the intial title."
     },
@@ -50,21 +50,21 @@
       "label": "Contacts",
       "preset": "composite_repeating",
       "form_blanks": 1,
-      "help_text": "Name, email and role of person(s) or an inbox to contact for more information regarding the record.",
+      "help_text": "Name, email and role of person(s) or an inbox to contact for more information regarding the record and resources.",
       "subfields": [
         {
           "field_name": "name",
           "label": "Name",
           "form_placeholder": "Contact name or generic imbox",
           "required": true,
-          "help_text": "Name of person or inbox to contact for more information regarding the record."
+          "help_text": "Name of person or inbox to contact."
         },
         {
           "field_name": "email",
           "label": "Email",
           "form_placeholder": "Contact email or generic imbox",
           "required": true,
-          "help_text": "Email of person or inbox to contact for more information regarding the record."
+          "help_text": "Email of person or inbox to contact."
         },
         {
           "field_name": "org",
@@ -72,7 +72,7 @@
           "preset": "select",
           "choices_helper": "edc_orgs_form",
           "required": true,
-          "help_text": "Organization of the person or inbox to contact for more information regarding the record."
+          "help_text": "Organization of the person or inbox to contact."
         },
         {
           "field_name": "role",
@@ -80,7 +80,7 @@
           "preset": "select",
           "required": true,
           "sorted_choices": true,
-          "help_text": "Role of the person or inbox to contact for more information regarding the record.",
+          "help_text": "Role of the person or inbox to contact.",
           "choices": [
             {
               "value": "pointOfContact",
@@ -116,7 +116,7 @@
             {
               "value": "displayed",
               "label": "Contact Displayed",
-              "help_text": "Displayed contacts are visible to public."
+              "help_text": "Displayed contacts are visible to public. One is always required to be visible."
             }
           ]
         }
@@ -158,7 +158,7 @@
           "label": "Description",
           "hide_if_empty": true,
           "no_label": true,
-          "form_placeholder": "Describe the link"
+          "form_placeholder": "Short description of webpage."
         },
         {
           "field_name": "url",
@@ -175,7 +175,7 @@
       "preset": "select",
       "required": true,
       "sorted_choices": false,
-      "help_text": "Information Security Classificaitons as defined by the https://www2.gov.bc.ca/gov/content?id=7430B7CCF0FE459F93A554E72DF21503.",
+      "help_text": "Classifications are defined in the <a href="https://www2.gov.bc.ca/gov/content?id=7430B7CCF0FE459F93A554E72DF21503">Information Security Classificaiton Standard</a> .",
       "choices": [
         {
           "value": "PUBLIC",
@@ -201,7 +201,7 @@
       "preset": "select",
       "required": true,
       "sorted_choices": true,
-      "help_text": "Defines the who can view datasets visible in applications like iMapBC.",
+      "help_text": "Defines who can view datasets that are visible in applications like iMapBC.",
       "choices": [
         {
           "value": "Public",
@@ -336,7 +336,7 @@
       "sorted_choices": true,
       "is_conditional_source": true,
       "comment": "As this is resource status should it maybe be moved to resource?",
-      "help_text": "Defines the current status of a record and it's resources.",
+      "help_text": "Defines the current status of a record and its resources.",
       "choices": [
         {
           "value": "planned",
@@ -346,7 +346,6 @@
           "value": "underDevelopment",
           "label": "Under Development"
         },
-
         {
           "value": "onGoing",
           "label": "On Going"
@@ -447,7 +446,8 @@
       "label": "Replacement Record",
       "conditional_field": "resource_status",
       "conditional_values": ["obsolete"],
-      "validators": "conditional_required"
+      "validators": "conditional_required",
+      "help_text": "URL to a record or webpage to a newer version of the record."
     },
     {
       "field_name": "retention_expiry_date",
@@ -455,14 +455,16 @@
       "preset": "date",
       "conditional_field": "resource_status",
       "conditional_values": ["historicalArchive"],
-      "validators": "conditional_required"
+      "validators": "conditional_required",
+      "help_text": "Archival retention date."
     },
     {
       "field_name": "source_data_path",
       "label": "Source Data Path",
       "conditional_field": "resource_status",
       "conditional_values": ["historicalArchive"],
-      "validators": "conditional_required"
+      "validators": "conditional_required",
+      "help_text": "Path or location of an archived resource."
     }
   ],
   "resource_fields": [
@@ -471,12 +473,14 @@
       "label": "Name",
       "preset": "title",
       "required": true,
-      "form_placeholder": "eg. January 2013 Silver Prices"
+      "form_placeholder": "e.g., Silver Prices - January 2013",
+      "help_text": "Brief title of the resource or dataset."
     },
     {
       "field_name": "url",
       "label": "Resource",
-      "preset": "resource_url_upload"
+      "preset": "resource_url_upload",
+      "help_text": "URL or uploaded file or a resource."
     },
     {
       "field_name": "bcdc_type",
@@ -485,6 +489,7 @@
       "required": true,
       "sorted_choices": true,
       "is_conditional_source": true,
+      "help_text": "Defines the type of resource associated with to a record. All BCGW records will be set to Geographic Data.",
       "choices": [
         {
           "value": "document",
@@ -509,7 +514,8 @@
       "label": "Resource Description",
       "form_snippet": "markdown.html",
       "display_snippet": "markdown.html",
-      "form_placeholder": "Some useful notes about the data",
+      "form_placeholder": "Detailed information about the data or resource.",
+      "help_text": "Detailed useful information about the data or resources.",
       "required": false
     },
     {
@@ -518,6 +524,7 @@
       "form_snippet": "markdown.html",
       "display_snippet": "markdown.html",
       "form_placeholder": "Other descriptive information about the dataset",
+      "help_text": "Other descriptive information about the data or resources.",
       "required": false
     },
     {
@@ -526,6 +533,7 @@
       "preset": "select",
       "required": true,
       "sorted_choices": false,
+      "help_text": "Frequency of update or refresh to the storage location.",
       "choices": [
         {
           "value": "daily",
@@ -589,16 +597,19 @@
       "field_name": "temporal_extent",
       "label": "Temporal Extent",
       "preset": "composite",
+      "help_text": "Temporal or date range of the data or resource.",
       "subfields": [
         {
           "field_name": "beginning_date",
           "preset": "date",
-          "label": "Beginning Date"
+          "label": "Beginning Date",
+          "help_text": "Beginning date for the date range of the data or resource."
         },
         {
           "field_name": "end_date",
           "preset": "date",
-          "label": "End Date"
+          "label": "End Date",
+          "help_text": "End date for the date range of the data or resource."
         }
       ]
     },
@@ -609,6 +620,7 @@
       "required": true,
       "sorted_choices": false,
       "form_include_blank_choice": true,
+      "help_text": "File format, extension or mime type of the data or resource.",
       "choices": [
         {
           "value": "arcgis_rest",
@@ -734,6 +746,7 @@
       "preset": "select",
       "required": true,
       "sorted_choices": false,
+      "help_text": "Location of where the data or resource is stored.",
       "choices": [
         {
           "value": "bc geographic warehouse",
@@ -782,6 +795,7 @@
       "conditional_values": ["geographic"],
       "validators": "conditional_required",
       "form_include_blank_choice": true,
+      "help_text": "Defines the geometry datatype when stored in a database, e.g., Oracle = SDO_GEOMETRY.",
       "choices": [
         {
           "value": "SDE_BINARY",
@@ -801,17 +815,20 @@
       "field_name": "object_name",
       "label": "Object Name",
       "conditional_field": "bcdc_type",
-      "conditional_values": ["geographic"]
+      "conditional_values": ["geographic"],
+      "help_text": "Name of schema and table stored in a database."
     },
     {
       "field_name": "object_short_name",
       "label": "Object Short Name",
-      "form_snippet": null
+      "form_snippet": null,
+      "help_text": "Short name for certain file types, e.g., Shape files. Max 10 characters."
     },
     {
       "field_name": "object_table_comments",
       "label": "Object Table Comments",
-      "form_snippet": null
+      "form_snippet": null,
+      "help_text": "Object defintion as defined in the storage location database."
     },
     {
       "field_name": "details",
@@ -820,6 +837,7 @@
       "validators": "composite_repeating_group2json",
       "form_snippet": null,
       "required": false,
+      "help_text": "Field defintion including name, short name, lenth, field type and desciption for a dataset in the BCGW.",
       "subfields": [
         {
           "field_name": "column_name",
@@ -852,6 +870,7 @@
       "conditional_values": ["geographic"],
       "validators": "conditional_required",
       "form_include_blank_choice": true,
+      "help_text": "Spatial reference system as defined by <a href="https://epsg.io/">ESPG</a>, e.g., BCGW is <a href="https://epsg.io/">ESPG-3005 - NAD83 BC Albers</a>.",
       "choices": [
         {
           "value": "epsg3005",
@@ -954,7 +973,8 @@
     {
       "field_name": "json_table_schema",
       "label": "JSON Table Schema",
-      "preset": "json_object"
+      "preset": "json_object",
+      "help_text": "JSON Table Schema is a standard for providing a “schema” (similar to a database schema) for tabular data. <a href="https://json-schema.org/">https://json-schema.org/<\a>",
     },
     {
       "field_name": "iso_topic_category",
@@ -964,6 +984,7 @@
       "conditional_values": ["geographic"],
       "validators": "conditional_required iso_topic_category",
       "form_include_blank_choice": true,
+      "help_text": "Categories to define spatial data by subjects. See <href="https://apps.usgs.gov/thesaurus/thesaurus-full.php?thcode=15">definitions<\a>.",
       "choices": [
         {
           "value": "biota",
@@ -1047,9 +1068,6 @@
         }
       ]
     },
-    
-
-
     {
       "field_name": "resource_type",
       "label": "Resource Type",
@@ -1057,6 +1075,7 @@
       "required": true,
       "sorted_choices": false,
       "form_include_blank_choice": true,
+      "help_text": "Classification of the data or resource.",
       "choices": [
         {
           "value": "abstraction",
@@ -1079,6 +1098,7 @@
       "preset": "select",
       "required": true,
       "sorted_choices": false,
+      "help_text": "Access method of the data or resource.",
       "choices": [
         {
           "value": "application",
@@ -1106,6 +1126,7 @@
       "preset": "composite",
       "conditional_field": "bcdc_type",
       "conditional_values": ["geographic"],
+      "help_text": "Configruation information related to previewing WMS on a map or a link to an advanded mapping application like iMapBC.",
       "subfields": [
         {
           "field_name": "layer_name",
@@ -1143,6 +1164,7 @@
       "preset": "composite",
       "conditional_field": "bcdc_type",
       "conditional_values": ["geographic"],
+      "help_text": "Bounding box or extent of a spatial dataset, bounding box the Province is set by default.",
       "subfields": [
         {
           "field_name": "north_bound_latitude",
