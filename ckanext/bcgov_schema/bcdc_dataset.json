@@ -164,7 +164,7 @@
           "field_name": "url",
           "label": "URL",
           "no_label": true,
-          "form_placeholder": "http://ministry.gov.bc.ca/moreinfo.html",
+          "form_placeholder": "https://www2.gov.bc.ca/gov/content/home",
           "truncate": true
         }
       ]
@@ -404,7 +404,6 @@
               "value": "Archived",
               "label": "Archived"
             },
-
             {
               "value": "Destroyed",
               "label": "Destroyed"
@@ -493,7 +492,7 @@
         },
         {
           "value": "geographic",
-          "label": "Geographic"
+          "label": "Geographic Data"
         },
         {
           "value": "webservice",
@@ -529,60 +528,60 @@
       "sorted_choices": false,
       "choices": [
         {
-          "value": "annually",
-          "label": "Annually"
-        },
-        {
-          "value": "asNeeded",
-          "label": "As Needed"
-        },
-        {
-          "value": "biannually",
-          "label": "Biannually"
-        },
-        {
-          "value": "biweekly",
-          "label": "Biweekly"
-        },
-        {
-          "value": "continual",
-          "label": "Continual"
-        },
-        {
           "value": "daily",
           "label": "Daily"
-        },
-        {
-          "value": "fortnightly",
-          "label": "Fortnightly"
-        },
-        {
-          "value": "irregular",
-          "label": "Irregular"
-        },
-        {
-          "value": "monthly",
-          "label": "Monthly"
         },
         {
           "value": "nightly",
           "label": "Nightly"
         },
         {
-          "value": "notPlanned",
-          "label": "Not Planned"
+          "value": "biweekly",
+          "label": "Biweekly"
+        },
+        {
+          "value": "weekly",
+          "label": "Weekly"
+        },
+        {
+          "value": "fortnightly",
+          "label": "Fortnightly"
+        },
+        {
+          "value": "monthly",
+          "label": "Monthly"
         },
         {
           "value": "quarterly",
           "label": "Quarterly"
         },
         {
-          "value": "unknown",
-          "label": "Unknown"
+          "value": "biannually",
+          "label": "Biannually"
         },
         {
-          "value": "weekly",
-          "label": "Weekly"
+          "value": "annually",
+          "label": "Annually"
+        },
+        {
+          "value": "continual",
+          "label": "Continual"
+        },
+        {
+          "value": "asNeeded",
+          "label": "As Needed"
+        },
+        {
+          "value": "irregular",
+          "label": "Irregular"
+        },
+        {
+          "value": "notPlanned",
+          "label": "Not Planned"
+        },
+        {
+          "value": "unknown",
+          "label": "Unknown"
         }
       ]
     },
