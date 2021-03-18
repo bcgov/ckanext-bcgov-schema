@@ -55,14 +55,14 @@
         {
           "field_name": "name",
           "label": "Name",
-          "form_placeholder": "Contact name or generic imbox",
+          "form_placeholder": "Contact name or generic inbox",
           "required": true,
           "help_text": "Name of person or inbox to contact."
         },
         {
           "field_name": "email",
           "label": "Email",
-          "form_placeholder": "Contact email or generic imbox",
+          "form_placeholder": "Contact email or generic inbox",
           "required": true,
           "help_text": "Email of person or inbox to contact."
         },
@@ -277,7 +277,7 @@
       "preset": "tag_string_autocomplete",
       "form_placeholder": "e.g., economy, mental health, government",
       "required": true,
-      "help_text": "Keywords help users return datasets using key identified words, phrases or accronyms for a record and it's resources."
+      "help_text": "Keywords help users return datasets using key identified words, phrases or acronyms for a record and its resources."
     },
     {
       "field_name": "publish_state",
@@ -836,7 +836,7 @@
       "validators": "composite_repeating_group2json",
       "form_snippet": null,
       "required": false,
-      "help_text": "Field defintion including name, short name, lenth, field type and desciption for a dataset in the BCGW.",
+      "help_text": "Field definition including name, short name, length, field type and description for a dataset in the BCGW.",
       "subfields": [
         {
           "field_name": "column_name",
@@ -973,7 +973,7 @@
       "field_name": "json_table_schema",
       "label": "JSON Table Schema",
       "preset": "json_object",
-      "help_text": "JSON Table Schema is a standard for providing a schema (similar to a database schema) for tabular data. <a href='https://json-schema.org/'>https://json-schema.org/<\a>"
+      "help_text": "JSON Table Schema is a standard for providing a schema (similar to a database schema) for tabular data. <a href='https://json-schema.org/'>https://json-schema.org/</a>"
     },
     {
       "field_name": "iso_topic_category",
@@ -983,7 +983,7 @@
       "conditional_values": ["geographic"],
       "validators": "conditional_required iso_topic_category",
       "form_include_blank_choice": true,
-      "help_text": "Categories to define spatial data by subjects. See <href='https://apps.usgs.gov/thesaurus/thesaurus-full.php?thcode=15>definitions'<\a>.",
+      "help_text": "Categories to define spatial data by subjects. See <href='https://apps.usgs.gov/thesaurus/thesaurus-full.php?thcode=15>definitions'</a>.",
       "choices": [
         {
           "value": "biota",
@@ -1125,7 +1125,7 @@
       "preset": "composite",
       "conditional_field": "bcdc_type",
       "conditional_values": ["geographic"],
-      "help_text": "Configruation information related to previewing WMS on a map or a link to an advanded mapping application like iMapBC.",
+      "help_text": "Configuration information related to previewing WMS on a map or a link to an advanced mapping application like iMapBC.",
       "subfields": [
         {
           "field_name": "layer_name",
