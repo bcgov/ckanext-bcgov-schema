@@ -797,6 +797,10 @@
       "help_text": "Defines the geometry datatype when stored in a database, e.g., Oracle = SDO_GEOMETRY.",
       "choices": [
         {
+          "value": "na",
+          "label": "N-A"
+        },
+        {
           "value": "SDE_BINARY",
           "label": "SDE_BINARY"
         },
