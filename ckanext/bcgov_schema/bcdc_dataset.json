@@ -798,7 +798,7 @@
       "choices": [
         {
           "value": "na",
-          "label": "N-A"
+          "label": "Not Applicable"
         },
         {
           "value": "SDE_BINARY",
@@ -965,7 +965,7 @@
         },
         {
           "value": "na",
-          "label": "N-A"
+          "label": "Not Applicable"
         },
         {
           "value": "utm",
