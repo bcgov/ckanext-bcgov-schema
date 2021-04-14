@@ -291,12 +291,12 @@
           "value": "DRAFT",
           "label": "Draft",
           "validTo": [
-            {"state":"PENDING PUBLISHED", "by": ["editor", "admin", "sysadmin"]}
+            {"state":"PENDING PUBLISH", "by": ["editor", "admin", "sysadmin"]}
           ]
         },
         {
-          "value": "PENDING PUBLISHED",
-          "label": "Pending Published",
+          "value": "PENDING PUBLISH",
+          "label": "Pending Publish",
           "validTo": [
             {"state":"DRAFT", "by": ["editor", "admin", "sysadmin"]},
             {"state":"PUBLISHED", "by": ["admin", "sysadmin"]}
@@ -307,7 +307,7 @@
           "label": "Published",
           "validTo": [
             {"state":"PENDING ARCHIVE", "by": ["editor", "admin", "sysadmin"]},
-            {"state":"PENDING PUBLISHED", "by": ["admin", "sysadmin"]}
+            {"state":"PENDING PUBLISH", "by": ["admin", "sysadmin"]}
           ]
         },
         {
