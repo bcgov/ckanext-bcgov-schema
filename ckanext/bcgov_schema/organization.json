@@ -9,7 +9,8 @@
       "validators": "ignore_missing unicode",
       "form_snippet": "large_text.html",
       "form_attrs": {"data-module": "slug-preview-target"},
-      "form_placeholder": "My theme"
+      "form_placeholder": "My theme",
+      "required": true
     },
     {
       "field_name": "short_name",
@@ -21,7 +22,8 @@
       "label": "URL",
       "validators": "not_empty unicode name_validator group_name_validator",
       "form_snippet": "slug.html",
-      "form_placeholder": "my-theme"
+      "form_placeholder": "my-theme",
+      "required": true
     },
     {
       "field_name": "notes",
@@ -31,6 +33,11 @@
     },
     {
       "field_name": "url",
+      "label": "External URL",
+      "form_placeholder": "http://my-organization.com"
+    },
+    {
+      "field_name": "image_url",
       "label": "Image URL",
       "form_placeholder": "http://example.com/my-image.jpg"
     },
