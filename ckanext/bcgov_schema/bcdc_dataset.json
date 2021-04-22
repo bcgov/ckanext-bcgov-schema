@@ -10,8 +10,7 @@
       "preset": "title",
       "form_placeholder": "A unique descriptive title. Limited to 100 characters.",
       "validators": "title_validator",
-      "required": true,
-      "help_text": "Unique title of a record."
+      "required": true
     },
     {
       "field_name": "name",
