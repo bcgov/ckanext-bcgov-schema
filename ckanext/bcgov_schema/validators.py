@@ -253,7 +253,7 @@ def title_validator(field, schema):
         if package_id and package_id is not missing:
             query = query.filter(model.Package.id != package_id)
         result = query.first()
-        if result and result.state != State.DELETED:
+        if result and result.state != 'DELETED':
             errors[key].append(_('That Title is already in use.'))
 
         value = data[key]
