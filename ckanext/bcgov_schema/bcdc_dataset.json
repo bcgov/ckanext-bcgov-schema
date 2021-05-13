@@ -262,27 +262,19 @@
         }
       ]
     },
-    {
-      "field_name": "tag_string",
-      "label": "Keywords",
-      "preset": "tag_string_autocomplete",
-      "form_placeholder": "e.g., economy, mental health, government",
-      "required": true,
-      "help_text": "Keywords help users return datasets using key identified words, phrases or acronyms for a record and its resources."
-    },
-    {
+     {
       "field_name": "publish_state",
       "preset": "state_machine",
       "label": "State",
       "startState": {"state": "DRAFT", "by": ["editor", "admin", "sysadmin"]},
       "required": true,
-      "help_text": "Defines the publication phase of a record. Published and Pending Archive records will be visible to consumers.",
+      "help_text": "Defines the publication phase of a record.",
       "choices": [
         {
           "value": "DRAFT",
           "label": "Draft",
           "validTo": [
-            {"state":"PENDING PUBLISHED", "by": ["editor", "admin", "sysadmin"]}
+            {"state":"PENDING PUBLISH", "by": ["editor", "admin", "sysadmin"]}
           ]
         },
         {
@@ -298,7 +290,7 @@
           "label": "Published",
           "validTo": [
             {"state":"PENDING ARCHIVE", "by": ["editor", "admin", "sysadmin"]},
-            {"state":"PENDING PUBLISHED", "by": ["admin", "sysadmin"]}
+            {"state":"PENDING PUBLISH", "by": ["admin", "sysadmin"]}
           ]
         },
         {
@@ -502,7 +494,7 @@
       "label": "Resource Description",
       "form_snippet": "markdown.html",
       "display_snippet": "markdown.html",
-      "form_placeholder": "Detailed information about the data or resource."
+      "form_placeholder": "Detailed information about the data or resource.",
       "required": false
     },
     {
@@ -1080,6 +1072,10 @@
         {
           "value": "reports",
           "label": "Reports"
+        },
+        {
+          "value": "na",
+          "label": "Not Applicable"
         }
       ]
     },
@@ -1107,6 +1103,10 @@
         {
           "value": "service",
           "label": "Service"
+        },
+        {
+          "value": "other",
+          "label": "Other"
         }
       ]
     },
