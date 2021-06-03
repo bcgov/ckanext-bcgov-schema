@@ -89,12 +89,16 @@
               "label": "Data Manager"
             },
             {
+              "value": "dataSteward",
+              "label": "Data Steward"
+            },
+            {
               "value": "custodian",
               "label": "Custodian"
             },
             {
-              "value": "dataSteward",
-              "label": "Data Steward"
+              "value": "AccessApprover",
+              "label": "Access Approver"
             },
             {
               "value": "distributor",
