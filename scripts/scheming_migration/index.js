@@ -252,8 +252,7 @@ async function main() {
 					resource['resource_update_cycle'] = 'asNeeded';
 				}
 				if (!('resource_storage_format' in resource)) {
-					if (resourceType === 'document') resource['resource_storage_format'] = 'csv';
-					else if (resourceType === 'geographic' && !makeService) resource['resource_storage_format'] = 'oracle_sde';
+					if (resource['format'] !== '') resource['resource_storage_format'] = resource['format'];
 					else resource['resource_storage_format'] = 'other';
 				}
 				if (!('resource_type' in resource)) {
