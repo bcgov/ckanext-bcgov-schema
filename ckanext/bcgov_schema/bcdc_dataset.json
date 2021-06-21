@@ -613,7 +613,7 @@
       ]
     },
     {
-      "field_name": "resource_storage_format",
+      "field_name": "format",
       "label": "Resource Storage Format",
       "preset": "select",
       "required": true,
