@@ -266,7 +266,15 @@
         }
       ]
     },
-     {
+    {
+      "field_name": "tag_string",
+      "label": "Keywords",
+      "preset": "tag_string_autocomplete",
+      "form_placeholder": "e.g., economy, mental health, government",
+      "required": true,
+      "help_text": "Keywords help users return datasets using key identified words, phrases or acronyms for a record and its resources."
+    },
+    {
       "field_name": "publish_state",
       "preset": "state_machine",
       "label": "State",
@@ -781,7 +789,7 @@
       "form_include_blank_choice": true,
       "help_text": "Defines the geometry datatype when stored in a database, e.g., BCGW Oracle Database = SDO_GEOMETRY.",
       "choices": [
-         {
+        {
           "value": "SDE_BINARY",
           "label": "SDE_BINARY"
         },
@@ -794,7 +802,7 @@
           "label": "ST_GEOMETRY"
         },
         {
-          "value": "na",
+          "value": "NA",
           "label": "Not Applicable"
         }
       ]
