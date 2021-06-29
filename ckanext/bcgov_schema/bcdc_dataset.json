@@ -21,7 +21,7 @@
     },
     {
       "field_name": "owner_org",
-      "label": "Provided By",
+      "label": "Published By",
       "preset": "dataset_organization",
       "required": true,
       "help_text": "Custodial business responsible for the record and resources."
