@@ -252,7 +252,7 @@ async function main() {
 					resource['resource_update_cycle'] = 'asNeeded';
 				}
 				if (resource.format) {
-					format = resource.format.toLowerCase();
+					format = resource['format'].toLowerCase();
 
 					switch (format) {
 						case 'arcview shape':
@@ -270,6 +270,8 @@ async function main() {
 				} else {
 					format = 'other'
 				}
+				delete resource['format'];
+
 				if (!('resource_type' in resource)) {
 					resource['resource_type'] = 'data';
 				}else if (resource.resource_type === null){
