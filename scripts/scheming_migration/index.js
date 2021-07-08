@@ -115,8 +115,7 @@ async function main() {
 						contactsObj[keyComponents[1]]['org'] = packageExtra['value'];
 					} else if (keyComponents[2] != 'organization') {
 						contactsObj[keyComponents[1]][keyComponents[2]] = packageExtra['value'];
-					}
-					else if (keyComponents[2] != 'organization') {
+					} else if (keyComponents[2] != 'organization') {
 						contactsObj[keyComponents[1]][keyComponents[2]] = packageExtra['value'];
 					}
 				} else if (packageExtra['key'].match(/dates\:/g)) {
@@ -224,6 +223,7 @@ async function main() {
 				let resourceId = resource['id'];
 				delete resource['id'];
 				let resourceName = resource['name'];
+				let format = '';
 				delete resource['name'];
 				let makeService = (resourceType === 'geographic' && (resourceName === 'WMS getCapabilities request' || resourceName === 'KML Network Link'));
 				if (resourceType) resource['bcdc_type'] = makeService ? 'webservice' : resourceType;
@@ -251,10 +251,27 @@ async function main() {
 				if (!('resource_update_cycle' in resource)) {
 					resource['resource_update_cycle'] = 'asNeeded';
 				}
-				if (!('resource_storage_format' in resource)) {
-					if (resource['format'] !== '') resource['resource_storage_format'] = resource['format'];
-					else resource['resource_storage_format'] = 'other';
+				if (resource.format) {
+					format = resource['format'].toLowerCase();
+
+					switch (format) {
+						case 'arcview shape':
+						case 'shape':
+							format = 'shp';
+							break;
+						case 'geodatabase_file':
+						case 'esri file geodatabase':
+							format = 'fgdb';
+							break;
+						case 'text':
+							format = 'txt';
+							break;
+					}
+				} else {
+					format = 'other'
 				}
+				delete resource['format'];
+
 				if (!('resource_type' in resource)) {
 					resource['resource_type'] = 'data';
 				}else if (resource.resource_type === null){
@@ -284,6 +301,7 @@ async function main() {
 				let extraString = JSON.stringify(resource);
 				// Update resource
 				await pool.query("UPDATE resource SET extras = $1 WHERE id = $2", [extraString, resourceId]);
+				await pool.query("UPDATE resource SET format = $1 WHERE id = $2", [format, resourceId]);
 			});
 
 			// Assign sane defaults in package extras to required fields if values are missing
