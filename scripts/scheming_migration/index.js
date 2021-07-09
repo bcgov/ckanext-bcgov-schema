@@ -197,8 +197,6 @@ async function main() {
 			resourceRes.rows.forEach(function(resource) {
 				resource['extras'] = JSON.parse(resource['extras']);
 				if (resource['extras'] == null ) resource['extras'] = {};
-				//extraObj['id'] = resource['id'];
-				//extraObj['name'] = resource['name'];
 				if ('data_collection_start_date' in resource['extras']) {
 					temporalExtent['beginning_date'] = resource['extras']['data_collection_start_date'];
 				}
@@ -222,9 +220,7 @@ async function main() {
 			resources.forEach(async function(resource) {
 				let resourceId = resource['id'];
 				delete resource['id'];
-				// let resourceName = resource['name'];
-				// let format = '';
-				// delete resource['name'];
+
 				let makeService = (resourceType === 'geographic' && (resource['name'] === 'WMS getCapabilities request' || resource['name'] === 'KML Network Link'));
 				if (resourceType) resource['extras']['bcdc_type'] = makeService ? 'webservice' : resourceType;
 				if (previewInformation && !makeService) resource['extras']['preview_info'] = JSON.stringify(previewInformation);
