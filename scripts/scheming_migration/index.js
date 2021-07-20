@@ -195,8 +195,7 @@ async function main() {
 
 			// Iterate over resources and assign relevant fields to an object
 			resourceRes.rows.forEach(function(resource) {
-				resource['extras'] = JSON.parse(resource['extras']);
-				if (resource['extras'] == null ) resource['extras'] = {};
+				resource['extras'] = JSON.parse(resource['extras']) || {};
 				if ('data_collection_start_date' in resource['extras']) {
 					temporalExtent['beginning_date'] = resource['extras']['data_collection_start_date'];
 				}
