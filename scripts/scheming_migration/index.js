@@ -195,25 +195,22 @@ async function main() {
 
 			// Iterate over resources and assign relevant fields to an object
 			resourceRes.rows.forEach(function(resource) {
-				let extraObj = JSON.parse(resource['extras']);
-				if (extraObj == null ) extraObj = {};
-				//extraObj['id'] = resource['id'];
-				//extraObj['name'] = resource['name'];
-				if ('data_collection_start_date' in extraObj) {
-					temporalExtent['beginning_date'] = extraObj['data_collection_start_date'];
+				resource['extras'] = JSON.parse(resource['extras']) || {};
+				if ('data_collection_start_date' in resource['extras']) {
+					temporalExtent['beginning_date'] = resource['extras']['data_collection_start_date'];
 				}
-				if ('data_collection_end_date' in extraObj) {
-					temporalExtent['end_date'] = extraObj['data_collection_end_date'];
+				if ('data_collection_end_date' in resource['extras']) {
+					temporalExtent['end_date'] = resource['extras']['data_collection_end_date'];
 				}
 				if (details.length > 0) {
-					resource['details'] = JSON.stringify(details);
+					resource['extras']['details'] = JSON.stringify(details);
 				}
-				resource['temporal_extent'] = JSON.stringify(temporalExtent);
-				if (proj_name[extraObj['projection_name']]) resource['projection_name'] = proj_name[extraObj['projection_name']];
-				if (extraObj['resource_storage_access_method']) resource['resource_storage_access_method'] = extraObj['resource_storage_access_method'].toLowerCase();
-				if (extraObj['resource_storage_location']) resource['resource_storage_location'] = extraObj['resource_storage_location'] == 'BCGW Datastore' ? 'bc geographic warehouse' : extraObj['resource_storage_location'].toLowerCase();
-				delete extraObj['data_collection_start_date'];
-				delete extraObj['data_collection_end_date'];
+				resource['extras']['temporal_extent'] = JSON.stringify(temporalExtent);
+				if (proj_name[resource['extras']['projection_name']]) resource['extras']['projection_name'] = proj_name[resource['extras']['projection_name']];
+				if (resource['extras']['resource_storage_access_method']) resource['extras']['resource_storage_access_method'] = resource['extras']['resource_storage_access_method'].toLowerCase();
+				if (resource['extras']['resource_storage_location']) resource['extras']['resource_storage_location'] = resource['extras']['resource_storage_location'] == 'BCGW Datastore' ? 'bc geographic warehouse' : resource['extras']['resource_storage_location'].toLowerCase();
+				delete resource['extras']['data_collection_start_date'];
+				delete resource['extras']['data_collection_end_date'];
 				
 				resources.push(resource);
 			});
@@ -222,86 +219,95 @@ async function main() {
 			resources.forEach(async function(resource) {
 				let resourceId = resource['id'];
 				delete resource['id'];
-				let resourceName = resource['name'];
-				let format = '';
-				delete resource['name'];
-				let makeService = (resourceType === 'geographic' && (resourceName === 'WMS getCapabilities request' || resourceName === 'KML Network Link'));
-				if (resourceType) resource['bcdc_type'] = makeService ? 'webservice' : resourceType;
-				if (previewInformation && !makeService) resource['preview_info'] = JSON.stringify(previewInformation);
-				if (geographicExtent && !makeService) resource['geographic_extent'] = JSON.stringify(geographicExtent);
-				if (packageExtras['iso_topic_string'] && !makeService) resource['iso_topic_category'] = JSON.stringify(packageExtras['iso_topic_string'].split(','));
-				if (packageExtras['object_name'] && !makeService) resource['object_name'] = packageExtras['object_name'];
-				if (packageExtras['object_short_name'] && !makeService) resource['object_short_name'] = packageExtras['object_short_name'];
-				if (packageExtras['object_table_comments'] && !makeService) resource['object_table_comments'] = packageExtras['object_table_comments'];
-				if (packageExtras['spatial_datatype'] && !makeService) resource['spatial_datatype'] = packageExtras['spatial_datatype'];
+
+				let makeService = (resourceType === 'geographic' && (resource['name'] === 'WMS getCapabilities request' || resource['name'] === 'KML Network Link'));
+				if (resourceType) resource['extras']['bcdc_type'] = makeService ? 'webservice' : resourceType;
+				if (previewInformation && !makeService) resource['extras']['preview_info'] = JSON.stringify(previewInformation);
+				if (geographicExtent && !makeService) resource['extras']['geographic_extent'] = JSON.stringify(geographicExtent);
+				if (packageExtras['iso_topic_string'] && !makeService) resource['extras']['iso_topic_category'] = JSON.stringify(packageExtras['iso_topic_string'].split(','));
+				if (packageExtras['object_name'] && !makeService) resource['extras']['object_name'] = packageExtras['object_name'];
+				if (packageExtras['object_short_name'] && !makeService) resource['extras']['object_short_name'] = packageExtras['object_short_name'];
+				if (packageExtras['object_table_comments'] && !makeService) resource['extras']['object_table_comments'] = packageExtras['object_table_comments'];
+				if (packageExtras['spatial_datatype'] && !makeService) resource['extras']['spatial_datatype'] = packageExtras['spatial_datatype'];
 
 				if (makeService) {
-					if (resource['projection_name']) delete resource['projection_name'];
-					if (resource['details']) delete resource['details'];
+					if (resource['extras']['projection_name']) delete resource['extras']['projection_name'];
+					if (resource['extras']['details']) delete resource['extras']['details'];
 				}
 
 				// Set sane defaults for required resource fields with missing
-				if ( (!('resource_description' in resource)) || (resource.resource_description === '') ){
+				if ( (!('resource_description' in resource['extras'])) || (resource['extras'].resource_description === '') ){
 					if ('description' in resource){
-						resource['resource_description'] =  resource['description']
+						resource['extras']['resource_description'] =  resource['description']
 					}else{
-						resource['resource_description'] = 'Description not provided.';
+						resource['extras']['resource_description'] = 'Description not provided.';
 					}
 				}
-				if (!('resource_update_cycle' in resource)) {
-					resource['resource_update_cycle'] = 'asNeeded';
+				if (!('resource_update_cycle' in resource['extras'])) {
+					resource['extras']['resource_update_cycle'] = 'asNeeded';
 				}
-				if (resource.format) {
-					format = resource['format'].toLowerCase();
+				if (resource['format']) {
+					resource['format'] = resource['format'].toLowerCase();
 
-					switch (format) {
+					switch (resource['format']) {
 						case 'arcview shape':
 						case 'shape':
-							format = 'shp';
+							resource['format'] = 'shp';
 							break;
 						case 'geodatabase_file':
 						case 'esri file geodatabase':
-							format = 'fgdb';
+							resource['format'] = 'fgdb';
 							break;
 						case 'text':
-							format = 'txt';
+							resource['format'] = 'txt';
 							break;
 					}
 				} else {
-					format = 'other'
+					resource['format'] = 'other'
 				}
-				delete resource['format'];
 
 				if (!('resource_type' in resource)) {
 					resource['resource_type'] = 'data';
 				}else if (resource.resource_type === null){
 					resource['resource_type'] = 'data';
 				}
-				if (makeService) resource['resource_storage_location'] = 'web or ftp site';
-				if (resourceType === 'geographic' && resourceName === 'BC Geographic Warehouse Custom Download') resource['resource_storage_location'] = 'bc geographic warehouse';
-				if (!('resource_storage_location' in resource)) {
-					if (resourceType === 'document') resource['resource_storage_location'] = 'catalogue data store';
-					else if (resourceType === 'geographic' && !makeService) resource['resource_storage_location'] = 'bc geographic warehouse';
-					else resource['resource_storage_location'] = 'web or ftp site';
+				if (makeService) resource['extras']['resource_storage_location'] = 'web or ftp site';
+				if (resourceType === 'geographic' && resource['name'] === 'BC Geographic Warehouse Custom Download') resource['extras']['resource_storage_location'] = 'bc geographic warehouse';
+				if (!('resource_storage_location' in resource['extras'])) {
+					if (resourceType === 'document') resource['extras']['resource_storage_location'] = 'catalogue data store';
+					else if (resourceType === 'geographic' && !makeService) resource['extras']['resource_storage_location'] = 'bc geographic warehouse';
+					else resource['extras']['resource_storage_location'] = 'web or ftp site';
 				}
-				if (!('resource_access_method' in resource)) {
-					resource['resource_access_method'] = 'direct access';
+				if (!('resource_access_method' in resource['extras'])) {
+					resource['extras']['resource_access_method'] = 'direct access';
 				}
-				if (!('projection_name' in resource) && resourceType === 'geographic' && !makeService) {
-					resource['projection_name'] = 'epsg3005';
+				if (!('projection_name' in resource['extras']) && resourceType === 'geographic' && !makeService) {
+					resource['extras']['projection_name'] = 'epsg3005';
 				}
-				if (!('spatial_datatype' in resource) && resourceType === 'geographic' && !makeService) {
-					resource['spatial_datatype'] = 'SDO_GEOMETRY';
+				if (!('spatial_datatype' in resource['extras']) && resourceType === 'geographic' && !makeService) {
+					resource['extras']['spatial_datatype'] = 'SDO_GEOMETRY';
 				}
-				if (!('iso_topic_category' in resource) && resourceType === 'geographic' && !makeService) {
-					resource['iso_topic_category'] = JSON.stringify(['unknown']);
+				if (!('iso_topic_category' in resource['extras']) && resourceType === 'geographic' && !makeService) {
+					resource['extras']['iso_topic_category'] = JSON.stringify(['unknown']);
 				}
-				resource['json_table_schema'] = '{}';
+				resource['extras']['json_table_schema'] = '{}';
 
-				let extraString = JSON.stringify(resource);
 				// Update resource
-				await pool.query("UPDATE resource SET extras = $1 WHERE id = $2", [extraString, resourceId]);
-				await pool.query("UPDATE resource SET format = $1 WHERE id = $2", [format, resourceId]);
+				const query = ['UPDATE resource'];
+				query.push('SET');
+
+				const set = [];
+				const values = [];
+				Object.entries(resource).forEach(function([key, value], i) {
+					set.push(key + ' = $' + (i + 1));
+					values.push(value);
+				});
+				query.push(set.join(', '));
+
+				query.push(`WHERE id = '${resourceId}'`);
+
+				await pool.query(query.join(' '), values);
+
 			});
 
 			// Assign sane defaults in package extras to required fields if values are missing
