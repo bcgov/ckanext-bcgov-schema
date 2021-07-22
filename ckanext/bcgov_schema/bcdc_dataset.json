@@ -502,7 +502,7 @@
       ]
     },
     {
-      "field_name": "resource_description",
+      "field_name": "description",
       "label": "Resource Description",
       "form_snippet": "markdown.html",
       "display_snippet": "markdown.html",
