@@ -306,9 +306,6 @@ async function main() {
 
 				query.push(`WHERE id = '${resourceId}'`);
 
-				console.log(query.join(' '));
-				console.log(values);
-
 				await pool.query(query.join(' '), values);
 
 			});
