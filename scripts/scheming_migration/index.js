@@ -210,7 +210,8 @@ async function main() {
 				}
 				resource['extras']['temporal_extent'] = JSON.stringify(temporalExtent);
 				if (proj_name[resource['extras']['projection_name']]) resource['extras']['projection_name'] = proj_name[resource['extras']['projection_name']];
-				if (resource['extras']['resource_storage_access_method']) resource['extras']['resource_storage_access_method'] = resource['extras']['resource_storage_access_method'].toLowerCase();
+				if (resource['extras']['resource_storage_access_method']) resource['extras']['resource_access_method'] = resource['extras']['resource_storage_access_method'].toLowerCase();
+				delete resource['extras']['resource_storage_access_method']
 				if (resource['extras']['resource_storage_location']) resource['extras']['resource_storage_location'] = resource['extras']['resource_storage_location'] == 'BCGW Datastore' ? 'bc geographic warehouse' : resource['extras']['resource_storage_location'].toLowerCase();
 				if (resource['extras']['supplemental_info']) resource['extras']['supplemental_information'] = resource['extras']['supplemental_info'];
 				delete resource['extras']['supplemental_info'];
