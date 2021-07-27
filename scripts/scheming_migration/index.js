@@ -202,6 +202,9 @@ async function main() {
 				if ('data_collection_end_date' in resource['extras']) {
 					temporalExtent['end_date'] = resource['extras']['data_collection_end_date'];
 				}
+				delete resource['extras']['data_collection_start_date'];
+				delete resource['extras']['data_collection_end_date'];
+
 				if (details.length > 0) {
 					resource['extras']['details'] = JSON.stringify(details);
 				}
@@ -209,8 +212,10 @@ async function main() {
 				if (proj_name[resource['extras']['projection_name']]) resource['extras']['projection_name'] = proj_name[resource['extras']['projection_name']];
 				if (resource['extras']['resource_storage_access_method']) resource['extras']['resource_storage_access_method'] = resource['extras']['resource_storage_access_method'].toLowerCase();
 				if (resource['extras']['resource_storage_location']) resource['extras']['resource_storage_location'] = resource['extras']['resource_storage_location'] == 'BCGW Datastore' ? 'bc geographic warehouse' : resource['extras']['resource_storage_location'].toLowerCase();
-				delete resource['extras']['data_collection_start_date'];
-				delete resource['extras']['data_collection_end_date'];
+				if (resource['extras']['supplemental_info']) resource['extras']['supplemental_information'] = resource['extras']['supplemental_info'];
+				delete resource['extras']['supplemental_info'];
+				if (resource['extras']['edc_resource_type']) resource['resource_type'] = resource['extras']['edc_resource_type'].toLowerCase();
+				delete resource['extras']['edc_resource_type']
 				
 				resources.push(resource);
 			});
@@ -236,12 +241,8 @@ async function main() {
 				}
 
 				// Set sane defaults for required resource fields with missing
-				if ( (!('resource_description' in resource['extras'])) || (resource['extras'].resource_description === '') ){
-					if ('description' in resource){
-						resource['extras']['resource_description'] =  resource['description']
-					}else{
-						resource['extras']['resource_description'] = 'Description not provided.';
-					}
+				if (resource['description'] === '' || resource['description'] === null) {
+						resource['description'] = 'Description not provided.';
 				}
 				if (!('resource_update_cycle' in resource['extras'])) {
 					resource['extras']['resource_update_cycle'] = 'asNeeded';
@@ -266,11 +267,10 @@ async function main() {
 					resource['format'] = 'other'
 				}
 
-				if (!('resource_type' in resource)) {
-					resource['resource_type'] = 'data';
-				}else if (resource.resource_type === null){
+				if (resource['resource_type'] === '' || resource['resource_type'] === null) {
 					resource['resource_type'] = 'data';
 				}
+
 				if (makeService) resource['extras']['resource_storage_location'] = 'web or ftp site';
 				if (resourceType === 'geographic' && resource['name'] === 'BC Geographic Warehouse Custom Download') resource['extras']['resource_storage_location'] = 'bc geographic warehouse';
 				if (!('resource_storage_location' in resource['extras'])) {
