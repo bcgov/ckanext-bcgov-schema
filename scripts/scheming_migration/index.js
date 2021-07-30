@@ -148,10 +148,26 @@ async function main() {
 			for (const key in contactsObj) {
 				packageExtras['contacts'].push(contactsObj[key]);
 			}
+
 			packageExtras['dates'] = [];
+			let hasCreatedDate = false;
+
 			for (const key in datesObj) {
 				packageExtras['dates'].push(datesObj[key]);
+
+				if (datesObj[key]['type'] === 'Created') {
+					hasCreatedDate = true;
+				}
 			}
+
+			if (!hasCreatedDate) {
+				packageExtras['dates'].push({"type": "Created", "date": packageExtras['record_create_date']});
+			}
+
+			// if (resource['extras']['bcdc_type'] === 'webservice' || resource['extras']['bcdc_type'] === 'application') {
+			// 	packageExtras['dates'].push({"type": "Created", "date": packageExtras['record_create_date']});
+			// }
+
 			packageExtras['more_info'] = [];
 			for (const key in moreInfoObj) {
 				packageExtras['more_info'].push(moreInfoObj[key]);
@@ -217,6 +233,8 @@ async function main() {
 				delete resource['extras']['supplemental_info'];
 				if (resource['extras']['edc_resource_type']) resource['resource_type'] = resource['extras']['edc_resource_type'].toLowerCase();
 				delete resource['extras']['edc_resource_type']
+
+				delete resource['extras']['type']
 				
 				resources.push(resource);
 			});
@@ -268,16 +286,34 @@ async function main() {
 					resource['format'] = 'other'
 				}
 
+				if (resource['extras']['bcdc_type'] === 'geographic' && ['csv', 'json', 'pdf', 'xml', 'html', 'xls', 'xlsx', 'atom', 'txt'].includes(resource['format'])) {
+					resource['extras']['bcdc_type'] = 'document';
+					resource['format'] = 'other';
+					resource['extras']['spatial_datatype'] = 'na';
+					resource['extras']['object_name'] = '';
+					resource['extras']['object_short_name'] = '';
+					resource['extras']['details'] = '';
+					resource['extras']['projection_name'] = '';
+					resource['extras']['iso_topic_category'] = '';
+					
+					resource['extras']['geographic_extent'] = '{}';
+					resource['extras']['preview_info'] = '{}';
+				}
+
 				if (resource['resource_type'] === '' || resource['resource_type'] === null) {
 					resource['resource_type'] = 'data';
 				}
 
-				if (makeService) resource['extras']['resource_storage_location'] = 'web or ftp site';
+				if (makeService) resource['extras']['resource_storage_location'] = 'bc geographic warehouse';
 				if (resourceType === 'geographic' && resource['name'] === 'BC Geographic Warehouse Custom Download') resource['extras']['resource_storage_location'] = 'bc geographic warehouse';
 				if (!('resource_storage_location' in resource['extras'])) {
-					if (resourceType === 'document') resource['extras']['resource_storage_location'] = 'catalogue data store';
-					else if (resourceType === 'geographic' && !makeService) resource['extras']['resource_storage_location'] = 'bc geographic warehouse';
-					else resource['extras']['resource_storage_location'] = 'web or ftp site';
+					if (resourceType === 'webservice' || resourceType === 'application') {
+						resource['extras']['resource_storage_location'] = 'na';
+					}
+
+					// if (resourceType === 'document') resource['extras']['resource_storage_location'] = 'catalogue data store';
+					// else if (resourceType === 'geographic' && !makeService) resource['extras']['resource_storage_location'] = 'bc geographic warehouse';
+					// else resource['extras']['resource_storage_location'] = 'web or ftp site';
 				}
 				if (!('resource_access_method' in resource['extras'])) {
 					resource['extras']['resource_access_method'] = 'direct access';
