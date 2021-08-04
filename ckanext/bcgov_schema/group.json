@@ -19,7 +19,7 @@
       "form_placeholder": "my-group"
     },
     {
-      "field_name": "notes",
+      "field_name": "description",
       "label": "Description",
       "form_snippet": "markdown.html",
       "form_placeholder": "A little information about my group..."
