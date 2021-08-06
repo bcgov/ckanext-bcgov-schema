@@ -160,13 +160,9 @@ async function main() {
 				}
 			}
 
-			if (!hasCreatedDate) {
+			if (!hasCreatedDate && (resourceType == 'webservice' ||  resourceType ===  'application')) {
 				packageExtras['dates'].push({"type": "Created", "date": packageExtras['record_create_date']});
 			}
-
-			// if (resource['extras']['bcdc_type'] === 'webservice' || resource['extras']['bcdc_type'] === 'application') {
-			// 	packageExtras['dates'].push({"type": "Created", "date": packageExtras['record_create_date']});
-			// }
 
 			packageExtras['more_info'] = [];
 			for (const key in moreInfoObj) {
@@ -306,23 +302,18 @@ async function main() {
 
 				if (makeService) resource['extras']['resource_storage_location'] = 'bc geographic warehouse';
 				if (resourceType === 'geographic' && resource['name'] === 'BC Geographic Warehouse Custom Download') resource['extras']['resource_storage_location'] = 'bc geographic warehouse';
-				if (!('resource_storage_location' in resource['extras'])) {
-					if (resourceType === 'webservice' || resourceType === 'application') {
-						resource['extras']['resource_storage_location'] = 'na';
-					}
-
-					// if (resourceType === 'document') resource['extras']['resource_storage_location'] = 'catalogue data store';
-					// else if (resourceType === 'geographic' && !makeService) resource['extras']['resource_storage_location'] = 'bc geographic warehouse';
-					// else resource['extras']['resource_storage_location'] = 'web or ftp site';
+				if (resourceType === 'webservice' || resourceType === 'application') {
+					resource['extras']['resource_storage_location'] = 'na';
 				}
+
 				if (!('resource_access_method' in resource['extras'])) {
 					resource['extras']['resource_access_method'] = 'direct access';
 				}
-				if (!('projection_name' in resource['extras']) && resourceType === 'geographic' && !makeService) {
-					resource['extras']['projection_name'] = 'epsg3005';
+				if (!('projection_name' in resource['extras']) && resourceType === 'geographic' && !makeService && resource['state'] != 'deleted') {
+					// resource['extras']['projection_name'] = 'epsg3005';
 				}
 				if (!('spatial_datatype' in resource['extras']) && resourceType === 'geographic' && !makeService) {
-					resource['extras']['spatial_datatype'] = 'SDO_GEOMETRY';
+					resource['extras']['spatial_datatype'] = 'NA';
 				}
 				if (!('iso_topic_category' in resource['extras']) && resourceType === 'geographic' && !makeService) {
 					resource['extras']['iso_topic_category'] = JSON.stringify(['unknown']);
