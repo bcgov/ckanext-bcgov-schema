@@ -67,6 +67,11 @@ const extra_keys = "("
 	+ "'record_last_modified'"
 	+ ")";
 
+function renameField(object, oldName, newName, mappingFunction = f => f) {
+	return object.newName = mappingFunction(oldName)
+}
+
+
 async function main() {
 	try {
 		let res = await pool.query('SELECT * FROM package');
@@ -223,12 +228,12 @@ async function main() {
 				}
 				resource['extras']['temporal_extent'] = JSON.stringify(temporalExtent);
 				if (proj_name[resource['extras']['projection_name']]) resource['extras']['projection_name'] = proj_name[resource['extras']['projection_name']];
-				if (resource['extras']['resource_storage_access_method']) resource['extras']['resource_access_method'] = resource['extras']['resource_storage_access_method'].toLowerCase();
+				if (resource['extras']['resource_storage_access_method']) renameField(resource['extras'], 'resource_storage_access_method', 'resource_access_method', f => f.toLowerCase());
 				delete resource['extras']['resource_storage_access_method']
 				if (resource['extras']['resource_storage_location']) resource['extras']['resource_storage_location'] = resource['extras']['resource_storage_location'] == 'BCGW Datastore' ? 'bc geographic warehouse' : resource['extras']['resource_storage_location'].toLowerCase();
-				if (resource['extras']['supplemental_info']) resource['extras']['supplemental_information'] = resource['extras']['supplemental_info'];
+				if (resource['extras']['supplemental_info']) renameField(resource['extras'], 'supplemental_info', 'supplemental_information')
 				delete resource['extras']['supplemental_info'];
-				if (resource['extras']['edc_resource_type']) resource['resource_type'] = resource['extras']['edc_resource_type'].toLowerCase();
+				if (resource['extras']['edc_resource_type']) renameField(resource, 'edc_resource_type', 'resource_type', f => f.toLowerCase())
 				delete resource['extras']['edc_resource_type']
 
 				// Information was duplicated in package.type which is now available as resource.extras.bcdc_type
