@@ -963,6 +963,10 @@
         {
           "value": "utm",
           "label": "UTM"
+        },
+        {
+          "value": "unknown",
+          "label": "Unknown"
         }
       ]
     },

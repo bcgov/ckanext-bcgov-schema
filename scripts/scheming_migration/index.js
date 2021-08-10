@@ -312,7 +312,7 @@ async function main() {
 					resource['extras']['resource_access_method'] = 'direct access';
 				}
 				if (!('projection_name' in resource['extras']) && resourceType === 'geographic' && !makeService && resource['state'] != 'deleted') {
-					// resource['extras']['projection_name'] = 'epsg3005';
+					resource['extras']['projection_name'] = 'unknown';
 				}
 				if (!('spatial_datatype' in resource['extras']) && resourceType === 'geographic' && !makeService) {
 					resource['extras']['spatial_datatype'] = 'NA';
