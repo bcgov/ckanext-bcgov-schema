@@ -292,6 +292,13 @@ async function main() {
 					resource['format'] = 'other'
 				}
 
+				// Webservices and applications did not have a resource_access_method
+				if (resource['extras']['bcdc_type'] === 'webservice') {
+					resource['extras']['resource_access_method'] = 'service';
+				} else if(resource['extras']['bcdc_type'] === 'application') {
+					resource['extras']['resource_access_method'] = 'application';
+				}
+
 				if (resource['extras']['bcdc_type'] === 'geographic' && ['csv', 'json', 'pdf', 'xml', 'html', 'xls', 'xlsx', 'atom', 'txt'].includes(resource['format'])) {
 					resource['extras']['bcdc_type'] = 'document';
 					resource['format'] = 'other';
