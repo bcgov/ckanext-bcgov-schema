@@ -160,6 +160,7 @@ async function main() {
 				}
 			}
 
+			// Most webservices and applications did not have created dates, but this is now a required field
 			if (!hasCreatedDate && (resourceType == 'webservice' ||  resourceType ===  'application')) {
 				packageExtras['dates'].push({"type": "Created", "date": packageExtras['record_create_date']});
 			}
@@ -230,6 +231,7 @@ async function main() {
 				if (resource['extras']['edc_resource_type']) resource['resource_type'] = resource['extras']['edc_resource_type'].toLowerCase();
 				delete resource['extras']['edc_resource_type']
 
+				// Information was duplicated in package.type which is now available as resource.extras.bcdc_type
 				delete resource['extras']['type']
 				
 				resources.push(resource);
