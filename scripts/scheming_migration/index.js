@@ -68,7 +68,7 @@ const extra_keys = "("
 	+ ")";
 
 function renameField(object, oldName, newName, mappingFunction = f => f) {
-	object.newName = mappingFunction(oldName)
+	object[newName] = mappingFunction(object[oldName])
 }
 
 async function main() {
@@ -232,7 +232,7 @@ async function main() {
 				if (resource['extras']['resource_storage_location']) resource['extras']['resource_storage_location'] = resource['extras']['resource_storage_location'] == 'BCGW Datastore' ? 'bc geographic warehouse' : resource['extras']['resource_storage_location'].toLowerCase();
 				if (resource['extras']['supplemental_info']) renameField(resource['extras'], 'supplemental_info', 'supplemental_information')
 				delete resource['extras']['supplemental_info'];
-				if (resource['extras']['edc_resource_type']) renameField(resource, 'edc_resource_type', 'resource_type', f => f.toLowerCase())
+				if (resource['extras']['edc_resource_type']) resource['resource_type'] = resource['extras']['edc_resource_type'].toLowerCase();
 				delete resource['extras']['edc_resource_type']
 
 				// Information was duplicated in package.type which is now available as resource.extras.bcdc_type
