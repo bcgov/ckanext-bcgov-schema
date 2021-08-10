@@ -68,7 +68,7 @@ const extra_keys = "("
 	+ ")";
 
 function renameField(object, oldName, newName, mappingFunction = f => f) {
-	return object.newName = mappingFunction(oldName)
+	object.newName = mappingFunction(oldName)
 }
 
 async function main() {
