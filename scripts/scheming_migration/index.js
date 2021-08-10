@@ -71,7 +71,6 @@ function renameField(object, oldName, newName, mappingFunction = f => f) {
 	return object.newName = mappingFunction(oldName)
 }
 
-
 async function main() {
 	try {
 		let res = await pool.query('SELECT * FROM package');
@@ -247,6 +246,7 @@ async function main() {
 				let resourceId = resource['id'];
 				delete resource['id'];
 
+				// Moving WMS and KML resources to type webservice
 				let makeService = (resourceType === 'geographic' && (resource['name'] === 'WMS getCapabilities request' || resource['name'] === 'KML Network Link'));
 				if (resourceType) resource['extras']['bcdc_type'] = makeService ? 'webservice' : resourceType;
 
