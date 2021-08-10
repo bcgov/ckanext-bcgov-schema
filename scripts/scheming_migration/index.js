@@ -244,13 +244,16 @@ async function main() {
 
 				let makeService = (resourceType === 'geographic' && (resource['name'] === 'WMS getCapabilities request' || resource['name'] === 'KML Network Link'));
 				if (resourceType) resource['extras']['bcdc_type'] = makeService ? 'webservice' : resourceType;
-				if (previewInformation && !makeService) resource['extras']['preview_info'] = JSON.stringify(previewInformation);
-				if (geographicExtent && !makeService) resource['extras']['geographic_extent'] = JSON.stringify(geographicExtent);
-				if (packageExtras['iso_topic_string'] && !makeService) resource['extras']['iso_topic_category'] = JSON.stringify(packageExtras['iso_topic_string'].split(','));
-				if (packageExtras['object_name'] && !makeService) resource['extras']['object_name'] = packageExtras['object_name'];
-				if (packageExtras['object_short_name'] && !makeService) resource['extras']['object_short_name'] = packageExtras['object_short_name'];
-				if (packageExtras['object_table_comments'] && !makeService) resource['extras']['object_table_comments'] = packageExtras['object_table_comments'];
-				if (packageExtras['spatial_datatype'] && !makeService) resource['extras']['spatial_datatype'] = packageExtras['spatial_datatype'];
+
+				if (!makeService) {
+					if (previewInformation) resource['extras']['preview_info'] = JSON.stringify(previewInformation);
+					if (geographicExtent) resource['extras']['geographic_extent'] = JSON.stringify(geographicExtent);
+					if (packageExtras['iso_topic_string']) resource['extras']['iso_topic_category'] = JSON.stringify(packageExtras['iso_topic_string'].split(','));
+					if (packageExtras['object_name']) resource['extras']['object_name'] = packageExtras['object_name'];
+					if (packageExtras['object_short_name']) resource['extras']['object_short_name'] = packageExtras['object_short_name'];
+					if (packageExtras['object_table_comments']) resource['extras']['object_table_comments'] = packageExtras['object_table_comments'];
+					if (packageExtras['spatial_datatype']) resource['extras']['spatial_datatype'] = packageExtras['spatial_datatype'];
+				}
 
 				if (makeService) {
 					if (resource['extras']['projection_name']) delete resource['extras']['projection_name'];
