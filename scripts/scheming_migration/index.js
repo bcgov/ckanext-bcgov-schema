@@ -249,7 +249,7 @@ async function main() {
 				let makeService = (resourceType === 'geographic' && (resource['name'] === 'WMS getCapabilities request' || resource['name'] === 'KML Network Link'));
 				if (resourceType) resource['extras']['bcdc_type'] = makeService ? 'webservice' : resourceType;
 
-				if (!makeService) {
+				if (resourceType === 'geographic') {
 					if (previewInformation) resource['extras']['preview_info'] = JSON.stringify(previewInformation);
 					if (geographicExtent) resource['extras']['geographic_extent'] = JSON.stringify(geographicExtent);
 					if (packageExtras['iso_topic_string']) resource['extras']['iso_topic_category'] = JSON.stringify(packageExtras['iso_topic_string'].split(','));
@@ -257,11 +257,6 @@ async function main() {
 					if (packageExtras['object_short_name']) resource['extras']['object_short_name'] = packageExtras['object_short_name'];
 					if (packageExtras['object_table_comments']) resource['extras']['object_table_comments'] = packageExtras['object_table_comments'];
 					if (packageExtras['spatial_datatype']) resource['extras']['spatial_datatype'] = packageExtras['spatial_datatype'];
-				}
-
-				if (makeService) {
-					if (resource['extras']['projection_name']) delete resource['extras']['projection_name'];
-					if (resource['extras']['details']) delete resource['extras']['details'];
 				}
 
 				// Set sane defaults for required resource fields with missing
@@ -296,20 +291,6 @@ async function main() {
 					resource['extras']['resource_access_method'] = 'service';
 				} else if(resource['extras']['bcdc_type'] === 'application') {
 					resource['extras']['resource_access_method'] = 'application';
-				}
-
-				if (resource['extras']['bcdc_type'] === 'geographic' && ['csv', 'json', 'pdf', 'xml', 'html', 'xls', 'xlsx', 'atom', 'txt'].includes(resource['format'])) {
-					resource['extras']['bcdc_type'] = 'document';
-					resource['format'] = 'other';
-					resource['extras']['spatial_datatype'] = 'na';
-					resource['extras']['object_name'] = '';
-					resource['extras']['object_short_name'] = '';
-					resource['extras']['details'] = '';
-					resource['extras']['projection_name'] = '';
-					resource['extras']['iso_topic_category'] = '';
-					
-					resource['extras']['geographic_extent'] = '{}';
-					resource['extras']['preview_info'] = '{}';
 				}
 
 				if (resource['resource_type'] === '' || resource['resource_type'] === null) {
