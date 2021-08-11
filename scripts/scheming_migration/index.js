@@ -69,6 +69,7 @@ const extra_keys = "("
 
 function renameField(object, oldName, newName, mappingFunction = f => f) {
 	object[newName] = mappingFunction(object[oldName])
+	delete object[oldName];
 }
 
 async function main() {
@@ -228,10 +229,8 @@ async function main() {
 				resource['extras']['temporal_extent'] = JSON.stringify(temporalExtent);
 				if (proj_name[resource['extras']['projection_name']]) resource['extras']['projection_name'] = proj_name[resource['extras']['projection_name']];
 				if (resource['extras']['resource_storage_access_method']) renameField(resource['extras'], 'resource_storage_access_method', 'resource_access_method', f => f.toLowerCase());
-				delete resource['extras']['resource_storage_access_method']
 				if (resource['extras']['resource_storage_location']) resource['extras']['resource_storage_location'] = resource['extras']['resource_storage_location'] == 'BCGW Datastore' ? 'bc geographic warehouse' : resource['extras']['resource_storage_location'].toLowerCase();
 				if (resource['extras']['supplemental_info']) renameField(resource['extras'], 'supplemental_info', 'supplemental_information')
-				delete resource['extras']['supplemental_info'];
 				if (resource['extras']['edc_resource_type']) resource['resource_type'] = resource['extras']['edc_resource_type'].toLowerCase();
 				delete resource['extras']['edc_resource_type']
 
