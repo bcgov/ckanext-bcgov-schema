@@ -45,28 +45,6 @@ const proj_name = {
 	"UTM": "utm"
 };
 
-const extra_keys = "("
-	+ "'publish_state', "
-	+ "'purpose', "
-	+ "'lineage_statement', "
-	+ "'data_quality', "
-	+ "'more_info', "
-	+ "'contacts', "
-	+ "'dates', "
-	+ "'resource_status', "
-	+ "'replacement_record', "
-	+ "'retention_exipry_date', "
-	+ "'source_data_path', "
-	+ "'view_audience', "
-	+ "'metadata_visibility', "
-	+ "'download_audience', "
-	+ "'security_class',"
-	+ "'record_publish_date',"
-	+ "'record_create_date',"
-	+ "'record_archive_date',"
-	+ "'record_last_modified'"
-	+ ")";
-
 function renameField(object, oldName, newName, mappingFunction = f => f) {
 	object[newName] = mappingFunction(object[oldName])
 	delete object[oldName];
@@ -439,9 +417,6 @@ async function main() {
 				uuidv4()//10
 			]
 			await pool.query(extrasUpdateSQL, extrasUpdateValues);
-
-			await pool.query("DELETE FROM package_extra_revision WHERE package_id = $1 AND key NOT IN " + extra_keys, [packageObj['id']]);
-			await pool.query("DELETE FROM package_extra WHERE package_id = $1 AND key NOT IN " + extra_keys, [packageObj['id']]);
 
 			// Update package
 			await pool.query("UPDATE package set type = 'bcdc_dataset' WHERE id = $1", [packageObj['id']]);
