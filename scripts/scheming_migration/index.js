@@ -45,9 +45,17 @@ const proj_name = {
 	"UTM": "utm"
 };
 
-function renameField(object, oldName, newName, mappingFunction = f => f) {
-	object[newName] = mappingFunction(object[oldName])
-	delete object[oldName];
+function renameFieldIfExists(object, oldName, newName, mappingFunction = f => f) {
+	if (object[oldName]) {
+		object[newName] = mappingFunction(object[oldName])
+		delete object[oldName];
+	}
+}
+
+function moveFieldIfExists(oldObject, newObject, fieldName) {
+	if (oldObject[fieldName]) {
+		newObject[fieldName] = oldObject[fieldName]
+	}
 }
 
 async function main() {
@@ -206,9 +214,9 @@ async function main() {
 				}
 				resource['extras']['temporal_extent'] = JSON.stringify(temporalExtent);
 				if (proj_name[resource['extras']['projection_name']]) resource['extras']['projection_name'] = proj_name[resource['extras']['projection_name']];
-				if (resource['extras']['resource_storage_access_method']) renameField(resource['extras'], 'resource_storage_access_method', 'resource_access_method', f => f.toLowerCase());
+				renameFieldIfExists(resource['extras'], 'resource_storage_access_method', 'resource_access_method', f => f.toLowerCase());
 				if (resource['extras']['resource_storage_location']) resource['extras']['resource_storage_location'] = resource['extras']['resource_storage_location'] == 'BCGW Datastore' ? 'bc geographic warehouse' : resource['extras']['resource_storage_location'].toLowerCase();
-				if (resource['extras']['supplemental_info']) renameField(resource['extras'], 'supplemental_info', 'supplemental_information')
+				renameFieldIfExists(resource['extras'], 'supplemental_info', 'supplemental_information')
 				if (resource['extras']['edc_resource_type']) resource['resource_type'] = resource['extras']['edc_resource_type'].toLowerCase();
 				delete resource['extras']['edc_resource_type']
 
@@ -231,10 +239,12 @@ async function main() {
 					if (previewInformation) resource['extras']['preview_info'] = JSON.stringify(previewInformation);
 					if (geographicExtent) resource['extras']['geographic_extent'] = JSON.stringify(geographicExtent);
 					if (packageExtras['iso_topic_string']) resource['extras']['iso_topic_category'] = JSON.stringify(packageExtras['iso_topic_string'].split(','));
-					if (packageExtras['object_name']) resource['extras']['object_name'] = packageExtras['object_name'];
-					if (packageExtras['object_short_name']) resource['extras']['object_short_name'] = packageExtras['object_short_name'];
-					if (packageExtras['object_table_comments']) resource['extras']['object_table_comments'] = packageExtras['object_table_comments'];
-					if (packageExtras['spatial_datatype']) resource['extras']['spatial_datatype'] = packageExtras['spatial_datatype'];
+					renameFieldIfExists(packageExtras, 'iso_topic_string', 'iso_topic_category', f => JSON.stringify(f.split(',')));
+					moveFieldIfExists(packageExtras, resource, 'iso_topic_category');
+					moveFieldIfExists(packageExtras, resource, 'object_name');
+					moveFieldIfExists(packageExtras, resource, 'object_short_name');
+					moveFieldIfExists(packageExtras, resource, 'object_table_comments');
+					moveFieldIfExists(packageExtras, resource, 'spatial_datatype');
 				}
 
 				// Set sane defaults for required resource fields with missing
