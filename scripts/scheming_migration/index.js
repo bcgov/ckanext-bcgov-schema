@@ -106,8 +106,6 @@ async function main() {
 						contactsObj[keyComponents[1]]['org'] = packageExtra['value'];
 					} else if (keyComponents[2] != 'organization') {
 						contactsObj[keyComponents[1]][keyComponents[2]] = packageExtra['value'];
-					} else if (keyComponents[2] != 'organization') {
-						contactsObj[keyComponents[1]][keyComponents[2]] = packageExtra['value'];
 					}
 				} else if (packageExtra['key'].match(/dates\:/g)) {
 					let keyComponents = packageExtra['key'].split(':');
@@ -215,7 +213,9 @@ async function main() {
 				resource['extras']['temporal_extent'] = JSON.stringify(temporalExtent);
 				if (proj_name[resource['extras']['projection_name']]) resource['extras']['projection_name'] = proj_name[resource['extras']['projection_name']];
 				renameFieldIfExists(resource['extras'], 'resource_storage_access_method', 'resource_access_method', f => f.toLowerCase());
-				if (resource['extras']['resource_storage_location']) resource['extras']['resource_storage_location'] = resource['extras']['resource_storage_location'] == 'BCGW Datastore' ? 'bc geographic warehouse' : resource['extras']['resource_storage_location'].toLowerCase();
+				if (resource['extras']['resource_storage_location']) resource['extras']['resource_storage_location'] = resource['extras']['resource_storage_location'].toLowerCase();
+				if (resource['extras']['resource_storage_location'] === 'bcgw datastore') resource['extras']['resource_storage_location'] = 'bc geographic warehouse'
+								
 				renameFieldIfExists(resource['extras'], 'supplemental_info', 'supplemental_information')
 				if (resource['extras']['edc_resource_type']) resource['resource_type'] = resource['extras']['edc_resource_type'].toLowerCase();
 				delete resource['extras']['edc_resource_type']
@@ -238,7 +238,6 @@ async function main() {
 				if (resourceType === 'geographic') {
 					if (previewInformation) resource['extras']['preview_info'] = JSON.stringify(previewInformation);
 					if (geographicExtent) resource['extras']['geographic_extent'] = JSON.stringify(geographicExtent);
-					if (packageExtras['iso_topic_string']) resource['extras']['iso_topic_category'] = JSON.stringify(packageExtras['iso_topic_string'].split(','));
 					renameFieldIfExists(packageExtras, 'iso_topic_string', 'iso_topic_category', f => JSON.stringify(f.split(',')));
 					moveFieldIfExists(packageExtras, resource, 'iso_topic_category');
 					moveFieldIfExists(packageExtras, resource, 'object_name');
