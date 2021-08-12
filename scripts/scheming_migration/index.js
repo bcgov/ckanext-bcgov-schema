@@ -21,7 +21,7 @@ console.log({
 const proj_name = {
 	"EPSG_3005 - NAD83 BC Albers": "epsg3005",
 	"EPSG_3857 - WGS84 Pseudo-Mercator -- Spherical Mercator": "epsg3857",
-	"EPSG_4326 - WGS84 World Geodetic System 1984": "epsg4326",
+	"EPSG_4326 - WGS84 - World Geodetic System 1984": "epsg4326",
 	"EPSG_26707 - NAD27 UTM zone 7N": "epsg26707",
 	"EPSG_26708 - NAD27 UTM zone 8N": "epsg26708",
 	"EPSG_26709 - NAD27 UTM zone 9N": "epsg26709",
@@ -47,14 +47,14 @@ const proj_name = {
 
 function renameFieldIfExists(object, oldName, newName, mappingFunction = f => f) {
 	if (object[oldName]) {
-		object[newName] = mappingFunction(object[oldName])
+		object[newName] = mappingFunction(object[oldName]);
 		delete object[oldName];
 	}
 }
 
 function moveFieldIfExists(oldObject, newObject, fieldName) {
 	if (oldObject[fieldName]) {
-		newObject[fieldName] = oldObject[fieldName]
+		newObject[fieldName] = oldObject[fieldName];
 	}
 }
 
@@ -214,14 +214,15 @@ async function main() {
 				if (proj_name[resource['extras']['projection_name']]) resource['extras']['projection_name'] = proj_name[resource['extras']['projection_name']];
 				renameFieldIfExists(resource['extras'], 'resource_storage_access_method', 'resource_access_method', f => f.toLowerCase());
 				if (resource['extras']['resource_storage_location']) resource['extras']['resource_storage_location'] = resource['extras']['resource_storage_location'].toLowerCase();
-				if (resource['extras']['resource_storage_location'] === 'bcgw datastore') resource['extras']['resource_storage_location'] = 'bc geographic warehouse'
+				if (resource['extras']['resource_storage_location'] === 'bcgw datastore') resource['extras']['resource_storage_location'] = 'bc geographic warehouse';
 								
-				renameFieldIfExists(resource['extras'], 'supplemental_info', 'supplemental_information')
-				if (resource['extras']['edc_resource_type']) resource['resource_type'] = resource['extras']['edc_resource_type'].toLowerCase();
-				delete resource['extras']['edc_resource_type']
+				renameFieldIfExists(resource['extras'], 'supplemental_info', 'supplemental_information');
+				renameFieldIfExists(resource['extras'], 'edc_resource_type', 'resource_type', f => f.toLowerCase());
+				moveFieldIfExists(resource['extras'], resource, 'resource_type');
+				delete resource['extras']['resource_type'];
 
 				// Information was duplicated in package.type which is now available as resource.extras.bcdc_type
-				delete resource['extras']['type']
+				delete resource['extras']['type'];
 				
 				resources.push(resource);
 			});
@@ -239,11 +240,11 @@ async function main() {
 					if (previewInformation) resource['extras']['preview_info'] = JSON.stringify(previewInformation);
 					if (geographicExtent) resource['extras']['geographic_extent'] = JSON.stringify(geographicExtent);
 					renameFieldIfExists(packageExtras, 'iso_topic_string', 'iso_topic_category', f => JSON.stringify(f.split(',')));
-					moveFieldIfExists(packageExtras, resource, 'iso_topic_category');
-					moveFieldIfExists(packageExtras, resource, 'object_name');
-					moveFieldIfExists(packageExtras, resource, 'object_short_name');
-					moveFieldIfExists(packageExtras, resource, 'object_table_comments');
-					moveFieldIfExists(packageExtras, resource, 'spatial_datatype');
+					moveFieldIfExists(packageExtras, resource['extras'], 'iso_topic_category');
+					moveFieldIfExists(packageExtras, resource['extras'], 'object_name');
+					moveFieldIfExists(packageExtras, resource['extras'], 'object_short_name');
+					moveFieldIfExists(packageExtras, resource['extras'], 'object_table_comments');
+					moveFieldIfExists(packageExtras, resource['extras'], 'spatial_datatype');
 				}
 
 				// Set sane defaults for required resource fields with missing
@@ -426,6 +427,11 @@ async function main() {
 				uuidv4()//10
 			]
 			await pool.query(extrasUpdateSQL, extrasUpdateValues);
+
+			const packageKeys = "('" + Object.keys(packageExtras).join("', '") + "')";
+
+			await pool.query("DELETE FROM package_extra_revision WHERE package_id = $1 AND key NOT IN " + packageKeys, [packageObj['id']]);
+			await pool.query("DELETE FROM package_extra WHERE package_id = $1 AND key NOT IN " + packageKeys, [packageObj['id']]);
 
 			// Update package
 			await pool.query("UPDATE package set type = 'bcdc_dataset' WHERE id = $1", [packageObj['id']]);
