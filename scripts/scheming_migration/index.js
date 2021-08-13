@@ -55,6 +55,7 @@ function renameFieldIfExists(object, oldName, newName, mappingFunction = f => f)
 function moveFieldIfExists(oldObject, newObject, fieldName) {
 	if (oldObject[fieldName]) {
 		newObject[fieldName] = oldObject[fieldName];
+		delete oldObject[fieldName];
 	}
 }
 
@@ -233,6 +234,7 @@ async function main() {
 				let makeService = (resourceType === 'geographic' && (resource['name'] === 'WMS getCapabilities request' || resource['name'] === 'KML Network Link'));
 				if (resourceType) resource['extras']['bcdc_type'] = makeService ? 'webservice' : resourceType;
 
+				// Moving geographic data from the package level to the resource level
 				if (resourceType === 'geographic') {
 					if (previewInformation) resource['extras']['preview_info'] = JSON.stringify(previewInformation);
 					if (geographicExtent) resource['extras']['geographic_extent'] = JSON.stringify(geographicExtent);
