@@ -75,9 +75,6 @@ async function main() {
 			}
 
 			// Assign sane defaults to package (not extras) that are required, if unset
-			if (!('name' in packageObj)) {
-				packageObj['name'] = packageObj['id'];
-			}
 			if (!('title' in packageObj)) {
 				packageObj['title'] = packageObj['name'];
 			}
