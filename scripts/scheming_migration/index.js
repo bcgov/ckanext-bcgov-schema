@@ -171,6 +171,11 @@ async function main() {
 					east_bound_longitude: packageExtras['east_bound_longitude'] || '',
 					west_bound_longitude: packageExtras['west_bound_longitude'] || ''
 				};
+
+				delete packageExtras['north_bound_latitude'];
+				delete packageExtras['south_bound_latitude'];
+				delete packageExtras['east_bound_longitude'];
+				delete packageExtras['west_bound_longitude'];
 			}
 			let previewInformation;
 			if ('preview_latitude' in packageExtras || 'preview_longitude' in packageExtras
@@ -187,6 +192,15 @@ async function main() {
 					layer_name: packageExtras['layer_name'] || '',
 					image_url: packageExtras['image_url'] || ''
 				};
+
+				delete packageExtras['preview_latitude'];
+				delete packageExtras['preview_longitude'];
+				delete packageExtras['preview_map_service_url'];
+				delete packageExtras['preview_zoom_level'];
+				delete packageExtras['preview_image_url'];
+				delete packageExtras['link_to_imap'];
+				delete packageExtras['layer_name'];
+				delete packageExtras['image_url'];
 			}
 
 			// Resources query and setting empty objects for composite fields
