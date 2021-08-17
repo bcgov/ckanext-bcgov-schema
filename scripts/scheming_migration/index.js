@@ -341,31 +341,31 @@ async function main() {
 				packageExtras['edc_state'] = 'DRAFT';
 			}
 			if (!('resource_status' in packageExtras)) {
-				packageExtras['resource_status'] = 'underDevelopment';
+				packageExtras['resource_status'] = 'onGoing';
 				await pool.query("INSERT INTO package_extra (id, package_id, key, value, revision_id, state)" +
 									"VALUES ($4, $1, 'resource_status', $2, $3, 'active')", 
 									[packageObj['id'], packageExtras['resource_status'], packageObj['revision_id'], uuidv4()]);
 			}
 			if (packageExtras['resource_status'] === 'obsolete' && !('replacement_record' in packageExtras)) {
-				packageExtras['replacement_record'] = 'Not Set. This needs to be updated';
+				packageExtras['replacement_record'] = null;
 				await pool.query("INSERT INTO package_extra (id, package_id, key, value, revision_id, state)" +
 									"VALUES ($4, $1, 'replacement_record', $2, $3, 'active')", 
 									[packageObj['id'], packageExtras['replacement_record'], packageObj['revision_id'], uuidv4()]);
 			}
 			if (packageExtras['resource_status'] === 'historical_archive' && !('retention_expiry_date' in packageExtras)) {
-				packageExtras['retention_expiry_date'] = '1066-10-14';
+				packageExtras['retention_expiry_date'] = null;
 				await pool.query("INSERT INTO package_extra (id, package_id, key, value, revision_id, state)" +
 									"VALUES ($4, $1, 'retention_expiry_date', $2, $3, 'active')", 
 									[packageObj['id'], packageExtras['retention_expiry_date'], packageObj['revision_id'], uuidv4()]);
 			}
 			if (packageExtras['resource_status'] === 'historical_archive' && !('source_data_path' in packageExtras)) {
-				packageExtras['source_data_path'] = 'Not Set. This needs to be updated';
+				packageExtras['source_data_path'] = null;
 				await pool.query("INSERT INTO package_extra (id, package_id, key, value, revision_id, state)" +
 									"VALUES ($4, $1, 'source_data_path', $2, $3, 'active')", 
 									[packageObj['id'], packageExtras['source_data_path'], packageObj['revision_id'], uuidv4()]);
 			}
 			if (!('view_audience' in packageExtras)) {
-				packageExtras['view_audience'] = 'Public';
+				packageExtras['view_audience'] = 'Government';
 				await pool.query("INSERT INTO package_extra (id, package_id, key, value, revision_id, state)" +
 									"VALUES ($4, $1, 'view_audience', $2, $3, 'active')", 
 									[packageObj['id'], packageExtras['view_audience'], packageObj['revision_id'], uuidv4()]);
@@ -377,7 +377,7 @@ async function main() {
 									[packageObj['id'], packageExtras['metadata_visibility'], packageObj['revision_id'], uuidv4()]);
 			}
 			if (!('download_audience' in packageExtras)) {
-				packageExtras['download_audience'] = 'Public';
+				packageExtras['download_audience'] = 'Not downloadable';
 				await pool.query("INSERT INTO package_extra (id, package_id, key, value, revision_id, state)" +
 									"VALUES ($4, $1, 'download_audience', $2, $3, 'active')", 
 									[packageObj['id'], packageExtras['download_audience'], packageObj['revision_id'], uuidv4()]);
@@ -414,8 +414,11 @@ async function main() {
 						packageExtras['security_class'] = 'PROTECTED C';
 						break;
 
-					default:
+					case "LOW-PUBLIC":
 						packageExtras['security_class'] = 'PUBLIC';
+
+					default:
+						throw `Package with missing/invalid security_class: ${packageObj['id']}`;
 				}
 				await pool.query("UPDATE package_extra set value=$1 WHERE package_id=$2 AND key=$3", [packageExtras['security_class'], packageObj['id'], 'security_class']);
 			}
@@ -441,6 +444,7 @@ async function main() {
 			]
 			await pool.query(extrasUpdateSQL, extrasUpdateValues);
 
+			// Delete all keys that have been migrated/renamed in package_extra
 			const packageKeys = "('" + Object.keys(packageExtras).join("', '") + "')";
 
 			await pool.query("DELETE FROM package_extra_revision WHERE package_id = $1 AND key NOT IN " + packageKeys, [packageObj['id']]);
