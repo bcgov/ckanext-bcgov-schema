@@ -352,13 +352,13 @@ async function main() {
 									"VALUES ($4, $1, 'replacement_record', $2, $3, 'active')", 
 									[packageObj['id'], packageExtras['replacement_record'], packageObj['revision_id'], uuidv4()]);
 			}
-			if (packageExtras['resource_status'] === 'historical_archive' && !('retention_expiry_date' in packageExtras)) {
+			if (packageExtras['resource_status'] === 'historicalArchive' && !('retention_expiry_date' in packageExtras)) {
 				packageExtras['retention_expiry_date'] = null;
 				await pool.query("INSERT INTO package_extra (id, package_id, key, value, revision_id, state)" +
 									"VALUES ($4, $1, 'retention_expiry_date', $2, $3, 'active')", 
 									[packageObj['id'], packageExtras['retention_expiry_date'], packageObj['revision_id'], uuidv4()]);
 			}
-			if (packageExtras['resource_status'] === 'historical_archive' && !('source_data_path' in packageExtras)) {
+			if (packageExtras['resource_status'] === 'historicalArchive' && !('source_data_path' in packageExtras)) {
 				packageExtras['source_data_path'] = null;
 				await pool.query("INSERT INTO package_extra (id, package_id, key, value, revision_id, state)" +
 									"VALUES ($4, $1, 'source_data_path', $2, $3, 'active')", 
@@ -416,6 +416,7 @@ async function main() {
 
 					case "LOW-PUBLIC":
 						packageExtras['security_class'] = 'PUBLIC';
+						break;
 
 					default:
 						throw `Package with missing/invalid security_class: ${packageObj['id']}`;
@@ -458,7 +459,7 @@ async function main() {
 		// console.log('All Finished ¯\\_(ツ)_/¯');
 		process.exit();
 	} catch(err) {
-		console.log(err.stack);
+		console.log(err);
 	}
 }
 
