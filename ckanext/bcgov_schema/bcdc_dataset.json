@@ -510,7 +510,7 @@
       "required": false
     },
     {
-      "field_name": "supplemental_information",
+      "field_name": "supplemental_info",
       "label": "Supplemental Information",
       "form_snippet": "markdown.html",
       "display_snippet": "markdown.html",
