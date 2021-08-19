@@ -55,7 +55,6 @@ function renameFieldIfExists(object, oldName, newName, mappingFunction = f => f)
 function moveFieldIfExists(oldObject, newObject, fieldName) {
 	if (fieldName in oldObject) {
 		newObject[fieldName] = oldObject[fieldName];
-		delete oldObject[fieldName];
 	}
 }
 
@@ -235,6 +234,9 @@ async function main() {
 				resources.push(resource);
 			});
 
+			// Moved package_extra fields to be deleted
+			let movedFieldsToBeDeleted = [];
+
 			// Iterate over resource objects and add in package fields that are moving a level
 			resources.forEach(async function(resource) {
 				let resourceId = resource['id'];
@@ -248,12 +250,22 @@ async function main() {
 				if (resourceType === 'geographic') {
 					if (previewInformation) resource['extras']['preview_info'] = JSON.stringify(previewInformation);
 					if (geographicExtent) resource['extras']['geographic_extent'] = JSON.stringify(geographicExtent);
+
 					renameFieldIfExists(packageExtras, 'iso_topic_string', 'iso_topic_category', f => JSON.stringify(f.split(',')));
 					moveFieldIfExists(packageExtras, resource['extras'], 'iso_topic_category');
+					movedFieldsToBeDeleted.push('iso_topic_category');
+
 					moveFieldIfExists(packageExtras, resource['extras'], 'object_name');
+					movedFieldsToBeDeleted.push('object_name');
+
 					moveFieldIfExists(packageExtras, resource['extras'], 'object_short_name');
+					movedFieldsToBeDeleted.push('object_short_name');
+
 					moveFieldIfExists(packageExtras, resource['extras'], 'object_table_comments');
+					movedFieldsToBeDeleted.push('object_table_comments');
+
 					moveFieldIfExists(packageExtras, resource['extras'], 'spatial_datatype');
+					movedFieldsToBeDeleted.push('spatial_datatype');
 				}
 
 				// Set sane defaults for required resource fields with missing
@@ -331,6 +343,8 @@ async function main() {
 				await pool.query(query.join(' '), values);
 
 			});
+
+			movedFieldsToBeDeleted.forEach(field => delete packageExtras[field]);
 
 			// Assign sane defaults in package extras to required fields if values are missing
 			if (!('edc_state' in packageExtras)) {
