@@ -202,10 +202,10 @@ async function main() {
 
 			// Resources query and setting empty objects for composite fields
 			let resourceRes = await pool.query("SELECT * from resource WHERE package_id = $1", [packageObj['id']]);
-			let temporalExtent = {};
 
 			// Iterate over resources and assign relevant fields to an object
 			resourceRes.rows.forEach(function(resource) {
+				let temporalExtent = {};
 				resource['extras'] = JSON.parse(resource['extras']) || {};
 				if ('data_collection_start_date' in resource['extras']) {
 					temporalExtent['beginning_date'] = resource['extras']['data_collection_start_date'];
@@ -456,7 +456,7 @@ async function main() {
 		// console.log('All Finished ¯\\_(ツ)_/¯');
 		process.exit();
 	} catch(err) {
-		console.log(err);
+		console.error(err);
 	}
 }
 
