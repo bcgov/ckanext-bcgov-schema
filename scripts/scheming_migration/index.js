@@ -46,14 +46,14 @@ const proj_name = {
 };
 
 function renameFieldIfExists(object, oldName, newName, mappingFunction = f => f) {
-	if (object[oldName]) {
+	if (oldName in object) {
 		object[newName] = mappingFunction(object[oldName]);
 		delete object[oldName];
 	}
 }
 
 function moveFieldIfExists(oldObject, newObject, fieldName) {
-	if (oldObject[fieldName]) {
+	if (fieldName in oldObject) {
 		newObject[fieldName] = oldObject[fieldName];
 		delete oldObject[fieldName];
 	}
@@ -76,9 +76,6 @@ async function main() {
 			}
 
 			// Assign sane defaults to package (not extras) that are required, if unset
-			if (!('title' in packageObj)) {
-				packageObj['title'] = packageObj['name'];
-			}
 			if (!('notes' in packageObj)) {
 				packageObj['notes'] = 'This field is required and needs to be updated';
 			}
