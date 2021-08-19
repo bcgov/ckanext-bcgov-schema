@@ -225,7 +225,6 @@ async function main() {
 				if (resource['extras']['resource_storage_location']) resource['extras']['resource_storage_location'] = resource['extras']['resource_storage_location'].toLowerCase();
 				if (resource['extras']['resource_storage_location'] === 'bcgw datastore') resource['extras']['resource_storage_location'] = 'bc geographic warehouse';
 								
-				renameFieldIfExists(resource['extras'], 'supplemental_info', 'supplemental_information');
 				renameFieldIfExists(resource['extras'], 'edc_resource_type', 'resource_type', f => f.toLowerCase());
 				moveFieldIfExists(resource['extras'], resource, 'resource_type');
 				delete resource['extras']['resource_type'];
@@ -343,24 +342,6 @@ async function main() {
 									"VALUES ($4, $1, 'resource_status', $2, $3, 'active')", 
 									[packageObj['id'], packageExtras['resource_status'], packageObj['revision_id'], uuidv4()]);
 			}
-			if (packageExtras['resource_status'] === 'obsolete' && !('replacement_record' in packageExtras)) {
-				packageExtras['replacement_record'] = null;
-				await pool.query("INSERT INTO package_extra (id, package_id, key, value, revision_id, state)" +
-									"VALUES ($4, $1, 'replacement_record', $2, $3, 'active')", 
-									[packageObj['id'], packageExtras['replacement_record'], packageObj['revision_id'], uuidv4()]);
-			}
-			if (packageExtras['resource_status'] === 'historicalArchive' && !('retention_expiry_date' in packageExtras)) {
-				packageExtras['retention_expiry_date'] = null;
-				await pool.query("INSERT INTO package_extra (id, package_id, key, value, revision_id, state)" +
-									"VALUES ($4, $1, 'retention_expiry_date', $2, $3, 'active')", 
-									[packageObj['id'], packageExtras['retention_expiry_date'], packageObj['revision_id'], uuidv4()]);
-			}
-			if (packageExtras['resource_status'] === 'historicalArchive' && !('source_data_path' in packageExtras)) {
-				packageExtras['source_data_path'] = null;
-				await pool.query("INSERT INTO package_extra (id, package_id, key, value, revision_id, state)" +
-									"VALUES ($4, $1, 'source_data_path', $2, $3, 'active')", 
-									[packageObj['id'], packageExtras['source_data_path'], packageObj['revision_id'], uuidv4()]);
-			}
 			if (!('view_audience' in packageExtras)) {
 				packageExtras['view_audience'] = 'Government';
 				await pool.query("INSERT INTO package_extra (id, package_id, key, value, revision_id, state)" +
@@ -445,7 +426,7 @@ async function main() {
 			// Delete all keys that have been migrated/renamed in package_extra
 			const packageKeys = "('" + Object.keys(packageExtras).join("', '") + "')";
 
-			await pool.query("DELETE FROM package_extra_revision WHERE package_id = $1 AND key NOT IN " + packageKeys, [packageObj['id']]);
+			// await pool.query("DELETE FROM package_extra_revision WHERE package_id = $1 AND key NOT IN " + packageKeys, [packageObj['id']]);
 			await pool.query("DELETE FROM package_extra WHERE package_id = $1 AND key NOT IN " + packageKeys, [packageObj['id']]);
 
 			// Update package
