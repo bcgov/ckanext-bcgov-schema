@@ -307,7 +307,7 @@ async function main() {
 					resource['extras']['projection_name'] = 'unknown';
 				}
 				if (!('spatial_datatype' in resource['extras']) && resourceType === 'geographic' && !makeService) {
-					resource['extras']['spatial_datatype'] = 'NA';
+					resource['extras']['spatial_datatype'] = 'UNKNOWN';
 				}
 				if (!('iso_topic_category' in resource['extras']) && resourceType === 'geographic' && !makeService) {
 					resource['extras']['iso_topic_category'] = JSON.stringify(['unknown']);

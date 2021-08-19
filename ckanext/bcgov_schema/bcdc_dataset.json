@@ -804,6 +804,10 @@
         {
           "value": "NA",
           "label": "Not Applicable"
+        },
+        {
+          "value": "UNKNOWN",
+          "label": "Unknown"
         }
       ]
     },
