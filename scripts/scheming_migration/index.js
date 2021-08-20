@@ -52,7 +52,7 @@ function renameFieldIfExists(object, oldName, newName, mappingFunction = f => f)
 	}
 }
 
-function moveFieldIfExists(oldObject, newObject, fieldName) {
+function copyFieldIfExists(oldObject, newObject, fieldName) {
 	if (fieldName in oldObject) {
 		newObject[fieldName] = oldObject[fieldName];
 	}
@@ -125,6 +125,8 @@ async function main() {
 					packageExtras[packageExtra['key']] = packageExtra['value'];
 				}
 			});
+
+			renameFieldIfExists(packageExtras, 'edc_state', 'publish_state');
 
 			// Repeating fields need to be moved to arrays
 			packageExtras['contacts'] = [];
@@ -225,7 +227,7 @@ async function main() {
 				if (resource['extras']['resource_storage_location'] === 'bcgw datastore') resource['extras']['resource_storage_location'] = 'bc geographic warehouse';
 								
 				renameFieldIfExists(resource['extras'], 'edc_resource_type', 'resource_type', f => f.toLowerCase());
-				moveFieldIfExists(resource['extras'], resource, 'resource_type');
+				copyFieldIfExists(resource['extras'], resource, 'resource_type');
 				delete resource['extras']['resource_type'];
 
 				// Information was duplicated in package.type which is now available as resource.extras.bcdc_type
@@ -235,7 +237,7 @@ async function main() {
 			});
 
 			// Moved package_extra fields to be deleted
-			let movedFieldsToBeDeleted = [];
+			let copiedFieldsToBeDeleted = [];
 
 			// Iterate over resource objects and add in package fields that are moving a level
 			resources.forEach(async function(resource) {
@@ -252,20 +254,20 @@ async function main() {
 					if (geographicExtent) resource['extras']['geographic_extent'] = JSON.stringify(geographicExtent);
 
 					renameFieldIfExists(packageExtras, 'iso_topic_string', 'iso_topic_category', f => JSON.stringify(f.split(',')));
-					moveFieldIfExists(packageExtras, resource['extras'], 'iso_topic_category');
-					movedFieldsToBeDeleted.push('iso_topic_category');
+					copyFieldIfExists(packageExtras, resource['extras'], 'iso_topic_category');
+					copiedFieldsToBeDeleted.push('iso_topic_category');
 
-					moveFieldIfExists(packageExtras, resource['extras'], 'object_name');
-					movedFieldsToBeDeleted.push('object_name');
+					copyFieldIfExists(packageExtras, resource['extras'], 'object_name');
+					copiedFieldsToBeDeleted.push('object_name');
 
-					moveFieldIfExists(packageExtras, resource['extras'], 'object_short_name');
-					movedFieldsToBeDeleted.push('object_short_name');
+					copyFieldIfExists(packageExtras, resource['extras'], 'object_short_name');
+					copiedFieldsToBeDeleted.push('object_short_name');
 
-					moveFieldIfExists(packageExtras, resource['extras'], 'object_table_comments');
-					movedFieldsToBeDeleted.push('object_table_comments');
+					copyFieldIfExists(packageExtras, resource['extras'], 'object_table_comments');
+					copiedFieldsToBeDeleted.push('object_table_comments');
 
-					moveFieldIfExists(packageExtras, resource['extras'], 'spatial_datatype');
-					movedFieldsToBeDeleted.push('spatial_datatype');
+					copyFieldIfExists(packageExtras, resource['extras'], 'spatial_datatype');
+					copiedFieldsToBeDeleted.push('spatial_datatype');
 				}
 
 				// Set sane defaults for required resource fields with missing
@@ -344,11 +346,11 @@ async function main() {
 
 			});
 
-			movedFieldsToBeDeleted.forEach(field => delete packageExtras[field]);
+			copiedFieldsToBeDeleted.forEach(field => delete packageExtras[field]);
 
 			// Assign sane defaults in package extras to required fields if values are missing
-			if (!('edc_state' in packageExtras)) {
-				packageExtras['edc_state'] = 'DRAFT';
+			if (!('publish_state' in packageExtras)) {
+				packageExtras['publish_state'] = 'DRAFT';
 			}
 			if (!('resource_status' in packageExtras)) {
 				packageExtras['resource_status'] = 'onGoing';
@@ -428,7 +430,7 @@ async function main() {
 				JSON.stringify(packageExtras['contacts']),//2
 				JSON.stringify(packageExtras['dates']),//3
 				JSON.stringify(packageExtras['more_info']),//4
-				packageExtras['edc_state'],//5
+				packageExtras['publish_state'],//5
 				packageObj['revision_id'],//6
 				uuidv4(),//7
 				uuidv4(),//8
@@ -438,15 +440,35 @@ async function main() {
 			await pool.query(extrasUpdateSQL, extrasUpdateValues);
 
 			// Delete all keys that have been migrated/renamed in package_extra
-			const packageKeys = "('" + Object.keys(packageExtras).join("', '") + "')";
+			const query = ['DELETE FROM'];
+			query.push('package_extra');
+			query.push('WHERE package_id = $1');
+			query.push('AND key NOT IN');
 
-			// await pool.query("DELETE FROM package_extra_revision WHERE package_id = $1 AND key NOT IN " + packageKeys, [packageObj['id']]);
-			await pool.query("DELETE FROM package_extra WHERE package_id = $1 AND key NOT IN " + packageKeys, [packageObj['id']]);
+			const set = [];
+			const values = [];
+
+			values.push(packageObj['id'])
+
+			Object.keys(packageExtras).forEach(function(key, i) {
+				set.push('$' + (i + 2)); // Offest by 2 to account for package_id
+				values.push(key);
+			});
+
+			query.push('(');
+			query.push(set.join(', '));
+			query.push(')');
+
+			await pool.query(query.join(' '), values);
 
 			// Update package
 			await pool.query("UPDATE package set type = 'bcdc_dataset' WHERE id = $1", [packageObj['id']]);
 			// console.log('Finished with Package: ', packageObj['name']);
 		}
+		await pool.query("DELETE FROM package_extra_revision");
+		await pool.query("DELETE FROM package_revision");
+		await pool.query("DELETE FROM resource_revision");
+
 		process.stdout.write("Done! ¯\\_(ツ)_/¯\n");
 		// console.log('All Finished ¯\\_(ツ)_/¯');
 		process.exit();
