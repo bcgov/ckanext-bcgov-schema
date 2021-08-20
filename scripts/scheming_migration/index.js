@@ -441,7 +441,7 @@ async function main() {
 
 			// Delete all keys that have been migrated/renamed in package_extra
 			const query = ['DELETE FROM'];
-			query.push('package_extra');
+			query.push('package_extra_revision');
 			query.push('WHERE package_id = $1');
 			query.push('AND key NOT IN');
 
@@ -459,6 +459,9 @@ async function main() {
 			query.push(set.join(', '));
 			query.push(')');
 
+			await pool.query(query.join(' '), values);
+
+			query[1] = 'package_extra';
 			await pool.query(query.join(' '), values);
 
 			// Update package
