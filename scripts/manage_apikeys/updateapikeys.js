@@ -39,10 +39,18 @@ async function updateUser(name, apikey = uuidv4()) {
 }
 
 async function main() {
-    let users = await getUserNames();
+    const userFile = process.argv[2];
+
+    let users = [];
+    // if passed a file location/name, will use that to update users, otherwise will get all users from db
+    if (userFile) {
+        users = JSON.parse(fs.readFileSync(userFile, 'utf8'));
+    } else {
+        users = await getUserNames();
+    }
 
     for (let user of users) {
-        await updateUser(user.name)
+        await updateUser(user.name, user.apikey)
     }
 
     console.log('Updated apikeys!');
