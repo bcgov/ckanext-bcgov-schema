@@ -29,9 +29,9 @@ async function getUserNames() {
     }
 }
 
-async function updateUser(name) {
+// if passed an apikey, will use that to update, otherwise will generate a new one
+async function updateUser(name, apikey = uuidv4()) {
     try {
-        const apikey = uuidv4();
         await pool.query("UPDATE public.user SET apikey = $1 WHERE name = $2", [apikey, name]);
     } catch(err) {
         console.error(err);
@@ -42,7 +42,7 @@ async function main() {
     let users = await getUserNames();
 
     for (let user of users) {
-        await updateUser(user.name, user.apikey);
+        await updateUser(user.name)
     }
 
     console.log('Updated apikeys!');
