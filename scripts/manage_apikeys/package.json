@@ -1,8 +1,8 @@
 {
-  "name": "update-user-apikey",
+  "name": "manage_apikeys",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "updateapikeys.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
