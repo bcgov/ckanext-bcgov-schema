@@ -1,6 +1,7 @@
 const { Pool } = require('pg');
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
+const readline = require("readline");
 
 const connectInfo = {
     user: process.env.DB_USER ? process.env.DB_USER : 'ckan',
@@ -14,6 +15,11 @@ const pool = new Pool(connectInfo);
 pool.connect();
   
 console.log(connectInfo);
+
+rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
 async function getUserNames() {
     try {
@@ -35,23 +41,39 @@ async function updateUser(name, apikey = uuidv4()) {
 }
 
 async function main() {
-    const userFile = process.argv[2];
+    try {
+        const userFile = process.argv[2];
 
-    let users = [];
-    // if passed a file location/name, will use that to update users, otherwise will get all users from db
-    if (userFile) {
-        users = JSON.parse(fs.readFileSync(userFile, 'utf8'));
-    } else {
-        users = await getUserNames();
+        let users = [];
+        // if passed a file location/name, will use that to update users, otherwise will get all users from db
+        if (userFile) {
+            users = JSON.parse(fs.readFileSync(userFile, 'utf8'));
+        } else {
+            users = await getUserNames();
+        }
+
+        userFileQuestion = `Confirm you want to replace all apikeys with keys from ${userFile} (yes/no)? `;
+        freshApikeyQuestion = "Confirm you would like to generate all new apikeys (yes/no)? ";
+    
+        rl.question(userFile ? userFileQuestion : freshApikeyQuestion, function(confimation) {
+            if (confimation === 'yes') {
+                for (let user of users) {
+                    await updateUser(user.name, user.apikey)
+                }
+    
+                console.log('Updated apikeys!');
+            }
+    
+            rl.close();
+        })
+    
+        rl.on("close", function() {
+            process.exit();
+        })
+    } catch (err) {
+        console.error(err);
+        process.exit(1);
     }
-
-    for (let user of users) {
-        await updateUser(user.name, user.apikey)
-    }
-
-    console.log('Updated apikeys!');
-    process.exit();
-
 }
 
 main();
