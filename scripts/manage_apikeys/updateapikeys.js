@@ -1,27 +1,14 @@
-const { Pool } = require('pg');
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const readline = require("readline");
-
-const connectInfo = {
-    user: process.env.DB_USER ? process.env.DB_USER : 'ckan',
-    host: process.env.DB_HOST ? process.env.DB_HOST : '127.0.0.1',
-    database: process.env.DB_NAME ? process.env.DB_NAME : 'ckan',
-    password: process.env.DB_PASS ? process.env.DB_PASS : 'ckan',
-    port: process.env.DB_PORT ? process.env.DB_PORT : 5432,
-};
-
-const pool = new Pool(connectInfo);
-pool.connect();
-  
-console.log(connectInfo);
+const dbconnection = require('./dbconnection');
 
 rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
-async function getUserNames() {
+async function getUserNames(pool) {
     try {
         let res = await pool.query('SELECT name FROM public.user');
 
@@ -32,7 +19,7 @@ async function getUserNames() {
 }
 
 // if passed an apikey, will use that to update, otherwise will generate a new one
-async function updateUser(name, apikey = uuidv4()) {
+async function updateUser(pool, name, apikey = uuidv4()) {
     try {
         await pool.query("UPDATE public.user SET apikey = $1 WHERE name = $2", [apikey, name]);
     } catch(err) {
@@ -44,12 +31,14 @@ async function main() {
     try {
         const userFile = process.argv[2];
 
+        const pool = dbconnection.connect();
+
         let users = [];
         // if passed a file location/name, will use that to update users, otherwise will get all users from db
         if (userFile) {
             users = JSON.parse(fs.readFileSync(userFile, 'utf8'));
         } else {
-            users = await getUserNames();
+            users = await getUserNames(pool);
         }
 
         userFileQuestion = `Confirm you want to replace all apikeys with keys from ${userFile} (yes/no)? `;
@@ -58,7 +47,7 @@ async function main() {
         rl.question(userFile ? userFileQuestion : freshApikeyQuestion, function(confimation) {
             if (confimation === 'yes') {
                 for (let user of users) {
-                    await updateUser(user.name, user.apikey)
+                    await updateUser(pool, user.name, user.apikey)
                 }
     
                 console.log('Updated apikeys!');

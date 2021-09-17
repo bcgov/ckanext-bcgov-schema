@@ -1,20 +1,7 @@
-const { Pool } = require('pg');
 const fs = require('fs');
+const dbconnection = require('./dbconnection');
 
-const connectInfo = {
-    user: process.env.DB_USER ? process.env.DB_USER : 'ckan',
-    host: process.env.DB_HOST ? process.env.DB_HOST : '127.0.0.1',
-    database: process.env.DB_NAME ? process.env.DB_NAME : 'ckan',
-    password: process.env.DB_PASS ? process.env.DB_PASS : 'ckan',
-    port: process.env.DB_PORT ? process.env.DB_PORT : 5432,
-};
-
-const pool = new Pool(connectInfo);
-pool.connect();
-  
-console.log(connectInfo);
-
-async function getNamesAndApikeys() {
+async function getNamesAndApikeys(pool) {
     try {
         let res = await pool.query('SELECT name, apikey FROM public.user');
 
@@ -29,11 +16,13 @@ function saveNamesAndApikeys(fileName, namesAndKeys) {
 }
 
 async function main() {
-    const userFileName = process.argv[2];
-
-    let users = await getNamesAndApikeys();
-    
     try {
+        const userFileName = process.argv[2];
+
+        const pool = dbconnection.connect();
+        let users = await getNamesAndApikeys(pool);
+    
+
         saveNamesAndApikeys(userFileName, users);
 
         console.log('Backed up apikeys!');
