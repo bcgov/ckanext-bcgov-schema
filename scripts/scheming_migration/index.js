@@ -471,6 +471,9 @@ async function main() {
 		await pool.query("DELETE FROM package_extra_revision");
 		await pool.query("DELETE FROM package_revision");
 		await pool.query("DELETE FROM resource_revision");
+		
+		// remove all existing follows due to incompatibilities with new UI
+		await pool.query("TRUNCATE user_following_dataset, user_following_group, user_following_user");
 
 		process.stdout.write("Done! ¯\\_(ツ)_/¯\n");
 		// console.log('All Finished ¯\\_(ツ)_/¯');
