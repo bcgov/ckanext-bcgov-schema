@@ -85,7 +85,7 @@ async function main() {
 			}
 
 			// Extras for the package and empty objects for the compostite fields
-			let extrasRes = await pool.query("SELECT key, value FROM package_extra WHERE package_id = $1", [packageObj['id']]);
+			let extrasRes = await pool.query("SELECT key, value FROM package_extra WHERE package_id = $1 and state = 'active'", [packageObj['id']]);
 			let contactsObj = {};
 			let datesObj = {};
 			let moreInfoObj = {};
