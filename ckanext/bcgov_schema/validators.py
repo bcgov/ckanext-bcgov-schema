@@ -203,13 +203,15 @@ def valid_next_state(field, schema):
         
 
         if package is not None and hasattr(package, 'owner_org'):
-            logger.debug('Package not none {0} {1} {2}'.format(package.owner_org, user.id, str(user)))
-            admin = authz._has_user_permission_for_groups(user.id, 'admin', [package.owner_org])
-            editor = authz._has_user_permission_for_groups(user.id, 'update_dataset', [package.owner_org])
+            logger.debug('Package not none {0} {1} {2}'.format(package.owner_org, user.name, str(user)))
+            admin = authz.has_user_permission_for_group_or_org(package.owner_org, user.name, 'admin')
+            editor = authz.has_user_permission_for_group_or_org[package.owner_org, user.name, 'update_dataset')
+            #editor = authz._has_user_permission_for_groups(user.id, 'update_dataset', [package.owner_org])
         elif owner_org_key in data:
             logger.debug('Owner org in data {0} {1} {2}'.format(data[owner_org_key], user.id, str(user)))
-            admin = authz._has_user_permission_for_groups(user.id, 'admin', [data[owner_org_key]])
-            editor = authz._has_user_permission_for_groups(user.id, 'update_dataset', [data[owner_org_key]])
+            admin = authz.has_user_permission_for_group_or_org(data[owner_org_key], user.name, 'admin')
+            editor = authz.has_user_permission_for_group_or_org(data[owner_org_key], user.name, 'update_dataset')
+            
         
         logger.debug('State machine checking permissions S,A,E {0}, {1}, {2}'.format(sysAdmin, admin, editor))
         
