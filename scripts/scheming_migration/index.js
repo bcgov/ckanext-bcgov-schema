@@ -151,7 +151,7 @@ async function main() {
 					packageExtras['dates'].push({"type": "Created", "date": packageExtras['record_create_date']});
 				}
 
-				packageExtras['download_audience'] = 'NA'
+				packageExtras['download_audience'] = 'NA';
 			}
 
 			packageExtras['more_info'] = [];
