@@ -145,9 +145,13 @@ async function main() {
 				}
 			}
 
-			// Most webservices and applications did not have created dates, but this is now a required field
-			if (!hasCreatedDate && (resourceType == 'webservice' ||  resourceType ===  'application')) {
-				packageExtras['dates'].push({"type": "Created", "date": packageExtras['record_create_date']});
+			// Most webservices and applications did not have created dates or download audience, but this is now a required field
+			if (resourceType == 'webservice' ||  resourceType ===  'application') {
+				if (!hasCreatedDate) {
+					packageExtras['dates'].push({"type": "Created", "date": packageExtras['record_create_date']});
+				}
+
+				packageExtras['download_audience'] = 'NA';
 			}
 
 			packageExtras['more_info'] = [];
