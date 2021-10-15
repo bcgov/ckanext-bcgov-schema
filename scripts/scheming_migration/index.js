@@ -424,10 +424,11 @@ async function main() {
 
 			// Update package extras by inserting new values
 			let extrasUpdateSQL = "INSERT INTO package_extra (id, package_id, key, value, revision_id, state) "
-					+ "VALUES ($7, $1, 'contacts', $2, $6, 'active'), "
-					+ "($8, $1, 'dates', $3, $6, 'active'), "
-					+ "($9, $1, 'more_info', $4, $6, 'active'), "
-					+ "($10, $1, 'publish_state', $5, $6, 'active')";
+					+ "VALUES ($8, $1, 'contacts', $2, $7, 'active'), "
+					+ "($9, $1, 'dates', $3, $7, 'active'), "
+					+ "($10, $1, 'more_info', $4, $7, 'active'), "
+					+ "($11, $1, 'publish_state', $5, $7, 'active'), "
+					+ "($12, $1, 'download_audience', $6, $7, 'active')";
 
 			let extrasUpdateValues = [
 				packageObj['id'], //1
@@ -435,11 +436,13 @@ async function main() {
 				JSON.stringify(packageExtras['dates']),//3
 				JSON.stringify(packageExtras['more_info']),//4
 				packageExtras['publish_state'],//5
-				packageObj['revision_id'],//6
-				uuidv4(),//7
+				packageExtras['download_audience'],//6
+				packageObj['revision_id'],//7
 				uuidv4(),//8
 				uuidv4(),//9
-				uuidv4()//10
+				uuidv4(),//10
+				uuidv4(),//11
+				uuidv4()//12
 			]
 			await pool.query(extrasUpdateSQL, extrasUpdateValues);
 
