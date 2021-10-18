@@ -151,7 +151,22 @@ async function main() {
 					packageExtras['dates'].push({"type": "Created", "date": packageExtras['record_create_date']});
 				}
 
-				packageExtras['download_audience'] = 'NA';
+				if (!packageExtras['download_audience']) {
+					packageExtras['download_audience'] = 'NA';
+
+					// Update package extras by inserting new values
+					let updateDownloadAudienceSql= "INSERT INTO package_extra (id, package_id, key, value, revision_id, state) "
+					+ "VALUES ($1, $2, 'download_audience', $3, $4, 'active')";
+
+					let updateDownloadAudienceValues = [
+						uuidv4(),//1
+						packageObj['id'], //2
+						packageExtras['download_audience'],//3
+						packageObj['revision_id']//4
+					]
+
+					await pool.query(updateDownloadAudienceSql, updateDownloadAudienceValues);
+				}
 			}
 
 			packageExtras['more_info'] = [];
@@ -424,11 +439,10 @@ async function main() {
 
 			// Update package extras by inserting new values
 			let extrasUpdateSQL = "INSERT INTO package_extra (id, package_id, key, value, revision_id, state) "
-					+ "VALUES ($8, $1, 'contacts', $2, $7, 'active'), "
-					+ "($9, $1, 'dates', $3, $7, 'active'), "
-					+ "($10, $1, 'more_info', $4, $7, 'active'), "
-					+ "($11, $1, 'publish_state', $5, $7, 'active'), "
-					+ "($12, $1, 'download_audience', $6, $7, 'active')";
+					+ "VALUES ($7, $1, 'contacts', $2, $6, 'active'), "
+					+ "($8, $1, 'dates', $3, $6, 'active'), "
+					+ "($9, $1, 'more_info', $4, $6, 'active'), "
+					+ "($10, $1, 'publish_state', $5, $6, 'active')"
 
 			let extrasUpdateValues = [
 				packageObj['id'], //1
@@ -436,13 +450,11 @@ async function main() {
 				JSON.stringify(packageExtras['dates']),//3
 				JSON.stringify(packageExtras['more_info']),//4
 				packageExtras['publish_state'],//5
-				packageExtras['download_audience'],//6
-				packageObj['revision_id'],//7
+				packageObj['revision_id'],//6
+				uuidv4(),//7
 				uuidv4(),//8
 				uuidv4(),//9
 				uuidv4(),//10
-				uuidv4(),//11
-				uuidv4()//12
 			]
 			await pool.query(extrasUpdateSQL, extrasUpdateValues);
 
