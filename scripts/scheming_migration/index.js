@@ -442,7 +442,7 @@ async function main() {
 					+ "VALUES ($7, $1, 'contacts', $2, $6, 'active'), "
 					+ "($8, $1, 'dates', $3, $6, 'active'), "
 					+ "($9, $1, 'more_info', $4, $6, 'active'), "
-					+ "($10, $1, 'publish_state', $5, $6, 'active')"
+					+ "($10, $1, 'publish_state', $5, $6, 'active')";
 
 			let extrasUpdateValues = [
 				packageObj['id'], //1
@@ -454,7 +454,7 @@ async function main() {
 				uuidv4(),//7
 				uuidv4(),//8
 				uuidv4(),//9
-				uuidv4(),//10
+				uuidv4()//10
 			]
 			await pool.query(extrasUpdateSQL, extrasUpdateValues);
 
