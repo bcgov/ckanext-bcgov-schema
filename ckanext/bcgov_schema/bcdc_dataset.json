@@ -606,7 +606,8 @@
             "resource_storage_location": { "const": "bc data catalogue" }
           },
           "required": ["bc data catalogue"]
-        },
+        }
+      ],
       "validators": "conditional_required",
     },
     {
