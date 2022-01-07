@@ -586,25 +586,16 @@
           "label": "Unknown"
         }
       ]
-    },
+    }, 
     {
       "field_name": "last_modified",
       "label": "Resource Last Refreshed/Updated",
       "form_snippet": "markdown.html",
       "display_snippet": "markdown.html",
-      "help_text": "Date the data was last refreshed in the BCGW or BC Data Catalogue.",
-      "anyOf": [
-        {
-          "last_modified": {
-            "resource_storage_location": { "const": "bc geographic warehouse" }
-          },
-          "required": ["bc geographic warehouse"]
-        },
-        {
-          "last_modified": {
-            "resource_storage_location": { "const": "bc data catalogue" }
-          },
-          "required": ["bc data catalogue"]
+      "help_text": "Date the data was last refreshed in the BCGW or BC Data Catalogue."
+      "conditional_field": "resource_storage_location",
+      "conditional_values": ["bc geographic warehouse","bc data catalogue"],
+      "validators": "conditional_required",
     },
     {
       "field_name": "temporal_extent",
