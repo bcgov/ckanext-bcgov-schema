@@ -592,7 +592,7 @@
       "label": "Resource Last Refreshed/Updated",
       "form_snippet": "markdown.html",
       "display_snippet": "markdown.html",
-      "help_text": "Date the data was last refreshed in the BCGW or BC Data Catalogue."
+      "help_text": "Date the data was last refreshed in the BCGW or BC Data Catalogue.",
       "conditional_field": "resource_storage_location",
       "conditional_values": ["bc geographic warehouse","bc data catalogue"],
       "validators": "conditional_required",
