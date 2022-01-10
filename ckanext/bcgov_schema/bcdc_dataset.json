@@ -590,12 +590,11 @@
     {
       "field_name": "last_modified",
       "label": "Resource Last Refreshed/Updated",
-      "form_snippet": "markdown.html",
+      "form_snippet": null,
       "display_snippet": "markdown.html",
       "help_text": "Date the data was last refreshed in the BCGW or BC Data Catalogue.",
       "conditional_field": "resource_storage_location",
-      "conditional_values": ["bc geographic warehouse","catalogue data store"],
-      "validators": "conditional_required"
+      "conditional_values": ["bc geographic warehouse","catalogue data store"]
     },
     {
       "field_name": "temporal_extent",
