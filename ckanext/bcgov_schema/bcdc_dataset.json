@@ -170,7 +170,7 @@
       "preset": "select",
       "required": true,
       "sorted_choices": false,
-      "help_text": "Defined in the Information Security Classification Standard.",
+      "help_text": "Refers to the classification of information as described in the B.C. government's Security Classification Standards.",
       "choices": [
         {
           "value": "PUBLIC",
@@ -276,7 +276,7 @@
       "preset": "tag_string_autocomplete",
       "form_placeholder": "e.g., economy, mental health, government",
       "required": true,
-      "help_text": "Keywords help users return datasets using key identified words, phrases or acronyms for a record and its resources."
+      "help_text":
     },
     {
       "field_name": "publish_state",
