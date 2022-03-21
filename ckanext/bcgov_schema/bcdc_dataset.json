@@ -40,14 +40,14 @@
       "form_snippet": "license.html",
       "required": true,
       "comment": "This was previously required for all but application datasets, I think we can probably just have this on the dataset regardless of resource types",
-      "help_text": "The licence defines the access and use of the data or resources."
+      "help_text": "A data licence defines who can access and use the data or resources."
     },
     {
       "field_name": "contacts",
       "label": "Contacts",
       "preset": "composite_repeating",
       "form_blanks": 1,
-      "help_text": "Name, email and role of person(s) or an inbox to contact for more information regarding the record and resources.",
+      "help_text":
       "subfields": [
         {
           "field_name": "name",
