@@ -273,7 +273,7 @@
       "label": "Keywords",
       "preset": "tag_string_autocomplete",
       "form_placeholder": "e.g., economy, mental health, government",
-      "required": true,
+      "required": true
     },
     {
       "field_name": "publish_state",
