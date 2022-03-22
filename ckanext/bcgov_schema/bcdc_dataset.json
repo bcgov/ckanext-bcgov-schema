@@ -40,14 +40,13 @@
       "form_snippet": "license.html",
       "required": true,
       "comment": "This was previously required for all but application datasets, I think we can probably just have this on the dataset regardless of resource types",
-      "help_text": "The licence defines the access and use of the data or resources."
+      "help_text": "A data licence defines who can access and use the data or resources."
     },
     {
       "field_name": "contacts",
       "label": "Contacts",
       "preset": "composite_repeating",
       "form_blanks": 1,
-      "help_text": "Name, email and role of person(s) or an inbox to contact for more information regarding the record and resources.",
       "subfields": [
         {
           "field_name": "name",
@@ -74,7 +73,6 @@
           "preset": "select",
           "required": true,
           "sorted_choices": true,
-          "help_text": "Role of the person or inbox to contact.",
           "choices": [
             {
               "value": "pointOfContact",
@@ -170,7 +168,7 @@
       "preset": "select",
       "required": true,
       "sorted_choices": false,
-      "help_text": "Defined in the Information Security Classification Standard.",
+      "help_text": "Refers to the classification of information as described in the B.C. government's Security Classification Standards.",
       "choices": [
         {
           "value": "PUBLIC",
@@ -275,8 +273,7 @@
       "label": "Keywords",
       "preset": "tag_string_autocomplete",
       "form_placeholder": "e.g., economy, mental health, government",
-      "required": true,
-      "help_text": "Keywords help users return datasets using key identified words, phrases or acronyms for a record and its resources."
+      "required": true
     },
     {
       "field_name": "publish_state",
@@ -523,11 +520,11 @@
     },
     {
       "field_name": "resource_update_cycle",
-      "label": "Resource Update Cycle",
+      "label": "Frequency of Resource Update",
       "preset": "select",
       "required": true,
       "sorted_choices": false,
-      "help_text": "Frequency of update or refresh to the storage location.",
+      "help_text": "How often the data was intended to be updated or reloaded.",
       "choices": [
         {
           "value": "daily",
@@ -588,10 +585,15 @@
       ]
     },
     {
+      "field_name": "last_modified",
+      "label": "Resource Data Last Updated",
+      "form_snippet": null,
+      "help_text": "When the data stored in the BC Data Catalogue or BC Geographic Warehouse was reloaded."
+    },
+    {
       "field_name": "temporal_extent",
-      "label": "Temporal Extent",
+      "label": "Data Collection Period",
       "preset": "composite",
-      "help_text": "Temporal or date range of the data or resource.",
       "subfields": [
         {
           "field_name": "beginning_date",
