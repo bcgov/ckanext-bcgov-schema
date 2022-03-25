@@ -877,7 +877,7 @@
       "preset": "select",
       "sorted_choices": false,
       "conditional_field": "bcdc_type",
-      "conditional_values": ["geographic"],
+      "conditional_values": ["geographic","webservice"],
       "validators": "conditional_required",
       "form_include_blank_choice": true,
       "help_text": "Spatial reference system as defined by ESPG, e.g., BCGW data is primarily ESPG-3005 - NAD83 BC Albers.",
@@ -885,6 +885,10 @@
         {
           "value": "epsg3005",
           "label": "EPSG_3005 - NAD83 BC Albers"
+        },
+        {
+          "value": "epsg3153",
+          "label": "EPSG_3153 - NAD83(CSRS) BC Albers"
         },
         {
           "value": "epsg3857",
