@@ -827,12 +827,16 @@
     {
       "field_name": "object_short_name",
       "label": "Object Short Name",
+      "conditional_field": "resource_storage_location",
+      "conditional_value": ["bc geographic warehouse"],
       "form_snippet": null,
       "help_text": "Short name for certain file types, e.g., Shape files. Max 10 characters."
     },
     {
       "field_name": "object_table_comments",
       "label": "Object Table Comments",
+      "conditional_field": "resource_storage_location",
+      "conditional_value": ["bc geographic warehouse"],
       "form_snippet": null,
       "help_text": "Object defintion as defined in the storage location database."
     },
@@ -841,6 +845,8 @@
       "label": "Details",
       "display_snippet": "bcgw_details.html",
       "validators": "composite_repeating_group2json",
+      "conditional_field": "resource_storage_location",
+      "conditional_value": ["bc geographic warehouse"],
       "form_snippet": null,
       "required": false,
       "help_text": "Field definition including name, short name, length, field type and description for a dataset in the BCGW.",
