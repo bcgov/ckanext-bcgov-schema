@@ -820,19 +820,21 @@
     {
       "field_name": "object_name",
       "label": "Object Name",
-      "conditional_field": "bcdc_type",
-      "conditional_values": ["geographic"],
       "help_text": "Name of schema and table stored in a database."
     },
     {
       "field_name": "object_short_name",
       "label": "Object Short Name",
+      "conditional_field": "resource_storage_location",
+      "conditional_value": ["bc geographic warehouse"],
       "form_snippet": null,
       "help_text": "Short name for certain file types, e.g., Shape files. Max 10 characters."
     },
     {
       "field_name": "object_table_comments",
       "label": "Object Table Comments",
+      "conditional_field": "resource_storage_location",
+      "conditional_value": ["bc geographic warehouse"],
       "form_snippet": null,
       "help_text": "Object defintion as defined in the storage location database."
     },
@@ -841,6 +843,8 @@
       "label": "Details",
       "display_snippet": "bcgw_details.html",
       "validators": "composite_repeating_group2json",
+      "conditional_field": "resource_storage_location",
+      "conditional_value": ["bc geographic warehouse"],
       "form_snippet": null,
       "required": false,
       "help_text": "Field definition including name, short name, length, field type and description for a dataset in the BCGW.",
@@ -873,7 +877,7 @@
       "preset": "select",
       "sorted_choices": false,
       "conditional_field": "bcdc_type",
-      "conditional_values": ["geographic"],
+      "conditional_values": ["geographic","webservice"],
       "validators": "conditional_required",
       "form_include_blank_choice": true,
       "help_text": "Spatial reference system as defined by ESPG, e.g., BCGW data is primarily ESPG-3005 - NAD83 BC Albers.",
@@ -881,6 +885,10 @@
         {
           "value": "epsg3005",
           "label": "EPSG_3005 - NAD83 BC Albers"
+        },
+        {
+          "value": "epsg3153",
+          "label": "EPSG_3153 - NAD83(CSRS) BC Albers"
         },
         {
           "value": "epsg3857",
