@@ -820,8 +820,6 @@
     {
       "field_name": "object_name",
       "label": "Object Name",
-      "conditional_field": "bcdc_type",
-      "conditional_values": ["geographic"],
       "help_text": "Name of schema and table stored in a database."
     },
     {
