@@ -134,24 +134,24 @@
     },
     {
       "field_name": "lineage_statement",
-      "label": "Lineage Statement",
+      "label": "Data Lineage",
       "form_snippet": "markdown.html",
       "display_snippet": "markdown.html",
-      "form_placeholder": "Information about the events or source data used in constructing the data.  Where appropriate it may include a statement whether the data set has been validated or quality assured, whether it is the official version (if multiple versions exist)."
+      "form_placeholder": "Describes the life cycle of data, including its origin and how it has since changed."
     },
     {
       "field_name": "more_info",
-      "label": "More Info",
+      "label": "Related Links",
       "preset": "composite_repeating",
       "form_blanks": 1,
       "help_text": "URLs to additional information about the record and resources.",
       "subfields": [
         {
           "field_name": "description",
-          "label": "Description",
+          "label": "Title of Web Asset",
           "hide_if_empty": true,
           "no_label": true,
-          "form_placeholder": "Short description of webpage."
+          "form_placeholder": ""
         },
         {
           "field_name": "url",
@@ -370,10 +370,10 @@
     
     {
       "field_name": "dates",
-      "label": "Record Lifecycle History",
+      "label": "Lifecycle Event",
       "preset": "composite_repeating",
       "form_blanks": 1,
-      "help_text": "Provides a variety of milestone dates related to its life cycle and milestones.",
+      "help_text": "Showcases a history of milestone dates.",
       "subfields": [
         {
           "field_name": "type",
