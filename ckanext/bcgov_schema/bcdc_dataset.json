@@ -151,7 +151,6 @@
           "label": "Title of Web Asset",
           "hide_if_empty": true,
           "no_label": true,
-          "form_placeholder": ""
         },
         {
           "field_name": "url",
