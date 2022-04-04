@@ -150,7 +150,7 @@
           "field_name": "description",
           "label": "Title of Web Asset",
           "hide_if_empty": true,
-          "no_label": true,
+          "no_label": true
         },
         {
           "field_name": "url",
