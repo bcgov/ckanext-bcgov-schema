@@ -50,7 +50,8 @@ This page supports ckan-ui [Changelog](https://github.com/bcgov/ckan-ui/blob/mas
     + Data Collection Period (was Temporal Extent) ([#54](https://github.com/bcgov/ckanext-bcgov-schema/pull/54))
 
 
-### Beta Record Level Changes
+### [2.0] 27-Oct-21 Beta Changes
+#### Beta Record Level Changes
 These changes reflect those that were implimented in the **27-Oct-21** major release.
 
 A Record or main metadata page is defined in CKAN as a Dataset or Package.
@@ -115,9 +116,9 @@ The following are fields which have been modified in the new schema.
 
 [RETURN TO TOP][1]
 
-### Beta Resource Level Changes
+#### Beta Resource Level Changes
 
-#### Document and Tabular Data Resource Level Changes
+##### Document and Tabular Data Resource Level Changes
 
 **Change Review**
 The following are fields which have been modified in the new schema.
@@ -154,7 +155,7 @@ The following are fields which have been modified in the new schema.
 
 [RETURN TO TOP][1]
 
-#### Geographic Data Resource Level Changes
+##### Geographic Data Resource Level Changes
 
 |UI Field Label|Database Field Name|Changes Flag|Database Field Renamed from|Moved from|Values|Repeating or Composite|Comment|
 |:---|:---|:---:|:---|:---|:---:|:---:|:---|
@@ -205,7 +206,7 @@ The following are fields which have been modified in the new schema.
 
 [RETURN TO TOP][1]
 
-#### Webservice and API Resource Level Changes
+##### Webservice and API Resource Level Changes
 
 |UI Field Label|Database Field Name|Changes Flag|Database Field Renamed from|Moved from|Values|Repeating or Composite|Comment|
 |:---|:---|:---:|:---|:---|:---:|:---:|:---|
@@ -239,7 +240,7 @@ The following are fields which have been modified in the new schema.
 
 [RETURN TO TOP][1]
 
-#### Application Resource Level Changes
+##### Application Resource Level Changes
 A Record or main metadata page is defined in CKAN as a Dataset or Package.
 
 |UI Field Label|Database Field Name|Changes Flag|Database Field Renamed from|Moved from|Values|Repeating or Composite|Comment|
