@@ -31,7 +31,7 @@ This page supports ckan-ui [Change Log](https://github.com/bcgov/ckan-ui/blob/ma
 
 **Added**
 + Projection `projection_name` ([#56](https://github.com/bcgov/ckanext-bcgov-schema/pull/56))
-    +  ESPG-3153(CSRS)
+    + EPSG_3153 - NAD83(CSRS) BC Albers `epsg3153`
 + Resource data last refreshed `last_modified` added to UI ([#54](https://github.com/bcgov/ckanext-bcgov-schema/pull/54))
     +  Currently represents dates for BCGW and BCDC dataset sources 
 
