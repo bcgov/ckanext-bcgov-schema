@@ -36,15 +36,18 @@ This page supports ckan-ui [Change Log](https://github.com/bcgov/ckan-ui/blob/ma
     +  Currently represents dates for BCGW and BCDC dataset sources 
 
 **Changed**
-+ Fields hidden now on only those where Resource Storage Location `resource_storage_location` set to 'BC Geographic Warehouse  `bc geographic warehouse` ([#56](https://github.com/bcgov/ckanext-bcgov-schema/pull/56))
-    + Object Short Name `object_short_name`
-    + Object Table Comments `object_table_comments`
-    + Details `details`
++ Fields hidden now on only used for BC Geographic Warehouse datasets ([#56](https://github.com/bcgov/ckanext-bcgov-schema/pull/56))
+    + Where Resource Storage Location `resource_storage_location` set to 'BC Geographic Warehouse  `bc geographic warehouse` 
+        + Object Short Name `object_short_name`
+        + Object Table Comments `object_table_comments`
+        + Details `details`
 + Object Name `oject_name` now accessible to all resource types. Previously only Geographic ([#56](https://github.com/bcgov/ckanext-bcgov-schema/pull/56))|
-+ Updated Help Text to be directed for editors - ? now no longer visible to viewers ([#54](https://github.com/bcgov/ckanext-bcgov-schema/pull/54))
++ Updated Help Text to be directed for editors - ? now no longer visible to viewers ([#54](https://github.com/bcgov/ckanext-bcgov-schema/pull/54)) 
 + Updated Labels ([#54](https://github.com/bcgov/ckanext-bcgov-schema/pull/54))
-    + Frequency of Resource Update (was Resource Update Cycle)
-    + Data Collection Period (was Temporal Extent)
+    + Frequency of Resource Update (was Resource Update Cycle) ([#58](https://github.com/bcgov/ckanext-bcgov-schema/pull/58))
+    + Replated Links (was More Info) ([#58](https://github.com/bcgov/ckanext-bcgov-schema/pull/58))
+    + Title of Web Asset (was Description) ([#58](https://github.com/bcgov/ckanext-bcgov-schema/pull/58))
+    + Data Collection Period (was Temporal Extent) ([#54](https://github.com/bcgov/ckanext-bcgov-schema/pull/54))
 
 
 ### Beta Record Level Changes
