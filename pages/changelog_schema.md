@@ -1,6 +1,6 @@
 # Schema Changelog
 
-This page supports ckan-ui [Change Log](https://github.com/bcgov/ckan-ui/blob/master/pages/changelog.md#change-log)
+This page supports ckan-ui [Changelog](https://github.com/bcgov/ckan-ui/blob/master/pages/changelog.md#change-log)
 
 |**Audience**|**Description**|
 |:---|:---|
@@ -27,7 +27,7 @@ This page supports ckan-ui [Change Log](https://github.com/bcgov/ckan-ui/blob/ma
 
 ## Release details and dates
 
-### [2.1.7 (18)] 18-Apr-22 (Prod)
+### [2.1] 18-Apr-22 (Prod)
 
 **Added**
 + Projection `projection_name` ([#56](https://github.com/bcgov/ckanext-bcgov-schema/pull/56))
