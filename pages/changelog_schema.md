@@ -45,7 +45,7 @@ This page supports ckan-ui [Changelog](https://github.com/bcgov/ckan-ui/blob/mas
 + Updated Help Text to be directed for editors - ? now no longer visible to viewers ([#54](https://github.com/bcgov/ckanext-bcgov-schema/pull/54)) 
 + Updated Labels ([#54](https://github.com/bcgov/ckanext-bcgov-schema/pull/54))
     + Frequency of Resource Update (was Resource Update Cycle) ([#58](https://github.com/bcgov/ckanext-bcgov-schema/pull/58))
-    + Replated Links (was More Info) ([#58](https://github.com/bcgov/ckanext-bcgov-schema/pull/58))
+    + Related Links (was More Info) ([#58](https://github.com/bcgov/ckanext-bcgov-schema/pull/58))
     + Title of Web Asset (was Description) ([#58](https://github.com/bcgov/ckanext-bcgov-schema/pull/58))
     + Data Collection Period (was Temporal Extent) ([#54](https://github.com/bcgov/ckanext-bcgov-schema/pull/54))
 
