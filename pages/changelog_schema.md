@@ -52,7 +52,7 @@ This page supports ckan-ui [Changelog](https://github.com/bcgov/ckan-ui/blob/mas
 
 ### [2.0] 27-Oct-21 Beta Changes
 #### Beta Record Level Changes
-These changes reflect those that were implimented in the **27-Oct-21** major release.
+These changes reflect those that were implemented in the **27-Oct-21** major release.
 
 A Record or main metadata page is defined in CKAN as a Dataset or Package.
 
