@@ -32,7 +32,7 @@
       "label": "State",
       "startState": {"state": "DRAFT", "by": ["editor", "admin", "sysadmin"]},
       "required": true,
-      "help_text": "Defines the publication phase of a record.",
+      "help_text": "For new records select Draft. To change the State, edit and select new state.",
       "choices": [
         {
           "value": "DRAFT",
