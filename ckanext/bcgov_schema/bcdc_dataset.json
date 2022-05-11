@@ -27,6 +27,54 @@
       "help_text": "Custodial business responsible for the record and resources."
     },
     {
+      "field_name": "publish_state",
+      "preset": "state_machine",
+      "label": "State",
+      "startState": {"state": "DRAFT", "by": ["editor", "admin", "sysadmin"]},
+      "required": true,
+      "help_text": "New records should be set to Draft. To change state: edit, select new state and save.",
+      "choices": [
+        {
+          "value": "DRAFT",
+          "label": "Draft",
+          "validTo": [
+            {"state":"PENDING PUBLISH", "by": ["editor", "admin", "sysadmin"]}
+          ]
+        },
+        {
+          "value": "PENDING PUBLISH",
+          "label": "Pending Publish",
+          "validTo": [
+            {"state":"DRAFT", "by": ["editor", "admin", "sysadmin"]},
+            {"state":"PUBLISHED", "by": ["admin", "sysadmin"]}
+          ]
+        },
+        {
+          "value": "PUBLISHED",
+          "label": "Published",
+          "validTo": [
+            {"state":"PENDING ARCHIVE", "by": ["editor", "admin", "sysadmin"]},
+            {"state":"PENDING PUBLISH", "by": ["admin", "sysadmin"]}
+          ]
+        },
+        {
+          "value": "PENDING ARCHIVE",
+          "label": "Pending Archive",
+          "validTo": [
+            {"state":"ARCHIVED", "by": ["admin", "sysadmin"]},
+            {"state":"PUBLISHED", "by": ["admin", "sysadmin"]}
+          ]
+        },
+        {
+          "value": "ARCHIVED",
+          "label": "Archived",
+          "validTo": [
+            {"state":"PENDING ARCHIVE", "by": ["admin", "sysadmin"]}
+          ]
+        }
+      ]
+    },
+    {
       "field_name": "notes",
       "label": "Description",
       "form_snippet": "markdown.html",
@@ -273,54 +321,6 @@
       "preset": "tag_string_autocomplete",
       "form_placeholder": "e.g., economy, mental health, government",
       "required": true
-    },
-    {
-      "field_name": "publish_state",
-      "preset": "state_machine",
-      "label": "State",
-      "startState": {"state": "DRAFT", "by": ["editor", "admin", "sysadmin"]},
-      "required": true,
-      "help_text": "Defines the publication phase of a record.",
-      "choices": [
-        {
-          "value": "DRAFT",
-          "label": "Draft",
-          "validTo": [
-            {"state":"PENDING PUBLISH", "by": ["editor", "admin", "sysadmin"]}
-          ]
-        },
-        {
-          "value": "PENDING PUBLISH",
-          "label": "Pending Publish",
-          "validTo": [
-            {"state":"DRAFT", "by": ["editor", "admin", "sysadmin"]},
-            {"state":"PUBLISHED", "by": ["admin", "sysadmin"]}
-          ]
-        },
-        {
-          "value": "PUBLISHED",
-          "label": "Published",
-          "validTo": [
-            {"state":"PENDING ARCHIVE", "by": ["editor", "admin", "sysadmin"]},
-            {"state":"PENDING PUBLISH", "by": ["admin", "sysadmin"]}
-          ]
-        },
-        {
-          "value": "PENDING ARCHIVE",
-          "label": "Pending Archive",
-          "validTo": [
-            {"state":"ARCHIVED", "by": ["admin", "sysadmin"]},
-            {"state":"PUBLISHED", "by": ["admin", "sysadmin"]}
-          ]
-        },
-        {
-          "value": "ARCHIVED",
-          "label": "Archived",
-          "validTo": [
-            {"state":"PENDING ARCHIVE", "by": ["admin", "sysadmin"]}
-          ]
-        }
-      ]
     },
     {
       "field_name": "resource_status",
