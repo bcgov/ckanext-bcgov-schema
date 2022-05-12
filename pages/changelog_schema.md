@@ -27,7 +27,7 @@ This page supports ckan-ui [Changelog](https://github.com/bcgov/ckan-ui/blob/mas
 
 ## Release details and dates
 
-### [2.1.1] 13-May-22 (Prod)
+### [2.1.1] 12-May-22 (Prod)
 
 State `publish_state` moved under Published by for accessibility.
 
