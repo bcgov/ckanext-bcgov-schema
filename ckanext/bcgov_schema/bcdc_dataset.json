@@ -321,52 +321,7 @@
       "preset": "tag_string_autocomplete",
       "form_placeholder": "e.g., economy, mental health, government",
       "required": true
-    },
-    {
-      "field_name": "resource_status",
-      "label": "Resource Status",
-      "preset": "select",
-      "required": true,
-      "sorted_choices": true,
-      "is_conditional_source": true,
-      "comment": "As this is resource status should it maybe be moved to resource?",
-      "help_text": "Defines the current status of a record and its resources.",
-      "choices": [
-        {
-          "value": "planned",
-          "label": "Planned"
-        },
-        {
-          "value": "underDevelopment",
-          "label": "Under Development"
-        },
-        {
-          "value": "onGoing",
-          "label": "On Going"
-        },
-        {
-          "value": "required",
-          "label": "Required"
-        },
-        {
-          "value": "completed",
-          "label": "Completed"
-        },
-        {
-          "value": "obsolete",
-          "label": "Obsolete"
-        },
-        {
-          "value": "historicalArchive",
-          "label": "Historical Archive"
-        },
-        {
-          "value": "destroyed",
-          "label": "Destroyed"
-        }
-      ]
-    },
-    
+    },  
     {
       "field_name": "dates",
       "label": "Lifecycle Event",
@@ -432,8 +387,50 @@
       "label": "",
       "preset": "date"
     },
-    
-    
+    {
+      "field_name": "resource_status",
+      "label": "Resource Status",
+      "preset": "select",
+      "required": true,
+      "sorted_choices": true,
+      "is_conditional_source": true,
+      "comment": "As this is resource status should it maybe be moved to resource?",
+      "help_text": "Defines the current status of a record and its resources.",
+      "choices": [
+        {
+          "value": "planned",
+          "label": "Planned"
+        },
+        {
+          "value": "underDevelopment",
+          "label": "Under Development"
+        },
+        {
+          "value": "onGoing",
+          "label": "On Going"
+        },
+        {
+          "value": "required",
+          "label": "Required"
+        },
+        {
+          "value": "completed",
+          "label": "Completed"
+        },
+        {
+          "value": "obsolete",
+          "label": "Obsolete"
+        },
+        {
+          "value": "historicalArchive",
+          "label": "Historical Archive"
+        },
+        {
+          "value": "destroyed",
+          "label": "Destroyed"
+        }
+      ]
+    },
     {
       "field_name": "replacement_record",
       "label": "Replacement Record",
