@@ -872,7 +872,7 @@
     },
     {
       "field_name": "projection_name",
-      "label": "Projection Name",
+      "label": "Spatial Reference System",
       "preset": "select",
       "sorted_choices": false,
       "conditional_field": "bcdc_type",
@@ -883,103 +883,99 @@
       "choices": [
         {
           "value": "epsg3005",
-          "label": "EPSG_3005 - NAD83 BC Albers"
+          "label": "EPSG:3005 - NAD83/BC Albers"
         },
         {
           "value": "epsg3153",
-          "label": "EPSG_3153 - NAD83(CSRS) BC Albers"
+          "label": "EPSG:3153 - NAD83(CSRS)/BC Albers"
         },
         {
           "value": "epsg3857",
-          "label": "EPSG_3857 - WGS84 Pseudo-Mercator -- Spherical Mercator"
-        },
-        {
-          "value": "epsg4326",
-          "label": "EPSG_4326 - WGS84 World Geodetic System 1984"
-        },
-        {
-          "value": "epsg26707",
-          "label": "EPSG_26707 - NAD27 UTM zone 7N"
-        },
-        {
-          "value": "epsg26708",
-          "label": "EPSG_26708 - NAD27 UTM zone 8N"
-        },
-        {
-          "value": "epsg26709",
-          "label": "EPSG_26709 - NAD27 UTM zone 9N"
-        },
-        {
-          "value": "epsg26710",
-          "label": "EPSG_26710 - NAD27 UTM zone 10N"
-        },
-        {
-          "value": "epsg26711",
-          "label": "EPSG_26711 - NAD27 UTM zone 11N"
-        },
-        {
-          "value": "epsg26712",
-          "label": "EPSG_26712 - NAD27 UTM zone 12N"
-        },
-        {
-          "value": "epsg26907",
-          "label": "EPSG_26907 - NAD83 UTM zone 7N"
-        },
-        {
-          "value": "epsg26908",
-          "label": "EPSG_26908 - NAD83 UTM zone 8N"
-        },
-        {
-          "value": "epsg26909",
-          "label": "EPSG_26909 - NAD83 UTM zone 9N"
-        },
-        {
-          "value": "epsg26910",
-          "label": "EPSG_26910 - NAD83 UTM zone 10N"
-        },
-        {
-          "value": "epsg26911",
-          "label": "EPSG_26911 - NAD83 UTM zone 11N"
-        },
-        {
-          "value": "epsg26912",
-          "label": "EPSG_26912 - NAD83 UTM zone 12N"
-        },
-        {
-          "value": "epsg32607",
-          "label": "EPSG_32607 - WGS84 UTM zone 7N"
-        },
-        {
-          "value": "epsg32608",
-          "label": "EPSG_32608 - WGS84 UTM zone 8N"
-        },
-        {
-          "value": "epsg32609",
-          "label": "EPSG_32609 - WGS84 UTM zone 9N"
-        },
-        {
-          "value": "epsg32610",
-          "label": "EPSG_32610 - WGS84 UTM zone 10N"
-        },
-        {
-          "value": "epsg32611",
-          "label": "EPSG_32611 - WGS84 UTM zone 11N"
-        },
-        {
-          "value": "epsg32612",
-          "label": "EPSG_32612 - WGS84 UTM zone 12N"
+          "label": "EPSG:3857 - WGS84/Pseudo-Mercator"
         },
         {
           "value": "epsg4269",
-          "label": "EPSG_4269 - NAD83"
+          "label": "EPSG:4269 - NAD83"
+        },
+        {
+          "value": "epsg4326",
+          "label": "EPSG:4326 - WGS84 World Geodetic System 1984"
+        },
+        {
+          "value": "epsg26707",
+          "label": "EPSG:26707 - NAD27/UTM zone 7N"
+        },
+        {
+          "value": "epsg26708",
+          "label": "EPSG:26708 - NAD27/UTM zone 8N"
+        },
+        {
+          "value": "epsg26709",
+          "label": "EPSG:26709 - NAD27/UTM zone 9N"
+        },
+        {
+          "value": "epsg26710",
+          "label": "EPSG:26710 - NAD27/UTM zone 10N"
+        },
+        {
+          "value": "epsg26711",
+          "label": "EPSG:26711 - NAD27/UTM zone 11N"
+        },
+        {
+          "value": "epsg26712",
+          "label": "EPSG:26712 - NAD27/UTM zone 12N"
+        },
+        {
+          "value": "epsg26907",
+          "label": "EPSG:26907 - NAD83/UTM zone 7N"
+        },
+        {
+          "value": "epsg26908",
+          "label": "EPSG:26908 - NAD83/UTM zone 8N"
+        },
+        {
+          "value": "epsg26909",
+          "label": "EPSG:26909 - NAD83/UTM zone 9N"
+        },
+        {
+          "value": "epsg26910",
+          "label": "EPSG:26910 - NAD83/UTM zone 10N"
+        },
+        {
+          "value": "epsg26911",
+          "label": "EPSG:26911 - NAD83/UTM zone 11N"
+        },
+        {
+          "value": "epsg26912",
+          "label": "EPSG:26912 - NAD83/UTM zone 12N"
+        },
+        {
+          "value": "epsg32607",
+          "label": "EPSG:32607 - WGS84/UTM zone 7N"
+        },
+        {
+          "value": "epsg32608",
+          "label": "EPSG:32608 - WGS84/UTM zone 8N"
+        },
+        {
+          "value": "epsg32609",
+          "label": "EPSG:32609 - WGS84/UTM zone 9N"
+        },
+        {
+          "value": "epsg32610",
+          "label": "EPSG:32610 - WGS84/UTM zone 10N"
+        },
+        {
+          "value": "epsg32611",
+          "label": "EPSG:32611 - WGS84/UTM zone 11N"
+        },
+        {
+          "value": "epsg32612",
+          "label": "EPSG:32612 - WGS84/UTM zone 12N"
         },
         {
           "value": "na",
           "label": "Not Applicable"
-        },
-        {
-          "value": "utm",
-          "label": "UTM"
         },
         {
           "value": "unknown",
