@@ -91,7 +91,7 @@
       "help_text": "A data licence defines who can access and use the data or resources."
     },
     {
-      "field_name": "support_url,
+      "field_name": "support_url",
       "label": "Open a ticket for support",
       "form_placeholder": "URL to a request service or help desk portal."
     },
