@@ -92,8 +92,8 @@
     },
     {
       "field_name": "support_url",
-      "label": "Open a ticket for support",
-      "form_placeholder": "URL to a request service or help desk portal."
+      "label": "Submit a support request",
+      "help_text": "URLs to a support service or portal."
     },
     {
       "field_name": "contacts",
