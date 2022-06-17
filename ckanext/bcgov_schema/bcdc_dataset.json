@@ -92,7 +92,7 @@
     },
     {
       "field_name": "support_url",
-      "label": "Submit a support request",
+      "label": "Create a support request",
       "help_text": "URLs to a support service or portal."
     },
     {
