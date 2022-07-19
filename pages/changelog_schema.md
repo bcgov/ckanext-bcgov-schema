@@ -27,6 +27,11 @@ This page supports ckan-ui [Changelog](https://github.com/bcgov/ckan-ui/blob/mas
 
 ## Release details and dates
 
+### [2.2.0] 19-July-22 (Prod)
++ Fields:
+   - Added the support_url for providers to include links to portals or websites
+   - Moved resource_status to the bottom of datasets as has dependent fields that appear based on selection.
+
 ### [2.1.1] 12-May-22 (Prod)
 
 State `publish_state` moved under Published by for accessibility.
