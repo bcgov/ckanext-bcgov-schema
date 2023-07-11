@@ -194,5 +194,19 @@
         "is_open": false,
         "title": "Open Government Licence – Industry Training Authority",
         "url": "https://itabc.ca/sites/default/files/docs/ITA_Open_Government_Licence_Final.pdf"
+    },
+	{
+        "domain_content": false,
+        "domain_data": true,
+        "domain_software": false,
+        "family": "",
+        "id": "51",
+        "is_okd_compliant": false,
+        "is_osi_compliant": false,
+        "maintainer": "",
+        "status": "active",
+        "is_open": false,
+        "title": "BC Energy Regulator Open Data License",
+        "url": "https://www.bc-er.ca/files/gis/BCER-Open-Data-Licence.pdf"
     }
 ]
