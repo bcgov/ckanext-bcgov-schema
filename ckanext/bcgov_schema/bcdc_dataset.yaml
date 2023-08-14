@@ -432,16 +432,16 @@ resource_fields":
   help_text: When the data stored in the BC Data Catalogue or BC Geographic Warehouse was reloaded.
 
 - field_name: temporal_extent
-      label: Data Collection Period
-      # preset: composite
-      validators: single_value_subfield
-      repeating_subfields:
-      - field_name: beginning_date
-        preset: date
-        label: Beginning Date
-      - field_name: end_date
-        preset: date
-        label: End Date
+  label: Data Collection Period
+  # preset: composite
+  validators: single_value_subfield
+  repeating_subfields:
+  - field_name: beginning_date
+    preset: date
+    label: Beginning Date
+  - field_name: end_date
+    preset: date
+    label: End Date
 
 - field_name: format
   label: Resource Storage Format
