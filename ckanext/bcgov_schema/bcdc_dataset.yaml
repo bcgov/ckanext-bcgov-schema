@@ -187,7 +187,7 @@ dataset_fields:
   preset: select
   required: true
   sorted_choices: false
-  help_text: "Refers to the classification of information as described in the B.C. government\'s Security Classification Standards."
+  help_text: "Refers to the classification of information as described in the B.C. government's Security Classification Standards."
   choices:
   - value: PUBLIC
     label: Public
