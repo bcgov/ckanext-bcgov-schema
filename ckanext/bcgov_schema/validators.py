@@ -78,7 +78,7 @@ def iso_topic_category(field, schema):
             if element in choice_values:
                 selected.add(element)
                 continue
-            if element is not '':
+            if element != '':
                 errors[key].append(_('unexpected choice "%s"') % element)
 
         if not errors[key]:
