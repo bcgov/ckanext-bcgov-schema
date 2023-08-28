@@ -346,7 +346,7 @@ dataset_fields:
   validators: conditional_required
   help_text: Path or location of an archived resource.
 
-resource_fields":
+resource_fields:
 
 - field_name: name
   label: Name
