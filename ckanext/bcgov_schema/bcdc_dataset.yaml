@@ -261,7 +261,7 @@ dataset_fields:
   - field_name: type
     label: Type
     preset: select
-    required": true
+    required: true
     sorted_choices: true
     choices:
     - value: Created
@@ -381,7 +381,7 @@ resource_fields:
   form_snippet: markdown.html
   display_snippet: markdown.html
   form_placeholder: Detailed information about the data or resource.
-  required": false
+  required: false
 
 - field_name: supplemental_info
   label: Supplemental Information
@@ -428,7 +428,7 @@ resource_fields:
 
 - field_name: last_modified
   label: Resource Data Last Updated
-  form_snippet": null
+  form_snippet: null
   help_text: When the data stored in the BC Data Catalogue or BC Geographic Warehouse was reloaded.
 
 - field_name: temporal_extent
