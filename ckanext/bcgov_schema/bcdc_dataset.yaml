@@ -86,7 +86,7 @@ dataset_fields:
       - admin
       - sysadmin
 
-- field_name: notes,
+- field_name: notes
   label: Description
   form_snippet: markdown.html
   display_snippet: markdown.html
