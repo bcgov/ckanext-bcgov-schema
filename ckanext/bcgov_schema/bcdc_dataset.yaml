@@ -583,7 +583,7 @@ resource_fields:
 - field_name: details
   label: Details
   display_snippet: bcgw_details.html
-  validators: composite_repeating_group2json single_value_subfield
+  validators: single_value_subfield
   conditional_field: resource_storage_location
   conditional_values:
   - bc geographic warehouse
