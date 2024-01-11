@@ -208,5 +208,19 @@
         "is_open": false,
         "title": "BC Energy Regulator Open Data License",
         "url": "https://www.bc-er.ca/files/gis/BCER-Open-Data-Licence.pdf"
+    },
+    {
+        "domain_content": false,
+        "domain_data": true,
+        "domain_software": false,
+        "family": "",
+        "id": "52",
+        "is_okd_compliant": false,
+        "is_osi_compliant": false,
+        "maintainer": "",
+        "status": "active",
+        "is_open": false,
+        "title": "Open Data Licence - Office of the Registrar of Lobbyists for British Columbia",
+        "url": "https://www.lobbyistsregistrar.bc.ca/media/1285/open-data-licence-for-the-office-of-the-registrar-of-lobbyists-for-british-columbia.pdf"
     }
 ]
