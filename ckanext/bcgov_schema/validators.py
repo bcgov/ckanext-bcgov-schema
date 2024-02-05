@@ -56,7 +56,7 @@ def iso_topic_category(field, schema):
 
         value = data[key]
         if value is not missing:
-            if isinstance(value, basestring):
+            if isinstance(value, str):
                 try:
                     value = json.loads(value)
                 except:
@@ -78,7 +78,7 @@ def iso_topic_category(field, schema):
             if element in choice_values:
                 selected.add(element)
                 continue
-            if element is not '':
+            if element != '':
                 errors[key].append(_('unexpected choice "%s"') % element)
 
         if not errors[key]:
@@ -104,7 +104,7 @@ def _float_validator(key, data, errors, content):
         if value.strip() == '':
             return None
         return float(value)
-    except (AttributeError, ValueError), e:
+    except (AttributeError, ValueError) as e:
         return None
 
 
@@ -199,7 +199,7 @@ def valid_next_state(field, schema):
         editor = False
 
         logger.debug('State machine checking permissions')
-        owner_org_key = (u'owner_org',)
+        owner_org_key = ('owner_org',)
         
 
         if package is not None and hasattr(package, 'owner_org'):
@@ -268,4 +268,13 @@ def title_validator(field, schema):
                 _('Title "%s" length is more than maximum %s') % (value, PACKAGE_NAME_MAX_LENGTH)
             )
         
+    return validator
+
+@scheming_validator
+def single_value_subfield(field, schema):
+    """Specifies that a particular repeating subfields field is only allowed to have one set of sub values"""
+    def validator(key, data, errors, context):
+        value = data[key]
+        if isinstance(value, list) and len(value) > 1:
+            raise Invalid(_('Field {0} can only have a single entry'.format(key)))
     return validator
