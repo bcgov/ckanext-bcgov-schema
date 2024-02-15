@@ -222,5 +222,19 @@
         "is_open": false,
         "title": "Open Data Licence - Office of the Registrar of Lobbyists for British Columbia",
         "url": "https://www.lobbyistsregistrar.bc.ca/media/1285/open-data-licence-for-the-office-of-the-registrar-of-lobbyists-for-british-columbia.pdf"
+    },
+    {
+        "domain_content": false,
+        "domain_data": true,
+        "domain_software": false,
+        "family": "",
+        "id": "53",
+        "is_okd_compliant": false,
+        "is_osi_compliant": false,
+        "maintainer": "",
+        "status": "active",
+        "is_open": false,
+        "title": "Open Licence - University of Northern British Columbia",
+        "url": "https://www2.unbc.ca/sites/default/files/sections/office-research-and-innovation/unbcopendatalicencedec2023.pdf"
     }
 ]
