@@ -21,15 +21,9 @@ def conditional_required(field, schema):
     def validator(key, data, errors, context):
         value = data[key] or ''
         data[key] = value
-        logger.debug("Key: {0}".format(key))
-        logger.debug("CR Field: {0}".format(field))
-        logger.debug("CR value: {0}".format(value))
         if 'conditional_field' in field and 'conditional_values' in field:
-            logger.debug('Found conditionals for {0}'.format(field['field_name']))
             conditional_field = (field['conditional_field'],)
             conditional_values = field['conditional_values']
-            logger.debug("CR Field - Field: {0}".format(conditional_field))
-            logger.debug("CR Field - Values: {0}".format(conditional_values))
             if conditional_field in data and data[conditional_field] and data[conditional_field] in conditional_values:
                 logger.debug('Found conditional active for value: {0}'.format(value))
                 if not value:
