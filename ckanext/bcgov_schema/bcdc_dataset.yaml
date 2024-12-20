@@ -118,7 +118,7 @@ dataset_fields:
     required: true
   - field_name: org
     label: Organization
-    preset: select
+    preset: dataset_organization
     required: true
   - field_name: role
     label: Role
