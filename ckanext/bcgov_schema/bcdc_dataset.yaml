@@ -119,7 +119,6 @@ dataset_fields:
   - field_name: org
     label: Organization
     preset: select
-    choices_helper: edc_orgs_form
     required: true
   - field_name: role
     label: Role
