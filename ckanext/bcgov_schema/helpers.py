@@ -47,7 +47,7 @@ def parse_bcgw_details(field_name, data):
 
 def is_empty(value):
     if value:
-        if isinstance(value, unicode):
+        if isinstance(value, str):
             try:
                 parsed = json.loads(value)
                 logger.debug("Type of parsed {0} is {1}".format(parsed, type(parsed)))

@@ -23,6 +23,7 @@ class BCGovSchemaPlugin(plugins.SingletonPlugin):
             "iso_topic_category": validators.iso_topic_category,
             "valid_next_state": validators.valid_next_state,
             "title_validator": validators.title_validator,
+            "single_value_subfield": validators.single_value_subfield
         }
 
     # ITemplateHelpers
