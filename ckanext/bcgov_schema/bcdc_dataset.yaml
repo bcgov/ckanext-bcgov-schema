@@ -38,7 +38,7 @@ dataset_fields:
   - value: DRAFT
     label: Draft
     validTo:
-      state: PENDING PUBLISH 
+      state: PENDING PUBLISH
       by:
       - editor
       - admin
