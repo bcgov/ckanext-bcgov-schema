@@ -236,5 +236,19 @@
         "is_open": false,
         "title": "Open Licence - University of Northern British Columbia",
         "url": "https://www2.unbc.ca/sites/default/files/sections/office-research-and-innovation/unbcopendatalicencedec2023.pdf"
+    },
+    {
+        "domain_content": false,
+        "domain_data": true,
+        "domain_software": false,
+        "family": "",
+        "id": "54",
+        "is_okd_compliant": false,
+        "is_osi_compliant": false,
+        "maintainer": "",
+        "status": "active",
+        "is_open": false,
+        "title": "ICI Society Data Sharing Licence",
+        "url": "https://www.icisociety.ca/wp-content/uploads/ICI-Society-DSLA_LG_2025-blank.pdf"
     }
 ]
